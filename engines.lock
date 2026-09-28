@@ -1,0 +1,9 @@
+# engines.lock — pinned sibling engines for gigo-jev-probe.
+# The sibling is cloned beside this repository (../dqSarc) and must be checked
+# out at exactly this commit. preflight.py refuses to proceed on a mismatch.
+
+[dqSarc]
+url = "https://github.com/besanson/dqSarc.git"
+path = "../dqSarc"
+commit = "db6c396128a4df7fe12d13be163b1e7d32087177"
+pinned_on = "2026-09-28"

@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gigo-jev-probe"
+version = "0.1.0"
+description = "Registered probe of TypeSafe AI's Jev model as an advisory data-quality critic on GIGO-Bench"
+requires-python = ">=3.11"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.setuptools]
+py-modules = ["preflight"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-q"
