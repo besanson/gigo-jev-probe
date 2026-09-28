@@ -1,0 +1,71 @@
+{
+  "registration": "jev-v1",
+  "prereg_tag": "prereg-jev-v1",
+  "prereg_commit": "306e701e66b12fd197bbc0cc9d645a8d44699435",
+  "engine_pin": {
+    "url": "https://github.com/besanson/dqSarc.git",
+    "commit": "db6c396128a4df7fe12d13be163b1e7d32087177"
+  },
+  "sdk": {
+    "name": "typesafe-sdk",
+    "version": "0.7.2",
+    "registered": "0.7.2"
+  },
+  "endpoint": "https://api.typesafe.ai/v1/systemone",
+  "requested_model": "jev-latest",
+  "price": {
+    "usd_per_input_token": 4.2e-08,
+    "usd_per_output_token": 0.0,
+    "statement": "USD 42 per 1e9 input tokens, output free (prereg §6)"
+  },
+  "cap": {
+    "usd": 40.0,
+    "input_tokens": 4000000
+  },
+  "retry": {
+    "initial_s": 1.0,
+    "max_s": 60.0,
+    "max_retries": 8,
+    "sdk_retry_policy": "RetryPolicy(max_retries=0)"
+  },
+  "context": "Unit-price evidence retrieved for a replenishment order decision. You are reviewing it before the decision is made.",
+  "context_sha256": "9f7514efcbdc6b5ea3ad7f743fdb48437abb1bb1792e06b7262dd6e2fb47dfbd",
+  "questions_sha256": "ccda56b15b3d07a7b4c34f3d66d88a8bcac85664e7cc3cbff3c5db9f12f7e817",
+  "python": "3.11.15",
+  "segments": [
+    {
+      "segment": "38c30f5e077e",
+      "started_utc": "2026-09-28T21:09:22.486235+00:00",
+      "docs_url": "https://docs.typesafe.ai/api",
+      "docs_sha256": "3dc4a00b8afb00a75ebb19397685ba6f6816f970bc0fedb6163e66c11e7ef480",
+      "models_listed": [
+        "jev-latest",
+        "jev-preview"
+      ],
+      "committed_usd_at_start": 0.0,
+      "ended_utc": "2026-09-28T21:09:24.724562+00:00",
+      "status": "PAUSED",
+      "detail": "limit 6 reached",
+      "committed_usd_at_end": 0.00014527800000000001,
+      "committed_input_tokens_at_end": 3459
+    },
+    {
+      "segment": "18c163b614d4",
+      "started_utc": "2026-09-28T21:09:31.870255+00:00",
+      "docs_url": "https://docs.typesafe.ai/api",
+      "docs_sha256": "3dc4a00b8afb00a75ebb19397685ba6f6816f970bc0fedb6163e66c11e7ef480",
+      "models_listed": [
+        "jev-latest",
+        "jev-preview"
+      ],
+      "committed_usd_at_start": 0.00014527800000000001
+    }
+  ],
+  "docs_sha256": "3dc4a00b8afb00a75ebb19397685ba6f6816f970bc0fedb6163e66c11e7ef480",
+  "status": "PAUSED",
+  "returned_models": [
+    "jev-1.13.0"
+  ],
+  "model_version_changed": false,
+  "n_calls_cached": 6
+}
