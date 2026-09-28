@@ -42,6 +42,8 @@ they appear only as a baseline, recomputed from the sibling.
 | `responses/` | append-only raw-response cache `jev-v1.jsonl` and the run manifest |
 | `results/` | `jev-v1.template.md` (slots only) and the filled `jev-v1.md` |
 | `tests/` | pytest suite (mock endpoint, no network) |
+| `prereg/jev-v2.md` | jev-v2 registration (binding at tag `prereg-jev-v2-reg`) |
+| `src/jev_probe/*_v2.py` | jev-v2 Phase B: `corpus_v2.py` (registered generator, §3–§5), `adapter_v2.py` (§6, §10), `run_v2.py`, `analysis_v2.py` (§7–§9), `template_v2.py` |
 
 ## Reproduction path
 
@@ -62,6 +64,17 @@ python preflight.py
 # 4. Phase B, after the prereg-jev-v1 tag: run the probe, then fill the result slots from responses/
 python -m jev_probe.run        # verifies docs + models, then runs or resumes the 1,800 calls
 python -m jev_probe.analysis   # reads only responses/, fills results/jev-v1.md
+```
+
+jev-v2 (after the `prereg-jev-v2-reg` tag) additionally needs `besanson/sarc-authority-derivation`
+cloned beside this repository at its `engines.lock` pin, and `ANTHROPIC_API_KEY` set:
+
+```bash
+pip install -e ".[dev,live-v2]"
+python -m jev_probe.run_v2        # validation split; stops with TAU_WRITTEN
+git add results/jev-v2.tau.json && git commit -m "jev-v2: frozen thresholds"
+python -m jev_probe.run_v2        # test split (refuses to start unless the thresholds are committed)
+python -m jev_probe.analysis_v2   # fills results/jev-v2.md from responses/
 ```
 
 Analysis reads only the committed raw-response cache. Re-running it is therefore
