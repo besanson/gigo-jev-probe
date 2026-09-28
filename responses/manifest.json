@@ -58,14 +58,19 @@
         "jev-latest",
         "jev-preview"
       ],
-      "committed_usd_at_start": 0.00014527800000000001
+      "committed_usd_at_start": 0.00014527800000000001,
+      "ended_utc": "2026-09-28T21:15:36.206897+00:00",
+      "status": "COMPLETE",
+      "detail": "",
+      "committed_usd_at_end": 0.04501664999999992,
+      "committed_input_tokens_at_end": 1071825
     }
   ],
   "docs_sha256": "3dc4a00b8afb00a75ebb19397685ba6f6816f970bc0fedb6163e66c11e7ef480",
-  "status": "PAUSED",
+  "status": "COMPLETE",
   "returned_models": [
     "jev-1.13.0"
   ],
   "model_version_changed": false,
-  "n_calls_cached": 6
+  "n_calls_cached": 1800
 }
