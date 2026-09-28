@@ -4,7 +4,8 @@ Reads configuration from the process environment only (load .env into the
 environment first, e.g. ``set -a; . ./.env; set +a``). The API key is checked
 for presence and never printed, logged, or echoed in any form.
 
-Exit codes: 0 ready · 1 missing configuration · 2 sibling engine not at the pin.
+Exit codes: 0 ready · 1 missing or invalid configuration · 2 sibling engine not at
+the pin.
 """
 
 from __future__ import annotations
@@ -17,11 +18,26 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 REQUIRED_ENV = ("JEV_API_KEY", "JEV_BASE_URL")
+# The TypeSafe SDK's own variable is accepted in place of JEV_API_KEY.
+KEY_ALIASES = {"JEV_API_KEY": "TYPESAFE_API_KEY"}
+SYSTEM_ONE_ENDPOINT = "https://api.typesafe.ai/v1/systemone"
 
 
 def check_env(env: dict[str, str]) -> list[str]:
     """Return the names of required variables that are missing or blank."""
-    return [name for name in REQUIRED_ENV if not env.get(name, "").strip()]
+    return [
+        name
+        for name in REQUIRED_ENV
+        if not env.get(name, "").strip() and not env.get(KEY_ALIASES.get(name, ""), "").strip()
+    ]
+
+
+def resolve_endpoint(base_url: str) -> str:
+    """The System One endpoint the SDK will call for ``base_url`` (a trailing /v1 is stripped)."""
+    root = base_url.strip().rstrip("/")
+    if root.endswith("/v1"):
+        root = root[: -len("/v1")]
+    return root + "/v1/systemone"
 
 
 def check_pin(lock_path: Path = ROOT / "engines.lock") -> str | None:
@@ -51,11 +67,18 @@ def main(env: dict[str, str] | None = None) -> int:
             file=sys.stderr,
         )
         return 1
+    endpoint = resolve_endpoint(env["JEV_BASE_URL"])
+    if endpoint != SYSTEM_ONE_ENDPOINT:
+        print(
+            f"preflight: JEV_BASE_URL resolves to {endpoint}, expected {SYSTEM_ONE_ENDPOINT}",
+            file=sys.stderr,
+        )
+        return 1
     pin_error = check_pin()
     if pin_error:
         print(f"preflight: {pin_error}", file=sys.stderr)
         return 2
-    print("preflight: ok (JEV_API_KEY present, JEV_BASE_URL set, engine at pin)")
+    print(f"preflight: ok (API key present, endpoint {endpoint}, engine at pin)")
     return 0
 
 

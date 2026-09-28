@@ -13,6 +13,7 @@ dependencies = []
 
 [project.optional-dependencies]
 dev = ["pytest>=8"]
+live = ["typesafe-sdk==0.7.2"]
 
 [tool.setuptools]
 py-modules = ["preflight"]

@@ -13,8 +13,9 @@ with seeing the payload alone. The full design is registered in
 [`prereg/jev-v1.md`](prereg/jev-v1.md), which covers:
 
 - the items;
+- the System One API interface (`jev-latest`, Noul questions, pinned SDK);
 - two conditions, payload only and payload plus metadata;
-- nine typed yes/no questions;
+- nine typed yes/no (Noul) questions;
 - three repeats;
 - metrics and baselines;
 - two-sided hypotheses H1–H3;
@@ -35,7 +36,7 @@ they appear only as a baseline, recomputed from the sibling.
 |---|---|
 | `prereg/jev-v1.md` | the registration (binding once tagged `prereg-jev-v1`) |
 | `engines.lock` | the pinned commit of the sibling engine `../dqSarc` |
-| `preflight.py` | checks that `JEV_API_KEY` and `JEV_BASE_URL` are set and the sibling is at its pin. It never prints the key. |
+| `preflight.py` | checks that the API key is present (`JEV_API_KEY`, or the SDK's `TYPESAFE_API_KEY`), that `JEV_BASE_URL` resolves to `https://api.typesafe.ai/v1/systemone`, and that the sibling is at its pin. It never prints the key. |
 | `.env.example` | placeholder configuration. Real values live only in `.env`, which is git-ignored. |
 | `tests/` | pytest suite |
 
@@ -48,7 +49,7 @@ git -C ../dqSarc checkout "$(sed -n 's/^commit = "\(.*\)"/\1/p' engines.lock)"
 
 # 2. Environment (Python 3.11+)
 python -m venv .venv && . .venv/bin/activate
-pip install -e ".[dev]" -e ../dqSarc
+pip install -e ".[dev,live]" -e ../dqSarc
 pytest
 
 # 3. Configuration: copy .env.example to .env, fill in real values, then load them

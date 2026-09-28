@@ -4,7 +4,7 @@
 |---|---|
 | registration id | `jev-v1` |
 | registered | 2026-09-28, in the commit tagged `prereg-jev-v1` |
-| model under test | TypeSafe AI's Jev, reached at `JEV_BASE_URL` |
+| model under test | TypeSafe AI's Jev, requested as model `jev-latest` through the System One API (`POST https://api.typesafe.ai/v1/systemone`) using the official SDK `typesafe-sdk==0.7.2` (§3a) |
 | benchmark | GIGO-Bench, frozen spec `benchmarks/gigo/SPEC.md` in the pinned sibling |
 | engine pin | `besanson/dqSarc` @ `db6c396128a4df7fe12d13be163b1e7d32087177` (`engines.lock`) |
 | status | registered. No experiment code has been written and no model call has been made. |
@@ -78,30 +78,70 @@ rendered in `evidence_set()` order.
 | payload only | `P` | a JSON list containing `EvidenceRecord.payload_view()` for each record |
 | payload plus metadata | `PM` | a JSON list containing `EvidenceRecord.full_view()` for each record (the payload, plus source, as_of_day, retrieved_day, age_days, version and lineage) |
 
-The two conditions use the same system prompt, question set, output schema and
-decoding settings, and differ only in the view. The system prompt says that the
-records are unit-price evidence retrieved for a replenishment order decision, and
-that the model is reviewing them before the decision is made. It names no defect
-class beyond the questions themselves and gives no examples. The exact prompt text
-is committed in Phase B before the first call, and its SHA-256 is recorded in the
-run manifest. A prompt that deviates from this description is a deviation under
-§12.
+The System One API has no system prompt. The only inputs are `state` and
+`questions`, so the context sentence travels inside `state`. In both conditions
+`state` is this JSON object:
+
+```json
+{"context": "Unit-price evidence retrieved for a replenishment order decision. You are reviewing it before the decision is made.",
+ "evidence": [<one view per record, in evidence_set() order>]}
+```
+
+The `context` string is registered verbatim above. It names no defect class
+beyond the questions themselves and gives no examples. The two conditions use the
+same `context`, question set and model, and differ only in the view inside
+`evidence`. The SHA-256 of each serialised request body is recorded with its
+response.
+
+## 3a. API interface
+
+These rules follow `docs.typesafe.ai/api` as read on 2026-09-28.
+
+- **Endpoint.** Calls go to `POST https://api.typesafe.ai/v1/systemone` with
+  `Authorization: Bearer <key>` and `Content-Type: application/json`. They use
+  the official Python SDK, pinned at `typesafe-sdk==0.7.2`, through
+  `TypeSafeClient.system_one(state=..., questions=...)`. The requested model is
+  `"jev-latest"`.
+- **Credentials.** The key is read from `JEV_API_KEY` and passed to the client.
+  `TYPESAFE_API_KEY`, the SDK's own variable, is accepted as an alias. The key is
+  never written, logged or printed.
+- **Base URL.** `JEV_BASE_URL` is the API root, `https://api.typesafe.ai`, and the
+  SDK appends `/v1/systemone`. A trailing `/v1` is stripped. The resolved endpoint
+  must equal `https://api.typesafe.ai/v1/systemone`, or the run stops before any
+  call.
+- **Run-time verification.** Before the first call, the adapter fetches
+  `https://docs.typesafe.ai/api` and confirms that the endpoint
+  `POST https://api.typesafe.ai/v1/systemone` and the model name `jev-latest`
+  both appear there. It also lists models through `GET /v1/models`, which runs no
+  inference, and confirms that `jev-latest` is listed. If any check differs, the
+  run stops with status `DOCS_MISMATCH` before any inference call. The SHA-256 of
+  the fetched docs page is recorded in the run manifest.
+- **Decoding.** The API exposes no temperature or output-length parameter, so
+  provider defaults apply.
 
 ## 4. Question set
 
-Every call asks all 9 questions below about one evidence set. Each answer is
-typed:
+Every call asks all 9 questions below about one evidence set. Each is a typed
+**Noul** question, the API's yes/no type. The question id is the map key, and the
+verbatim question text is `instructions`. No `criteria` field is sent, and no
+other question type is used:
 
 ```json
-{"id": "<question id>", "answer": "yes" | "no", "confidence": <number in [0.5, 1.0]>}
+"questions": {"<question id>": {"type": "noul", "instructions": "<verbatim question>"}}
 ```
 
-`confidence` is the model's probability that its own answer is correct. From it,
-`p_yes = confidence` when the answer is `yes`, and `1 − confidence` when the answer
-is `no`. A response that fails the schema is re-requested **once**, with the same
-prompt. If the second response also fails, every answer in the call is scored
-`invalid`, which counts as not detected and not a false positive. The invalid rate
-is reported for each condition.
+The answer comes back as `{"type": "noul", "noul": <number in [0, 1]>}`, where
+`noul` is the model's probability that the answer is yes. It serves as both the
+decision score and the calibration input:
+- `p_yes = noul`;
+- the binary answer is `yes` if and only if `noul ≥ 0.5`.
+
+An answer is malformed when its key is missing, its type is not `noul`, or its
+value is non-numeric or outside [0, 1]. A call whose answers are malformed, or
+which returns HTTP 422, is re-requested **once** with the same body. If the second
+response also fails, the malformed answers are scored `invalid`, which counts as
+not detected and not a false positive. The invalid rate is reported for each
+condition.
 
 | id | question (verbatim) | true answer is "yes" iff |
 |---|---|---|
@@ -121,9 +161,9 @@ its class when its answer is `yes`. Questions are presented in the order listed.
 ## 5. Repeats and aggregation
 
 Each (item, condition) pair is called **3 times** as independent requests with no
-shared conversation state, for 1,800 calls in total. Decoding uses
-`temperature = 1.0` if the endpoint accepts it; otherwise the provider default is
-used and recorded. For binary endpoints, the **item-level outcome is the majority
+shared conversation state, for 1,800 calls in total. Decoding uses the provider
+defaults (§3a), so repeats may be identical; their agreement is reported, not
+assumed. For binary endpoints, the **item-level outcome is the majority
 of the 3 repeats**, with invalid answers counted as non-detections. Calibration
 uses every individual answer. Agreement across repeats (Fleiss' κ for each
 question) is reported descriptively.
@@ -147,10 +187,12 @@ All metrics are computed per condition.
     Wilson 95% interval.
   - The Brier skill score against a constant predictor at the empirical base rate
     for each question. ECE is reported descriptively.
-- **Latency.** Wall-clock time per call from request sent to response parsed:
+- **Latency.** Wall-clock time per attempt, and per call including backoff, from
+  request sent to response parsed:
   median, P90, P99 and maximum, per condition. Retries are included and flagged.
-- **Cost.** Input and output tokens per call as reported by the endpoint, and USD
-  at the provider's list price. That price is recorded in the run manifest before
+- **Cost.** Input and output tokens per call from the response's `usage` field,
+  and USD at the vendor's public price: **USD 42 per billion input tokens, with
+  output tokens free**. That price is recorded in the run manifest before
   the first call. Totals are given per call, per item and per condition.
 
 ## 7. Baselines
@@ -231,11 +273,23 @@ Everything outside §8 is descriptive.
 ## 9. Spending cap
 
 - **Hard cap: USD 40.00** for the whole run, retries included.
-- Before each call the adapter computes committed spend plus the worst-case cost
-  of that call (input tokens plus the `max_tokens` output ceiling of 1,024, at list
-  price). It refuses the call if the total would exceed the cap.
-- If the list price cannot be established before the first call, the cap becomes
-  **4,000,000 total tokens** instead.
+- Committed spend is computed from each response's `usage.input_tokens` at the
+  §6 price. The cap is enforced from the `usage` field whatever the vendor's
+  pricing statements say.
+- Before each call the adapter adds a worst-case cost for that call: the UTF-8
+  byte length of the request body, treated as an upper bound on input tokens. It
+  refuses the call if committed spend plus that worst case would exceed the cap. A
+  response with no `usage` field is charged at that byte-length bound.
+- In parallel, a **4,000,000 input-token cap** applies. It is reached first only
+  if the price turns out to be much higher than stated.
+- **Retries.** HTTP 429 and 529, other 5xx responses, and connection errors or
+  timeouts are retried with exponential backoff: 1 s initial delay, doubling, a
+  60 s maximum and up to 8 retries per call. A `Retry-After` header is honoured.
+  The SDK's built-in retries are disabled (`RetryPolicy(max_retries=0)`), so
+  every retry passes through the adapter. Each retry is logged to the cache with
+  its status and delay. A call that exhausts its retries stops the run with
+  status `RETRY_EXHAUSTED`. The run can be resumed in the same registered order,
+  and calls already cached are not repeated.
 - When the cap stops a run, the run is marked `CAP_TRUNCATED`. Descriptive metrics
   are reported for the completed items. Hypothesis verdicts are reported only if
   every item received all 3 repeats in both conditions; otherwise H1–H3 are
@@ -254,9 +308,10 @@ Everything outside §8 is descriptive.
   - the raw response body;
   - a UTC timestamp for when the request was sent and one for when the response
     was received;
-  - the model identifier and version string exactly as returned by the endpoint
-    (or `unreported`);
-  - the token counts and the latency.
+  - the requested model (`jev-latest`) and the `model` string exactly as returned
+    in the response, for example `jev-1.13.0` (or `unreported`);
+  - `usage.input_tokens`, `usage.output_tokens` and the latency;
+  - every retry attempt, with its HTTP status, error class and backoff delay.
 
   No credential, header or environment value is ever written. The run is flagged
   `MODEL_VERSION_CHANGED` if the returned version changes during the run. Analysis
@@ -296,6 +351,6 @@ replication.
 
 Any departure from this document is logged in `prereg/DEVIATIONS.md` with the date,
 the reason and the expected impact, before the affected data are analysed.
-Examples include an item that fails to construct, an endpoint that rejects the
-schema or `temperature`, or a change of engine pin. The registered analysis is
+Examples include an item that fails to construct, an API that rejects the
+registered request shape, a change of SDK version, or a change of engine pin. The registered analysis is
 still reported, and any alternative is labelled exploratory.
