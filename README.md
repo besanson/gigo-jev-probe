@@ -69,5 +69,6 @@ exact and costs nothing, while a fresh live run counts as a replication.
 
 ## Status
 
-Phase A (registration) is complete and tagged `prereg-jev-v1`. Phase B code was
-committed after the tag and before the first model call.
+Tag prereg-jev-v2 points to 4e79b6a, the setup commit, and registers nothing. The binding registration is prereg-jev-v1 at 306e701.
+
+Phase B complete: 1,800 calls cached, results filled from the cache.
