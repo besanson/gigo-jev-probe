@@ -12,13 +12,15 @@ license = { text = "Apache-2.0" }
 dependencies = []
 
 [project.optional-dependencies]
-dev = ["pytest>=8"]
+dev = ["pytest>=8", "pyyaml>=6"]
 live = ["typesafe-sdk==0.7.2"]
 
 [tool.setuptools]
 py-modules = ["preflight"]
+packages = ["jev_probe"]
+package-dir = { "jev_probe" = "src/jev_probe" }
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-pythonpath = ["."]
+pythonpath = [".", "src"]
 addopts = "-q"

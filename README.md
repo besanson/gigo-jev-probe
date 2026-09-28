@@ -38,7 +38,10 @@ they appear only as a baseline, recomputed from the sibling.
 | `engines.lock` | the pinned commit of the sibling engine `../dqSarc` |
 | `preflight.py` | checks that the API key is present (`JEV_API_KEY`, or the SDK's `TYPESAFE_API_KEY`), that `JEV_BASE_URL` resolves to `https://api.typesafe.ai/v1/systemone`, and that the sibling is at its pin. It never prints the key. |
 | `.env.example` | placeholder configuration. Real values live only in `.env`, which is git-ignored. |
-| `tests/` | pytest suite |
+| `src/jev_probe/` | Phase B probe: `items.py` (§2–3), `questions.py` (§4), `adapter.py` (§3a, §4, §9, §10), `run.py`, `analysis.py` (§6–8), `template.py` |
+| `responses/` | append-only raw-response cache `jev-v1.jsonl` and the run manifest |
+| `results/` | `jev-v1.template.md` (slots only) and the filled `jev-v1.md` |
+| `tests/` | pytest suite (mock endpoint, no network) |
 
 ## Reproduction path
 
@@ -57,6 +60,8 @@ set -a; . ./.env; set +a
 python preflight.py
 
 # 4. Phase B, after the prereg-jev-v1 tag: run the probe, then fill the result slots from responses/
+python -m jev_probe.run        # verifies docs + models, then runs or resumes the 1,800 calls
+python -m jev_probe.analysis   # reads only responses/, fills results/jev-v1.md
 ```
 
 Analysis reads only the committed raw-response cache. Re-running it is therefore
@@ -64,6 +69,5 @@ exact and costs nothing, while a fresh live run counts as a replication.
 
 ## Status
 
-**Phase A is complete: registration only.** This repository contains no
-experiment code, and no model call has been made. Phase B begins after the
-`prereg-jev-v1` tag exists.
+Phase A (registration) is complete and tagged `prereg-jev-v1`. Phase B code was
+committed after the tag and before the first model call.
