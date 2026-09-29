@@ -35,53 +35,57 @@ they appear only as a baseline, recomputed from the sibling.
 | path | what |
 |---|---|
 | `prereg/jev-v1.md` | the registration (binding once tagged `prereg-jev-v1`) |
-| `engines.lock` | the pinned commit of the sibling engine `../dqSarc` |
-| `preflight.py` | checks that the API key is present (`JEV_API_KEY`, or the SDK's `TYPESAFE_API_KEY`), that `JEV_BASE_URL` resolves to `https://api.typesafe.ai/v1/systemone`, and that the sibling is at its pin. It never prints the key. |
+| `engines.lock` | the pinned commits of the sibling engines `../dqSarc` and `../sarc-authority-derivation` |
+| `preflight.py` | checks that the API key is present (`JEV_API_KEY`, or the SDK's `TYPESAFE_API_KEY`), that `JEV_BASE_URL` resolves to `https://api.typesafe.ai/v1/systemone`, and that both siblings (`../dqSarc` and `../sarc-authority-derivation`) are at their pins. It never prints any key. |
 | `.env.example` | placeholder configuration. Real values live only in `.env`, which is git-ignored. |
-| `src/jev_probe/` | Phase B probe: `items.py` (§2–3), `questions.py` (§4), `adapter.py` (§3a, §4, §9, §10), `run.py`, `analysis.py` (§6–8), `template.py` |
+| `src/jev_probe/` | jev-v1: `items.py` (§2–3), `questions.py` (§4), `adapter.py` (§3a, §4, §9, §10), `run.py`, `analysis.py` (§6–8), `template.py` |
 | `responses/` | append-only raw-response cache `jev-v1.jsonl` and the run manifest |
 | `results/` | `jev-v1.template.md` (slots only) and the filled `jev-v1.md` |
 | `tests/` | pytest suite (mock endpoint, no network) |
 | `prereg/jev-v2.md` | jev-v2 registration (binding at tag `prereg-jev-v2-reg`) |
-| `src/jev_probe/*_v2.py` | jev-v2 Phase B: `corpus_v2.py` (registered generator, §3–§5), `adapter_v2.py` (§6, §10), `run_v2.py`, `analysis_v2.py` (§7–§9), `template_v2.py` |
+| `src/jev_probe/*_v2.py` | jev-v2: `corpus_v2.py` (registered generator, §3–§5), `adapter_v2.py` (§6, §10), `run_v2.py`, `analysis_v2.py` (§7–§9), `template_v2.py`, and the post-hoc `exploratory_v2.py` |
+| `prereg/jev-v3.md`, `src/jev_probe/*_v3.py` | jev-v3 registration (tag `prereg-jev-v3`) and its arm-B re-run: `constants_v3.py`, `adapter_v3.py`, `run_v3.py`, `analysis_v3.py` |
+| `docs/jev-note.md` | the combined results note for jev-v1 to jev-v3, filled from the slot files by `python -m jev_probe.note_all` |
 
 ## Reproduction path
 
 ```bash
-# 1. Sibling engine, at the pin recorded in engines.lock
+# 1. Both sibling engines, at the pins recorded in engines.lock. The test suite and the
+#    jev-v2/v3 analysis import both; pytest fails without them.
 git clone https://github.com/besanson/dqSarc.git ../dqSarc
-git -C ../dqSarc checkout "$(sed -n 's/^commit = "\(.*\)"/\1/p' engines.lock)"
+git -C ../dqSarc checkout db6c396128a4df7fe12d13be163b1e7d32087177
+git clone https://github.com/besanson/sarc-authority-derivation.git ../sarc-authority-derivation
+git -C ../sarc-authority-derivation checkout cfb321ec220e83e81a771a048276571f6edf08fb
 
 # 2. Environment (Python 3.11+)
 python -m venv .venv && . .venv/bin/activate
-pip install -e ".[dev,live]" -e ../dqSarc
+pip install -e ".[dev,live,live-v2]" -e ../dqSarc
 pytest
 
 # 3. Configuration: copy .env.example to .env, fill in real values, then load them
 set -a; . ./.env; set +a
 python preflight.py
 
-# 4. Phase B, after the prereg-jev-v1 tag: run the probe, then fill the result slots from responses/
-python -m jev_probe.run        # verifies docs + models, then runs or resumes the 1,800 calls
-python -m jev_probe.analysis   # reads only responses/, fills results/jev-v1.md
+# 4. Regenerate every result and the note from the committed caches (no model call)
+python -m jev_probe.analysis        # results/jev-v1.md
+python -m jev_probe.analysis_v2     # results/jev-v2.md
+python -m jev_probe.exploratory_v2  # results/jev-v2-exploratory.md (post hoc)
+python -m jev_probe.analysis_v3     # results/jev-v3.md
+python -m jev_probe.note_all        # docs/jev-note.md
 ```
 
-jev-v2 (after the `prereg-jev-v2-reg` tag) additionally needs `besanson/sarc-authority-derivation`
-cloned beside this repository at its `engines.lock` pin, and `ANTHROPIC_API_KEY` set:
-
-```bash
-pip install -e ".[dev,live-v2]"
-python -m jev_probe.run_v2        # validation split; stops with TAU_WRITTEN
-git add results/jev-v2.tau.json && git commit -m "jev-v2: frozen thresholds"
-python -m jev_probe.run_v2        # test split (refuses to start unless the thresholds are committed)
-python -m jev_probe.analysis_v2   # fills results/jev-v2.md from responses/
-```
+A live replication runs `python -m jev_probe.run` (jev-v1), `python -m jev_probe.run_v2` and
+`python -m jev_probe.run_v3`; the v2 and v3 runners stop with `TAU_WRITTEN` after the
+validation split, and refuse the test split until `results/jev-v2.tau.json` or
+`results/jev-v3.tau.json` is committed. jev-v2 and jev-v3 also need `ANTHROPIC_API_KEY`.
 
 Analysis reads only the committed raw-response cache. Re-running it is therefore
 exact and costs nothing, while a fresh live run counts as a replication.
 
+## Standing policy
+
+Every registration from jev-v3 onward includes an arm health check with a hard stop before the test split.
+
 ## Status
 
-Tag prereg-jev-v2 points to 4e79b6a, the setup commit, and registers nothing. The binding registration is prereg-jev-v1 at 306e701.
-
-Phase B complete: 1,800 calls cached, results filled from the cache.
+jev-v1, jev-v2 and jev-v3 complete. Results: [`docs/jev-note.md`](docs/jev-note.md).
