@@ -1,0 +1,14 @@
+{
+ "jev": {
+  "tau_false": 0.05,
+  "tau_true": 0.49
+ },
+ "kw": {
+  "tau_false": 0.0,
+  "tau_true": 1.0
+ },
+ "llm": {
+  "tau_false": "-inf",
+  "tau_true": "inf"
+ }
+}
