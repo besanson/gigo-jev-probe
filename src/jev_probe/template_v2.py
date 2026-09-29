@@ -83,10 +83,13 @@ def build() -> str:
       f"{s('H1.p_adj')} | {s('H1.verdict')} |")
     a(f"| H2: Jev not worse than LLM at 30% noise | Jev {s('H2.jev_rate')} vs LLM {s('H2.llm_rate')}; "
       f"difference {s('H2.estimate')} (b = {s('H2.b')}, c = {s('H2.c')}, n = {s('H2.n')}) | "
-      f"[{s('H2.ci_lo')}, {s('H2.ci_hi')}] | {s('H2.p')} | {s('H2.p_adj')} | {s('H2.verdict')} |")
+      f"[{s('H2.ci_lo')}, {s('H2.ci_hi')}] | {s('H2.p')} | {s('H2.p_adj')} | "
+      f"{s('H2.verdict')}{s('caveat.llm.cell')} |")
     a(f"| H3: Jev cost per verdict below LLM | Jev USD {s('H3.jev_usd')} vs LLM USD {s('H3.llm_usd')}; "
       f"difference {s('H3.estimate')} (n = {s('H3.n')}) | [{s('H3.ci_lo')}, {s('H3.ci_hi')}] | "
-      f"{s('H3.p')} | {s('H3.p_adj')} | {s('H3.verdict')} |")
+      f"{s('H3.p')} | {s('H3.p_adj')} | {s('H3.verdict')}{s('caveat.llm.cell')} |")
+    a("")
+    a(s("caveat.llm.block"))
     a("")
     a("## Verdict change (test split, Clopper-Pearson 95%)")
     a("")

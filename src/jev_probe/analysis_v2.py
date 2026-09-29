@@ -306,6 +306,24 @@ def ops_slots(out: dict[str, str], data: Data) -> None:
     out["cost.kw.usd"] = fmt(0.0, 6)
 
 
+# ------------------------------------------------------------------ KI-1 caveat (added after the run)
+
+# Reporting rule added after jev-v2 ran (DEVIATIONS KI-1). It prints a caveat only; it changes
+# no registered computation, threshold, test or verdict slot.
+CAVEAT_INVALID_RATE = 0.20
+
+
+def caveat_slots(out: dict[str, str], data: Data) -> None:
+    calls = [c for (a, _, _), c in data.calls.items() if a == "llm"]
+    rate = sum(c["status"] == "invalid" for c in calls) / len(calls) if calls else 0.0
+    out["invalid.llm.rate"] = fmt(rate)
+    text = (f"CAVEAT: LLM arm invalid rate {out['invalid.llm.rate']}; H2 and H3 are uninformative "
+            "about the LLM sensor. See DEVIATIONS KI-1.")
+    flagged = rate > CAVEAT_INVALID_RATE
+    out["caveat.llm.block"] = f"**{text}**" if flagged else ""
+    out["caveat.llm.cell"] = f"<br>{text}" if flagged else ""
+
+
 # ------------------------------------------------------------------ §9 hypotheses
 
 
@@ -447,6 +465,7 @@ def compute(cache_path: Path = CACHE_PATH, tau_path: Path = TAU_PATH, *, items: 
     verdict_slots(out, oc)
     reliability_slots(out, oc)
     ops_slots(out, data)
+    caveat_slots(out, data)
     evaluated = all_test_complete(data, items) and not str(
         (data.run_events[-1]["status"] if data.run_events else "")).startswith("CAP_TRUNCATED")
     hypothesis_slots(out, data, oc, items, evaluated, bootstrap_b)

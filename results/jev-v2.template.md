@@ -53,8 +53,10 @@ Approval-sensitive tuples in the population: {{design.population_sensitive}}.
 | hypothesis | estimate | 95% CI | p | Holm-adjusted p | verdict |
 |---|---|---|---|---|---|
 | H1: Jev verdict-change rate at 0% noise below 2% | {{H1.estimate}} ({{H1.k}}/{{H1.n}}) | [{{H1.ci_lo}}, {{H1.ci_hi}}] | {{H1.p}} | {{H1.p_adj}} | {{H1.verdict}} |
-| H2: Jev not worse than LLM at 30% noise | Jev {{H2.jev_rate}} vs LLM {{H2.llm_rate}}; difference {{H2.estimate}} (b = {{H2.b}}, c = {{H2.c}}, n = {{H2.n}}) | [{{H2.ci_lo}}, {{H2.ci_hi}}] | {{H2.p}} | {{H2.p_adj}} | {{H2.verdict}} |
-| H3: Jev cost per verdict below LLM | Jev USD {{H3.jev_usd}} vs LLM USD {{H3.llm_usd}}; difference {{H3.estimate}} (n = {{H3.n}}) | [{{H3.ci_lo}}, {{H3.ci_hi}}] | {{H3.p}} | {{H3.p_adj}} | {{H3.verdict}} |
+| H2: Jev not worse than LLM at 30% noise | Jev {{H2.jev_rate}} vs LLM {{H2.llm_rate}}; difference {{H2.estimate}} (b = {{H2.b}}, c = {{H2.c}}, n = {{H2.n}}) | [{{H2.ci_lo}}, {{H2.ci_hi}}] | {{H2.p}} | {{H2.p_adj}} | {{H2.verdict}}{{caveat.llm.cell}} |
+| H3: Jev cost per verdict below LLM | Jev USD {{H3.jev_usd}} vs LLM USD {{H3.llm_usd}}; difference {{H3.estimate}} (n = {{H3.n}}) | [{{H3.ci_lo}}, {{H3.ci_hi}}] | {{H3.p}} | {{H3.p_adj}} | {{H3.verdict}}{{caveat.llm.cell}} |
+
+{{caveat.llm.block}}
 
 ## Verdict change (test split, Clopper-Pearson 95%)
 

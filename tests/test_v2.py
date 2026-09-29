@@ -204,6 +204,24 @@ def test_slots_fill_end_to_end(full_run, subset) -> None:
     assert slots["H3.verdict"] == "supported: Jev cheaper"
 
 
+def test_ki1_caveat_absent_when_llm_invalid_rate_is_zero(full_run, subset) -> None:
+    tmp, *_ = full_run
+    slots = analysis_v2.compute(tmp / "c.jsonl", tmp / "tau.json", items=subset, bootstrap_b=200)
+    assert slots["invalid.llm.rate"] == "0.0000"
+    assert "CAVEAT" not in analysis.fill(template_v2.build(), slots)
+
+
+def test_ki1_caveat_present_at_head() -> None:
+    results = (ROOT / "results" / "jev-v2.md").read_text(encoding="utf-8")
+    slots = json.loads((ROOT / "results" / "jev-v2.slots.json").read_text(encoding="utf-8"))
+    assert slots["invalid.llm.rate"] == "1.0000"
+    line = ("CAVEAT: LLM arm invalid rate 1.0000; H2 and H3 are uninformative about the LLM sensor. "
+            "See DEVIATIONS KI-1.")
+    assert f"**{line}**" in results
+    rows = [r for r in results.splitlines() if r.startswith(("| H2:", "| H3:"))]
+    assert len(rows) == 2 and all(f"<br>{line}" in r for r in rows)
+
+
 def test_committed_template_matches_generator() -> None:
     assert (ROOT / "results" / "jev-v2.template.md").read_text(encoding="utf-8") == template_v2.build()
 

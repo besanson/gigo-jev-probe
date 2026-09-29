@@ -53,8 +53,10 @@ Approval-sensitive tuples in the population: 432.
 | hypothesis | estimate | 95% CI | p | Holm-adjusted p | verdict |
 |---|---|---|---|---|---|
 | H1: Jev verdict-change rate at 0% noise below 2% | 0.0000 (0/700) | [0.0000, 0.0053] | 1.18e-06 | 2.36e-06 | supported: below the 2% bound |
-| H2: Jev not worse than LLM at 30% noise | Jev 0.0971 vs LLM 0.4100; difference -0.3129 (b = 0, c = 219, n = 700) | [-0.3471, -0.2786] | 2.37e-66 | 7.12e-66 | supported: Jev better |
-| H3: Jev cost per verdict below LLM | Jev USD 0.00001730 vs LLM USD 0.00087027; difference -0.00085297 (n = 2100) | [-0.00086491, -0.00084095] | 1.00e-04 | 1.00e-04 | supported: Jev cheaper |
+| H2: Jev not worse than LLM at 30% noise | Jev 0.0971 vs LLM 0.4100; difference -0.3129 (b = 0, c = 219, n = 700) | [-0.3471, -0.2786] | 2.37e-66 | 7.12e-66 | supported: Jev better<br>CAVEAT: LLM arm invalid rate 1.0000; H2 and H3 are uninformative about the LLM sensor. See DEVIATIONS KI-1. |
+| H3: Jev cost per verdict below LLM | Jev USD 0.00001730 vs LLM USD 0.00087027; difference -0.00085297 (n = 2100) | [-0.00086491, -0.00084095] | 1.00e-04 | 1.00e-04 | supported: Jev cheaper<br>CAVEAT: LLM arm invalid rate 1.0000; H2 and H3 are uninformative about the LLM sensor. See DEVIATIONS KI-1. |
+
+**CAVEAT: LLM arm invalid rate 1.0000; H2 and H3 are uninformative about the LLM sensor. See DEVIATIONS KI-1.**
 
 ## Verdict change (test split, Clopper-Pearson 95%)
 
