@@ -282,3 +282,36 @@ def test_wire_bodies_are_the_registered_requests(full_run, subset) -> None:
     llm = json.loads(fakes.llm_calls[0].content)
     assert llm == {"model": LLM_MODEL, "max_tokens": 64, "temperature": 0.0,
                    "messages": [{"role": "user", "content": llm_prompt(render(it, "n00"))}]}
+
+
+# ------------------------------------------------------------------ KI-1 exploratory re-score (post hoc)
+
+
+def _msg(text: str, stop: str = "end_turn") -> str:
+    return json.dumps({"type": "message", "content": [{"type": "text", "text": text}], "stop_reason": stop})
+
+
+def test_lenient_parser_strips_fences_and_takes_first_object() -> None:
+    from jev_probe.exploratory_v2 import parse_lenient
+
+    assert parse_lenient(_msg('```json\n{"p_valid": 0.25}\n```')) == 0.25
+    assert parse_lenient(_msg('```json\n{"p_valid": 0.9}\n```\n\nThe record shows', "max_tokens")) == 0.9
+    assert parse_lenient(_msg('{"p_valid": 1}')) == 1.0
+    assert parse_lenient(_msg('{"p_valid": 0.2} {"p_valid": 0.8}')) == 0.2
+    for bad in ('```json\n{"p_valid": 1.5}\n```', '{"p_valid": true}', "no object here", '```json\n{"p_val'):
+        assert parse_lenient(_msg(bad)) is None, bad
+    assert parse_lenient(_msg('{"p_valid": 0.5}', "refusal")) is None
+    assert parse_llm(_msg('```json\n{"p_valid": 0.25}\n```')) is None  # the registered parser is unchanged
+
+
+def test_exploratory_is_isolated_from_the_registered_analysis() -> None:
+    src = (ROOT / "src" / "jev_probe" / "analysis_v2.py").read_text(encoding="utf-8")
+    assert "exploratory" not in src
+
+
+def test_committed_exploratory_template_matches_generator() -> None:
+    from jev_probe import exploratory_v2
+
+    assert exploratory_v2.TEMPLATE_PATH.read_text(encoding="utf-8") == exploratory_v2.build()
+    out = exploratory_v2.OUT_PATH.read_text(encoding="utf-8")
+    assert f"**{exploratory_v2.HEADER}**" in out.splitlines()[2] and "{{" not in out
