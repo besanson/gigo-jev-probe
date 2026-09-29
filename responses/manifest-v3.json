@@ -65,10 +65,20 @@
       "status": "TAU_WRITTEN",
       "detail": "commit jev-v3.tau.json, then resume for the test split",
       "committed_usd_at_end": 0.23210700000000128
+    },
+    {
+      "segment": "2c8247149314",
+      "started_utc": "2026-09-29T19:54:44.545515+00:00",
+      "llm_model_retrieved": "claude-haiku-4-5-20251001",
+      "committed_usd_at_start": 0.23210700000000128,
+      "ended_utc": "2026-09-29T20:15:13.183948+00:00",
+      "status": "COMPLETE",
+      "detail": "",
+      "committed_usd_at_end": 0.773503999999996
     }
   ],
   "tau_sha256": "9c196930d68f5e2538292c85db917c49933e613a9aff47748d63fc4508aaf46b",
-  "status": "TAU_WRITTEN",
+  "status": "COMPLETE",
   "returned_models": {
     "llm": [
       "claude-haiku-4-5-20251001"
@@ -76,6 +86,6 @@
   },
   "model_version_changed": false,
   "n_calls_cached": {
-    "llm": 900
+    "llm": 3000
   }
 }
