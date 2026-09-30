@@ -14,3 +14,11 @@ path = "../sarc-authority-derivation"
 commit = "cfb321ec220e83e81a771a048276571f6edf08fb"
 pinned_on = "2026-09-28"
 # jev-v2 only: CH-B1 code/cloud domain (domain_v4.py, losses_v4.py).
+
+[self]
+url = "https://github.com/besanson/gigo-jev-probe.git"
+path = "."
+commit = "e1fc75b6686beecd3f4abdd57241ffc46c96e019"
+tag = "jev-probes-final"
+pinned_on = "2026-09-30"
+# Paper 6 quotes the jev-v1/v2/v3 results only through this tag (DECISIONS.md ADR-000).
