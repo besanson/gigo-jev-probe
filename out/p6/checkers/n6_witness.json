@@ -1,0 +1,52 @@
+{
+ "a_disjoint": {
+  "exact": {
+   "bound_attained": true,
+   "bound_holds": true,
+   "e": {
+    "f1": "1/40",
+    "f2": "1/40"
+   },
+   "s1_unsafe_bound": "1/20",
+   "unsafe": "1/20"
+  },
+  "simulation": {
+   "bound_holds": true,
+   "n": 10000,
+   "seed": 20261105,
+   "unsafe": 452,
+   "wrong_f1": 232,
+   "wrong_f2": 220
+  }
+ },
+ "b_joint": {
+  "exact": {
+   "bound_attained": false,
+   "bound_holds": true,
+   "e": {
+    "f1": "1/20",
+    "f2": "1/20"
+   },
+   "global_deny_ward": false,
+   "s1_unsafe_bound": "1/10",
+   "unsafe": "1/20",
+   "v1_directional_bound": "0"
+  },
+  "simulation": {
+   "bound_holds": true,
+   "n": 10000,
+   "seed": 20261108,
+   "unsafe": 503,
+   "wrong_f1": 503,
+   "wrong_f2": 503
+  }
+ },
+ "checker": "n6_witness",
+ "generated_at_head_sha": "2fac5a476b17abf7e361d27993860213755ffd09",
+ "holds": true,
+ "inputs_hash": "d33aee4f6a56f5072d1f7d2e9c52b147f18be822827643ee6c1848beefc70bcb",
+ "provenance": "sarc-suite-one-pass: checkers/_provenance.py ported verbatim with attribution (sarc-suite-one-pass@782261e via sarc-authority-derivation@cfb321e)",
+ "q": "1/20",
+ "scope": "witness",
+ "statement": "N6: (a) the S1 unsafe bound is attained with disjoint errors; (b) joint errors defeat the v1 directional bound while S1 holds"
+}

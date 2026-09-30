@@ -1,0 +1,24 @@
+{
+ "argument": "deny-ward (global) holds exactly when no vertex (t, o) turns deny into allow",
+ "checker": "s3_check",
+ "configurations": {
+  "B12": 528,
+  "B3": 2048,
+  "T2": 2048
+ },
+ "deny_ward": {
+  "B12": 376,
+  "B3": 318,
+  "T2": 530
+ },
+ "field_wise_deny_ward_but_not_global": {
+  "B12": 4
+ },
+ "generated_at_head_sha": "2fac5a476b17abf7e361d27993860213755ffd09",
+ "holds": true,
+ "inputs_hash": "c89663af95f9950b7c86c90aaa83cfe29d687c99499764858c49c844f5476b40",
+ "mismatches": {},
+ "provenance": "sarc-suite-one-pass: checkers/_provenance.py ported verbatim with attribution (sarc-suite-one-pass@782261e via sarc-authority-derivation@cfb321e)",
+ "scope": "finite-models:B12,B3,T2",
+ "statement": "S3: unknown denies and the configuration is deny-ward (global) => P(deny->allow) = 0"
+}

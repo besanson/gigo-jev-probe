@@ -21,3 +21,6 @@ dist/
 .hypothesis/
 .coverage
 htmlcov/
+
+# Mutation testing working copy
+mutants/

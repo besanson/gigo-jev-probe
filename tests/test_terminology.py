@@ -39,6 +39,11 @@ def test_lint_reports_a_hit(tmp_path: Path) -> None:
     assert terminology.main(tmp_path) == 1
 
 
-def test_package_has_only_a_version() -> None:
+def test_package_init_defines_only_a_version() -> None:
+    import ast
+
     assert sensed_authority.__version__ == "0.0.0"
-    assert [n for n in vars(sensed_authority) if not n.startswith("__")] == []
+    tree = ast.parse(Path(sensed_authority.__file__).read_text(encoding="utf-8"))
+    assigned = [t.id for node in tree.body if isinstance(node, ast.Assign) for t in node.targets]
+    assert assigned == ["__version__"]
+    assert not [n for n in tree.body if isinstance(n, (ast.Import, ast.ImportFrom, ast.FunctionDef, ast.ClassDef))]

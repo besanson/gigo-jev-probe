@@ -12,16 +12,30 @@ license = { text = "Apache-2.0" }
 dependencies = []
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "pyyaml>=6", "httpx2", "typesafe-sdk==0.7.2", "anthropic==1.9.0"]
+dev = ["pytest>=8", "pyyaml>=6", "httpx2", "typesafe-sdk==0.7.2", "anthropic==1.9.0",
+       "hypothesis==6.167.1", "mutmut==3.7.0", "python-sat==1.9.dev15"]
 live = ["typesafe-sdk==0.7.2"]
 live-v2 = ["typesafe-sdk==0.7.2", "anthropic==1.9.0"]
 
 [tool.setuptools]
 py-modules = ["preflight"]
-packages = ["jev_probe"]
-package-dir = { "jev_probe" = "src/jev_probe" }
+packages = ["jev_probe", "sensed_authority"]
+package-dir = { "jev_probe" = "src/jev_probe", "sensed_authority" = "src/sensed_authority" }
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = [".", "src"]
 addopts = "-q"
+
+[tool.mutmut]
+# Paper 6 mutation gate (`make mutate`, checkers/mutation_gate.py): kill score >= 0.85 on
+# src/sensed_authority. Only the package's own unit and property tests run against mutants; the
+# checker-freshness and sibling-compiler tests read files outside the mutated copy.
+paths_to_mutate = ["src/sensed_authority/"]
+tests_dir = [
+    "tests/test_p6_record.py",
+    "tests/test_p6_admission.py",
+    "tests/test_p6_bound.py",
+    "tests/test_p6_selection.py",
+    "tests/test_p6_properties.py",
+]
