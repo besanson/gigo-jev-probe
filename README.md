@@ -88,7 +88,7 @@ Every registration from jev-v3 onward includes an arm health check with a hard s
 
 ## Paper 6
 
-*Probabilistic Sensing, Deterministic Authority* (working title). The paragraph below is the paper 6 brief's summary (§1); it states what the paper sets out to show. Its experiments are registered in [`prereg/p6-v1.md`](prereg/p6-v1.md) and not yet run. Claims and their status: [`CLAIMS.md`](CLAIMS.md); prior-art fence: [`NOVELTY.md`](NOVELTY.md).
+*Probabilistic Sensing, Deterministic Authority* (working title). The paragraph below is the paper 6 brief's summary (§1); it states what the paper sets out to show. Its experiments are registered in [`prereg/p6-v1.1.md`](prereg/p6-v1.1.md) (superseding [`prereg/p6-v1.md`](prereg/p6-v1.md)) and not yet run. Claims and their status: [`CLAIMS.md`](CLAIMS.md); prior-art fence: [`NOVELTY.md`](NOVELTY.md).
 
 > Papers 1 to 5 govern facts that were recorded. This paper governs facts that were read. When a field the authority contract needs exists only in unstructured evidence, a model may sense it and write an observation record with a score. An admission policy, set on held-out data at a declared false-positive ceiling, maps the score to true, false or unknown. Unknown denies. The deterministic contract decides. The paper proves that the probability a sensing error changes the verdict is bounded by a sum over sensed fields, so a minimal sufficient contract bounds exposure, and shows the bound holds on two constructed domains and two sensor families with zero deny-to-allow flips in 4,200 verdicts.
 
