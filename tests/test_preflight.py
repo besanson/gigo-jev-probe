@@ -1,3 +1,4 @@
+import subprocess
 from pathlib import Path
 
 import pytest
@@ -55,3 +56,18 @@ def test_pin_mismatch_is_reported(tmp_path: Path) -> None:
     lock = tmp_path / "engines.lock"
     lock.write_text('[dqSarc]\nurl = "u"\npath = "missing"\ncommit = "abc"\n', encoding="utf-8")
     assert "not found" in (preflight.check_pin(lock) or "")
+
+
+def test_second_sibling_is_checked(tmp_path: Path) -> None:
+    head = subprocess.run(["git", "-C", str(preflight.ROOT), "rev-parse", "HEAD"],
+                          capture_output=True, text=True, check=True).stdout.strip()
+    lock = tmp_path / "engines.lock"
+    lock.write_text(
+        f'[dqSarc]\nurl = "u"\npath = "{preflight.ROOT}"\ncommit = "{head}"\n'
+        '[sarc-authority-derivation]\nurl = "u2"\npath = "missing"\ncommit = "abc"\n', encoding="utf-8")
+    msg = preflight.check_pin(lock) or ""
+    assert "sarc-authority-derivation" in msg and "not found" in msg
+
+
+def test_real_pins_hold() -> None:
+    assert preflight.check_pin() is None

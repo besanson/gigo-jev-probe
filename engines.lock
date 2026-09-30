@@ -7,3 +7,10 @@ url = "https://github.com/besanson/dqSarc.git"
 path = "../dqSarc"
 commit = "db6c396128a4df7fe12d13be163b1e7d32087177"
 pinned_on = "2026-09-28"
+
+[sarc-authority-derivation]
+url = "https://github.com/besanson/sarc-authority-derivation.git"
+path = "../sarc-authority-derivation"
+commit = "cfb321ec220e83e81a771a048276571f6edf08fb"
+pinned_on = "2026-09-28"
+# jev-v2 only: CH-B1 code/cloud domain (domain_v4.py, losses_v4.py).

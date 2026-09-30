@@ -89,3 +89,50 @@ def fleiss_kappa(table: Sequence[Sequence[int]]) -> float | None:
     if p_e >= 1.0:
         return None
     return (p_bar - p_e) / (1 - p_e)
+
+
+def _log_pmf(k: int, n: int, p: float) -> float:
+    if p <= 0.0:
+        return 0.0 if k == 0 else -math.inf
+    if p >= 1.0:
+        return 0.0 if k == n else -math.inf
+    return (math.lgamma(n + 1) - math.lgamma(k + 1) - math.lgamma(n - k + 1)
+            + k * math.log(p) + (n - k) * math.log1p(-p))
+
+
+def binom_pmf(k: int, n: int, p: float) -> float:
+    return math.exp(_log_pmf(k, n, p))
+
+
+def binom_test_two_sided(k: int, n: int, p: float) -> float:
+    """Exact two-sided binomial test: total probability of outcomes no more likely than k."""
+    if n == 0:
+        return 1.0
+    obs = binom_pmf(k, n, p)
+    return min(1.0, sum(q for q in (binom_pmf(x, n, p) for x in range(n + 1)) if q <= obs * (1 + 1e-7)))
+
+
+def clopper_pearson(k: int, n: int, alpha: float = 0.05) -> tuple[float, float]:
+    """Exact (Clopper-Pearson) interval by bisection on the binomial tails."""
+    if n == 0:
+        return (math.nan, math.nan)
+
+    def upper_tail(p: float) -> float:  # P(X >= k)
+        return sum(binom_pmf(x, n, p) for x in range(k, n + 1))
+
+    def lower_tail(p: float) -> float:  # P(X <= k)
+        return sum(binom_pmf(x, n, p) for x in range(0, k + 1))
+
+    def solve(f, target: float, increasing: bool) -> float:
+        lo, hi = 0.0, 1.0
+        for _ in range(100):
+            mid = (lo + hi) / 2
+            if (f(mid) < target) == increasing:
+                lo = mid
+            else:
+                hi = mid
+        return (lo + hi) / 2
+
+    lower = 0.0 if k == 0 else solve(upper_tail, alpha / 2, True)
+    upper = 1.0 if k == n else solve(lower_tail, alpha / 2, False)
+    return (lower, upper)

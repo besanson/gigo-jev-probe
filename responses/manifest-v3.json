@@ -1,0 +1,91 @@
+{
+  "registration": "jev-v3",
+  "prereg_tag": "prereg-jev-v3",
+  "prereg_commit": "37084f8167b9c645217e74edcc09f560b70cc4de",
+  "engine_pins": {
+    "dqSarc": "db6c396128a4df7fe12d13be163b1e7d32087177",
+    "sarc-authority-derivation": "cfb321ec220e83e81a771a048276571f6edf08fb"
+  },
+  "sdks": {
+    "anthropic": "1.9.0"
+  },
+  "sdks_registered": {
+    "anthropic": "1.9.0"
+  },
+  "generator_sha256": "f9e2f1c03246831e533a454cb47e2660eb4cd10d04eda84c04c77c0f96eedc3d",
+  "llm": {
+    "base_url": "https://api.anthropic.com",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "temperature": 0.0,
+    "max_tokens": 32,
+    "prefill": "{"
+  },
+  "price": {
+    "llm": {
+      "usd_per_input_token": 1e-06,
+      "usd_per_output_token": 5e-06,
+      "statement": "Claude Haiku 4.5 list price: USD 1.00 per 1e6 input tokens, USD 5.00 per 1e6 output tokens"
+    }
+  },
+  "cap": {
+    "usd": 5.0
+  },
+  "fp_ceiling": 0.01,
+  "health_rule": {
+    "smoke_n": 20,
+    "smoke_max_invalid": 2,
+    "validation_max_invalid_rate": 0.05
+  },
+  "llm_prompt_sha256": "2d264b1bfced8a5111c174a53bb7c10869d7561750462dc3d335ab9f96f445b6",
+  "carried_arm": {
+    "arm": "jev",
+    "cache": "responses/jev-v2.jsonl",
+    "thresholds": "results/jev-v2.tau.json"
+  },
+  "python": "3.11.15",
+  "health": {
+    "smoke": {
+      "invalid": 0,
+      "n": 20,
+      "stopped": false
+    },
+    "validation": {
+      "invalid": 0,
+      "n": 900,
+      "stopped": false
+    }
+  },
+  "segments": [
+    {
+      "segment": "5e9960dfe67a",
+      "started_utc": "2026-09-29T19:46:02.627482+00:00",
+      "llm_model_retrieved": "claude-haiku-4-5-20251001",
+      "committed_usd_at_start": 0.0,
+      "ended_utc": "2026-09-29T19:54:31.834498+00:00",
+      "status": "TAU_WRITTEN",
+      "detail": "commit jev-v3.tau.json, then resume for the test split",
+      "committed_usd_at_end": 0.23210700000000128
+    },
+    {
+      "segment": "2c8247149314",
+      "started_utc": "2026-09-29T19:54:44.545515+00:00",
+      "llm_model_retrieved": "claude-haiku-4-5-20251001",
+      "committed_usd_at_start": 0.23210700000000128,
+      "ended_utc": "2026-09-29T20:15:13.183948+00:00",
+      "status": "COMPLETE",
+      "detail": "",
+      "committed_usd_at_end": 0.773503999999996
+    }
+  ],
+  "tau_sha256": "9c196930d68f5e2538292c85db917c49933e613a9aff47748d63fc4508aaf46b",
+  "status": "COMPLETE",
+  "returned_models": {
+    "llm": [
+      "claude-haiku-4-5-20251001"
+    ]
+  },
+  "model_version_changed": false,
+  "n_calls_cached": {
+    "llm": 3000
+  }
+}

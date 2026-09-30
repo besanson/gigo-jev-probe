@@ -1,0 +1,99 @@
+{
+  "registration": "jev-v2",
+  "prereg_tag": "prereg-jev-v2-reg",
+  "prereg_commit": "ab2a4daacde289026df1308cfa9fdf4f3e48ce92",
+  "engine_pins": {
+    "dqSarc": "db6c396128a4df7fe12d13be163b1e7d32087177",
+    "sarc-authority-derivation": "cfb321ec220e83e81a771a048276571f6edf08fb"
+  },
+  "sdks": {
+    "typesafe-sdk": "0.7.2",
+    "anthropic": "1.9.0"
+  },
+  "sdks_registered": {
+    "typesafe-sdk": "0.7.2",
+    "anthropic": "1.9.0"
+  },
+  "generator_sha256": "f9e2f1c03246831e533a454cb47e2660eb4cd10d04eda84c04c77c0f96eedc3d",
+  "jev": {
+    "endpoint": "https://api.typesafe.ai/v1/systemone",
+    "requested_model": "jev-latest"
+  },
+  "llm": {
+    "base_url": "https://api.anthropic.com",
+    "requested_model": "claude-haiku-4-5-20251001",
+    "temperature": 0.0,
+    "max_tokens": 64
+  },
+  "price": {
+    "jev": {
+      "usd_per_input_token": 4.2e-08,
+      "usd_per_output_token": 0.0,
+      "statement": "USD 42 per 1e9 input tokens, output free (jev-v1 §6)"
+    },
+    "llm": {
+      "usd_per_input_token": 1e-06,
+      "usd_per_output_token": 5e-06,
+      "statement": "Claude Haiku 4.5 list price: USD 1.00 per 1e6 input tokens, USD 5.00 per 1e6 output tokens"
+    }
+  },
+  "cap": {
+    "usd": 40.0
+  },
+  "fp_ceiling": 0.01,
+  "jev_context_sha256": "a2a242b872f219d73fe865035736ea7911dc385eb1409c403a941fa98bc53087",
+  "jev_question_sha256": "4dbbc42cc4593f4343170f3999be3beb83b1f5b0dd61b07e2c8509a776f172cb",
+  "llm_prompt_sha256": "1bbe20b01e5b9ffd8cc27dc6ee3ffc63b82aa3bc8b6ccf12b7e4d415d1465c49",
+  "python": "3.11.15",
+  "segments": [
+    {
+      "segment": "c7df0c907e9d",
+      "started_utc": "2026-09-28T22:41:29.506996+00:00",
+      "docs_url": "https://docs.typesafe.ai/api",
+      "docs_sha256": "1ebd602bd84fef7e754864aacf44ab9d9b3740bf1c30f05d712cef7e55e2ffce",
+      "jev_models_listed": [
+        "jev-latest",
+        "jev-preview"
+      ],
+      "llm_model_retrieved": "claude-haiku-4-5-20251001",
+      "committed_usd_at_start": 0.0,
+      "ended_utc": "2026-09-28T23:16:46.300660+00:00",
+      "status": "TAU_WRITTEN",
+      "detail": "commit jev-v2.tau.json, then resume for the test split",
+      "committed_usd_at_end": 0.815851992000006
+    },
+    {
+      "segment": "58eb917b7315",
+      "started_utc": "2026-09-29T06:33:29.880720+00:00",
+      "docs_url": "https://docs.typesafe.ai/api",
+      "docs_sha256": "1ebd602bd84fef7e754864aacf44ab9d9b3740bf1c30f05d712cef7e55e2ffce",
+      "jev_models_listed": [
+        "jev-latest",
+        "jev-preview"
+      ],
+      "llm_model_retrieved": "claude-haiku-4-5-20251001",
+      "committed_usd_at_start": 0.815851992000006,
+      "ended_utc": "2026-09-29T08:01:04.818689+00:00",
+      "status": "COMPLETE",
+      "detail": "",
+      "committed_usd_at_end": 2.6797469579999915
+    }
+  ],
+  "docs_sha256": "1ebd602bd84fef7e754864aacf44ab9d9b3740bf1c30f05d712cef7e55e2ffce",
+  "tau_sha256": "51f6efdded389a5add0a0ed835b7e967af06e28d7478a5bbdbd1c10cf06fc354",
+  "status": "COMPLETE",
+  "returned_models": {
+    "jev": [
+      "jev-1.13.0"
+    ],
+    "llm": [
+      "claude-haiku-4-5-20251001"
+    ]
+  },
+  "model_version_changed": false,
+  "n_calls_cached": {
+    "jev": 3000,
+    "llm": 3000,
+    "kw": 3000
+  }
+}

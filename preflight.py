@@ -4,8 +4,8 @@ Reads configuration from the process environment only (load .env into the
 environment first, e.g. ``set -a; . ./.env; set +a``). The API key is checked
 for presence and never printed, logged, or echoed in any form.
 
-Exit codes: 0 ready · 1 missing or invalid configuration · 2 sibling engine not at
-the pin.
+Exit codes: 0 ready · 1 missing or invalid configuration · 2 a sibling engine (dqSarc or
+sarc-authority-derivation) missing or not at its pin.
 """
 
 from __future__ import annotations
@@ -21,6 +21,8 @@ REQUIRED_ENV = ("JEV_API_KEY", "JEV_BASE_URL")
 # The TypeSafe SDK's own variable is accepted in place of JEV_API_KEY.
 KEY_ALIASES = {"JEV_API_KEY": "TYPESAFE_API_KEY"}
 SYSTEM_ONE_ENDPOINT = "https://api.typesafe.ai/v1/systemone"
+# Both siblings are required: dqSarc for jev-v1, sarc-authority-derivation for jev-v2/v3 and the tests.
+SIBLINGS = ("dqSarc", "sarc-authority-derivation")
 
 
 def check_env(env: dict[str, str]) -> list[str]:
@@ -40,20 +42,24 @@ def resolve_endpoint(base_url: str) -> str:
     return root + "/v1/systemone"
 
 
-def check_pin(lock_path: Path = ROOT / "engines.lock") -> str | None:
-    """Return an error message if the sibling engine is not at its pinned commit."""
-    lock = tomllib.loads(lock_path.read_text(encoding="utf-8"))["dqSarc"]
-    sibling = (lock_path.parent / lock["path"]).resolve()
-    if not (sibling / ".git").exists():
-        return f"sibling engine not found at {sibling}; clone {lock['url']} there"
-    head = subprocess.run(
-        ["git", "-C", str(sibling), "rev-parse", "HEAD"],
-        capture_output=True,
-        text=True,
-        check=False,
-    ).stdout.strip()
-    if head != lock["commit"]:
-        return f"sibling engine at {head or 'unknown'}, pinned {lock['commit']}"
+def check_pin(lock_path: Path = ROOT / "engines.lock", names: tuple[str, ...] = SIBLINGS) -> str | None:
+    """Return an error message if a sibling engine is missing or not at its pinned commit."""
+    locks = tomllib.loads(lock_path.read_text(encoding="utf-8"))
+    for name in names:
+        if name not in locks:
+            return f"{name} has no entry in {lock_path.name}"
+        lock = locks[name]
+        sibling = (lock_path.parent / lock["path"]).resolve()
+        if not (sibling / ".git").exists():
+            return f"sibling engine {name} not found at {sibling}; clone {lock['url']} there"
+        head = subprocess.run(
+            ["git", "-C", str(sibling), "rev-parse", "HEAD"],
+            capture_output=True,
+            text=True,
+            check=False,
+        ).stdout.strip()
+        if head != lock["commit"]:
+            return f"sibling engine {name} at {head or 'unknown'}, pinned {lock['commit']}"
     return None
 
 
@@ -78,7 +84,7 @@ def main(env: dict[str, str] | None = None) -> int:
     if pin_error:
         print(f"preflight: {pin_error}", file=sys.stderr)
         return 2
-    print(f"preflight: ok (API key present, endpoint {endpoint}, engine at pin)")
+    print(f"preflight: ok (API key present, endpoint {endpoint}, both sibling engines at their pins)")
     return 0
 
 
