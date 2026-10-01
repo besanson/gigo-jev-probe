@@ -21,7 +21,7 @@ FORBIDDEN = (
     "sensor verdict",
 )
 TARGETS = ("README.md", "NOVELTY.md", "CLAIMS.md", "DECISIONS.md", "FINAL-AUDIT.md",
-           "prereg/p6-*.md", "src/sensed_authority/**/*.py")
+           "prereg/p6-*.md", "src/sensed_authority/**/*.py", "experiments/**/*.py")
 
 
 def hits(text: str) -> list[str]:
