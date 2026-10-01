@@ -16,7 +16,7 @@ mutate:
 	rm -rf mutants
 	$(PY) -m mutmut run
 	$(PY) -m mutmut export-cicd-stats
-	$(PY) -m checkers.mutation_gate
+	$(PY) -m checkers.mutation_gate --write
 
 run6 paper release-check:
 	@echo "$@: not yet registered (paper 6, Phase C onward; see prereg/p6-v1.1.md)" >&2; exit 2
