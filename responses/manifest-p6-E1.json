@@ -73,6 +73,22 @@
       "status": "TAU_WRITTEN",
       "detail": "commit p6-E1.tau.json, then resume for the test split",
       "committed_usd_at_end": 1.1825485359999965
+    },
+    {
+      "segment": "d05ded8ef8e6",
+      "started_utc": "2026-10-01T16:35:10.655357+00:00",
+      "docs_url": "https://docs.typesafe.ai/api",
+      "docs_sha256": "429352ad00abeef123b8c8329808a88e794e229dedcf9543e45e21103f67e6d2",
+      "jev_models_listed": [
+        "jev-latest",
+        "jev-preview"
+      ],
+      "llm_model_retrieved": "claude-haiku-4-5-20251001",
+      "committed_usd_at_start": 1.1825485359999965,
+      "ended_utc": "2026-10-01T17:44:44.782616+00:00",
+      "status": "COMPLETE",
+      "detail": "",
+      "committed_usd_at_end": 3.9415890600000387
     }
   ],
   "design_facts": {
@@ -133,7 +149,7 @@
   },
   "docs_sha256": "429352ad00abeef123b8c8329808a88e794e229dedcf9543e45e21103f67e6d2",
   "tau_sha256": "4d3bed4378508bfffa0746f19712d1f42b65de3d797dd835eb939188f0e539f7",
-  "status": "TAU_WRITTEN",
+  "status": "COMPLETE",
   "returned_models": {
     "jev": [
       "jev-1.13.0"
@@ -144,7 +160,7 @@
   },
   "model_version_changed": false,
   "n_calls_cached": {
-    "jev": 1800,
-    "llm": 1800
+    "jev": 6000,
+    "llm": 6000
   }
 }
