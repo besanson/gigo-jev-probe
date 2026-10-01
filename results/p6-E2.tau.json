@@ -1,0 +1,321 @@
+{
+ "experiment": "E2",
+ "prereg_tag": "prereg-p6-v1.1",
+ "registration": "p6-v1.1",
+ "sensors": {
+  "jev": {
+   "picks": {
+    "E2.1": {
+     "estimated_bounds": {
+      "R_branch": 0.750435201134,
+      "R_env": 0.317123452752
+     },
+     "picked": "R_env"
+    },
+    "E2.2": {
+     "estimated_bounds": {
+      "R_branch": 0.316968438165,
+      "R_env": 0.715712448229
+     },
+     "picked": "R_branch"
+    }
+   },
+   "policy": {
+    "admission_policy_version": "p6-v1.1/E2/jev",
+    "ceiling": 0.01,
+    "estimates": {
+     "E2.1|approval_assertion": {
+      "n00": {
+       "e_hat": 0.019773438165,
+       "n": 150,
+       "u_hat": 0.019773438165,
+       "unknown": 0,
+       "wrong": 0
+      },
+      "n10": {
+       "e_hat": 0.019773438165,
+       "n": 150,
+       "u_hat": 0.07741799716,
+       "unknown": 6,
+       "wrong": 0
+      },
+      "n30": {
+       "e_hat": 0.041374969894,
+       "n": 150,
+       "u_hat": 0.275748482858,
+       "unknown": 32,
+       "wrong": 2
+      }
+     },
+     "E2.1|branch": {
+      "n00": {
+       "e_hat": 0.019773438165,
+       "n": 150,
+       "u_hat": 0.019773438165,
+       "unknown": 0,
+       "wrong": 0
+      },
+      "n10": {
+       "e_hat": 0.019773438165,
+       "n": 150,
+       "u_hat": 0.180301780039,
+       "unknown": 19,
+       "wrong": 0
+      },
+      "n30": {
+       "e_hat": 0.031233816921,
+       "n": 150,
+       "u_hat": 0.402077931461,
+       "unknown": 50,
+       "wrong": 1
+      }
+     },
+     "E2.2|approval_assertion": {
+      "n00": {
+       "e_hat": 0.019773438165,
+       "n": 150,
+       "u_hat": 0.019773438165,
+       "unknown": 0,
+       "wrong": 0
+      },
+      "n10": {
+       "e_hat": 0.019773438165,
+       "n": 150,
+       "u_hat": 0.102364084184,
+       "unknown": 9,
+       "wrong": 0
+      },
+      "n30": {
+       "e_hat": 0.019773438165,
+       "n": 150,
+       "u_hat": 0.297195000001,
+       "unknown": 35,
+       "wrong": 0
+      }
+     },
+     "E2.2|environment": {
+      "n00": {
+       "e_hat": 0.019773438165,
+       "n": 150,
+       "u_hat": 0.019773438165,
+       "unknown": 0,
+       "wrong": 0
+      },
+      "n10": {
+       "e_hat": 0.019773438165,
+       "n": 150,
+       "u_hat": 0.157494434259,
+       "unknown": 16,
+       "wrong": 0
+      },
+      "n30": {
+       "e_hat": 0.031233816921,
+       "n": 150,
+       "u_hat": 0.367510193143,
+       "unknown": 45,
+       "wrong": 1
+      }
+     }
+    },
+    "inputs_sha256": "fbd5bce637189f5b2989845e814eeaf392ea53c8ef3a0399eab10ec8c1369a1e",
+    "thresholds": {
+     "approval_assertion": {
+      "not_recorded": {
+       "tau_false": 0.09,
+       "tau_true": 0.35
+      },
+      "recorded": {
+       "tau_false": 0.46,
+       "tau_true": 0.42
+      }
+     },
+     "branch": {
+      "feature": {
+       "tau_false": 0.57,
+       "tau_true": 0.57
+      },
+      "main": {
+       "tau_false": 0.21,
+       "tau_true": 0.21
+      },
+      "staging": {
+       "tau_false": 0.2,
+       "tau_true": 0.2
+      }
+     },
+     "environment": {
+      "development": {
+       "tau_false": 0.28,
+       "tau_true": 0.28
+      },
+      "production": {
+       "tau_false": 0.4,
+       "tau_true": 0.07
+      },
+      "staging": {
+       "tau_false": 0.39,
+       "tau_true": 0.39
+      }
+     }
+    }
+   }
+  },
+  "llm": {
+   "picks": {
+    "E2.1": {
+     "estimated_bounds": {
+      "R_branch": 0.918179004524,
+      "R_env": 0.483744984677
+     },
+     "picked": "R_env"
+    },
+    "E2.2": {
+     "estimated_bounds": {
+      "R_branch": 0.547605553828,
+      "R_env": 0.988366877303
+     },
+     "picked": "R_branch"
+    }
+   },
+   "policy": {
+    "admission_policy_version": "p6-v1.1/E2/llm",
+    "ceiling": 0.01,
+    "estimates": {
+     "E2.1|approval_assertion": {
+      "n00": {
+       "e_hat": 0.019773438165,
+       "n": 150,
+       "u_hat": 0.353578922592,
+       "unknown": 43,
+       "wrong": 0
+      },
+      "n10": {
+       "e_hat": 0.019773438165,
+       "n": 150,
+       "u_hat": 0.367510193143,
+       "unknown": 45,
+       "wrong": 0
+      },
+      "n30": {
+       "e_hat": 0.102364084184,
+       "n": 150,
+       "u_hat": 0.381380900493,
+       "unknown": 47,
+       "wrong": 9
+      }
+     },
+     "E2.1|branch": {
+      "n00": {
+       "e_hat": 0.019773438165,
+       "n": 150,
+       "u_hat": 0.019773438165,
+       "unknown": 0,
+       "wrong": 0
+      },
+      "n10": {
+       "e_hat": 0.041374969894,
+       "n": 150,
+       "u_hat": 0.157494434259,
+       "unknown": 16,
+       "wrong": 2
+      },
+      "n30": {
+       "e_hat": 0.059981040301,
+       "n": 150,
+       "u_hat": 0.374452979545,
+       "unknown": 46,
+       "wrong": 4
+      }
+     },
+     "E2.2|approval_assertion": {
+      "n00": {
+       "e_hat": 0.019773438165,
+       "n": 150,
+       "u_hat": 0.339584697028,
+       "unknown": 41,
+       "wrong": 0
+      },
+      "n10": {
+       "e_hat": 0.050877067979,
+       "n": 150,
+       "u_hat": 0.374452979545,
+       "unknown": 46,
+       "wrong": 3
+      },
+      "n30": {
+       "e_hat": 0.07741799716,
+       "n": 150,
+       "u_hat": 0.470187556669,
+       "unknown": 60,
+       "wrong": 6
+      }
+     },
+     "E2.2|environment": {
+      "n00": {
+       "e_hat": 0.019773438165,
+       "n": 150,
+       "u_hat": 0.134257007991,
+       "unknown": 13,
+       "wrong": 0
+      },
+      "n10": {
+       "e_hat": 0.050877067979,
+       "n": 150,
+       "u_hat": 0.210182807346,
+       "unknown": 23,
+       "wrong": 3
+      },
+      "n30": {
+       "e_hat": 0.094171482292,
+       "n": 150,
+       "u_hat": 0.346589841182,
+       "unknown": 42,
+       "wrong": 8
+      }
+     }
+    },
+    "inputs_sha256": "52dedacaec4688919afa03923db28a7acd4b694dd68fe1713ed1704af015bd0a",
+    "thresholds": {
+     "approval_assertion": {
+      "not_recorded": {
+       "tau_false": 0.02,
+       "tau_true": 0.98
+      },
+      "recorded": {
+       "tau_false": 0.3,
+       "tau_true": 0.3
+      }
+     },
+     "branch": {
+      "feature": {
+       "tau_false": 0.05,
+       "tau_true": 0.34
+      },
+      "main": {
+       "tau_false": 0.33,
+       "tau_true": 0.5
+      },
+      "staging": {
+       "tau_false": 0.35,
+       "tau_true": 0.35
+      }
+     },
+     "environment": {
+      "development": {
+       "tau_false": 0.34,
+       "tau_true": 1.0
+      },
+      "production": {
+       "tau_false": 0.33,
+       "tau_true": 0.95
+      },
+      "staging": {
+       "tau_false": 0.25,
+       "tau_true": 0.4
+      }
+     }
+    }
+   }
+  }
+ }
+}
