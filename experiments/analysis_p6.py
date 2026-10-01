@@ -51,7 +51,7 @@ from experiments.run_p6 import NOISES, cached_calls, fit_policy, labels, registe
 from jev_probe.analysis import SLOT_RE, fill, fmt, fmt_p
 from jev_probe.cache import Cache
 from jev_probe.stats import binom_pmf, clopper_pearson, holm, mcnemar_exact, quantile, sd, two_sided_normal_p
-from sensed_authority.admission import admit, load_policy
+from sensed_authority.admission import admit, cp_upper, load_policy
 
 NE = "not evaluated"
 NOISE_NAME = {"n00": "0%", "n10": "10%", "n30": "30%"}
@@ -143,9 +143,19 @@ def e1_slots(out: dict[str, str], items: list[Item], calls: dict, pol: dict) -> 
             bounds = pol[s]["bounds"][noise]
             out[f"{p}.unsafe_bound"] = fmt(bounds["unsafe_bound"])
             out[f"{p}.change_bound"] = fmt(bounds["change_bound"])
+            for b in ("unsafe_bound", "change_bound"):
+                out[f"{p}.{b}.label"] = " vacuous" if bounds[b] > 1 else ""
             out[f"{p}.s3_held"] = fmt(unsafe == 0)
             pvals[f"{s}.{noise}"] = upper_tail(unsafe, n, bounds["unsafe_bound"])
             out[f"{p}.h1_p"] = fmt_p(pvals[f"{s}.{noise}"])
+    # looseness: the bound a sensor with no split-B errors still gets, one Clopper-Pearson floor per term
+    n_b = sum(it.part == "B" for it in items)
+    floors = {f: cp_upper(0, n_b) for f in fields_for("E1")}
+    out["E1.floor.n"] = fmt(n_b)
+    for f, v in floors.items():
+        out[f"E1.floor.{f}"] = fmt(v)
+    out["E1.floor.unsafe_bound"] = fmt(sum(floors.values()))
+    out["E1.floor.change_bound"] = fmt(2 * sum(floors.values()))
     return pvals
 
 
@@ -421,6 +431,16 @@ def build() -> str:
               f"{s(p + '.approval_assertion.wrong')} / {s(p + '.approval_assertion.unknown')} | "
               f"{s(p + '.data_residency_region.wrong')} / {s(p + '.data_residency_region.unknown')} | "
               f"{s(p + '.s3_held')} | {s(p + '.h1_p')} |")
+    a("")
+    a("Bound labels (a bound greater than 1 is vacuous: it holds for any sensor): " + "; ".join(
+        f"{SENSOR_NAME[sen]} {NOISE_NAME[n]}: B+ {s(f'E1.{sen}.{n}.unsafe_bound')}{s(f'E1.{sen}.{n}.unsafe_bound.label')}, "
+        f"B {s(f'E1.{sen}.{n}.change_bound')}{s(f'E1.{sen}.{n}.change_bound.label')}"
+        for sen in SENSORS for n in NOISES) + ".")
+    a("")
+    a(f"Looseness: split B has n = {s('E1.floor.n')} items per field; with zero observed errors the one-sided 95% "
+      f"Clopper-Pearson upper bound is {s('E1.floor.approval_assertion')} for approval_assertion and "
+      f"{s('E1.floor.data_residency_region')} for data_residency_region, so a sensor with no split-B errors still "
+      f"gets B+ = {s('E1.floor.unsafe_bound')} and B = {s('E1.floor.change_bound')}.")
     a("")
     a("## E2: substitution test on CH-B1 (test split)")
     a("")
