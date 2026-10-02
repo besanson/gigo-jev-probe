@@ -3,7 +3,8 @@
 Finite model families (all exhaustive):
 - B12: binary fields, n = 1 and 2, every nonempty reachable set R of {0,1}^n, every verdict
   function g: R -> {allow, deny}, every sufficient contract C (a subset of the fields that
-  determines g on R).
+  determines g on R), including the empty contract, which is sufficient exactly when g is
+  constant on R (round-two finding F12; cardinality 0 was previously skipped).
 - B3: three binary fields, R = {0,1}^3, every g, the full contract.
 - T2: two ternary fields, R = {0,1,2}^2, every g, the full contract.
 
@@ -47,7 +48,7 @@ def _verdicts(reachable: Sequence[dict[str, Any]]) -> Iterator[dict[tuple[Any, .
 
 def _sufficient_subsets(fields: Sequence[str], reachable: Sequence[dict[str, Any]],
                         table: dict[tuple[Any, ...], str]) -> Iterator[tuple[str, ...]]:
-    for r in range(1, len(fields) + 1):
+    for r in range(len(fields) + 1):  # F12: cardinality 0 included
         for sub in itertools.combinations(fields, r):
             seen: dict[tuple[Any, ...], str] = {}
             if all(seen.setdefault(tuple(t[f] for f in sub), table[tuple(t.values())]) == table[tuple(t.values())]

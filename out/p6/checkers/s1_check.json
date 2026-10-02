@@ -2,11 +2,11 @@
  "argument": "pointwise at every vertex (t, o); both sides linear in the joint distribution",
  "checker": "s1_check",
  "first_violation": null,
- "generated_at_head_sha": "2fac5a476b17abf7e361d27993860213755ffd09",
+ "generated_at_head_sha": "e3d5ed12518515398c866fd3a191691dbc908bf4",
  "holds": true,
- "inputs_hash": "d74adda4dba62e2b0e6a1717c23db0088368e5a0ecbdd89042d2085f6be5aa0a",
+ "inputs_hash": "009445ae18046f767baf248027d552ad7c06d3197b819f3d44089817ab149cf4",
  "pointwise_checks": {
-  "B12": 4400,
+  "B12": 4472,
   "B3": 131072,
   "T2": 115200
  },

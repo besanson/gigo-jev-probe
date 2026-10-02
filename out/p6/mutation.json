@@ -1,5 +1,5 @@
 {
- "generated_at_head_sha": "11e51d6b17ad3253a79ac62160453c6f5e7075c7",
+ "generated_at_head_sha": "e3d5ed12518515398c866fd3a191691dbc908bf4",
  "inputs": [
   "checkers/mutation_gate.py",
   "pyproject.toml",
@@ -14,14 +14,14 @@
   "tests/test_p6_record.py",
   "tests/test_p6_selection.py"
  ],
- "inputs_hash": "d30180d14536f3f5471f2ea1fcfc08546790d4f540a9d676e3ebb3b98bb05a1b",
- "kill_score": 0.9569471624266145,
- "killed": 489,
+ "inputs_hash": "d2bdcef0c7ff867eb07f1473c755ed8a329bd1dd17cd87541b9d9ef9de402769",
+ "kill_score": 0.9460869565217391,
+ "killed": 544,
  "no_tests": 0,
  "passes": true,
- "survived": 22,
+ "survived": 31,
  "target": "src/sensed_authority",
  "threshold": 0.85,
  "tool": "mutmut 3.7.0",
- "total": 511
+ "total": 575
 }

@@ -1,9 +1,9 @@
 {
  "argument": "pointwise at every vertex; the readings of the smaller set are the restriction of the larger",
  "checker": "s2_check",
- "generated_at_head_sha": "2fac5a476b17abf7e361d27993860213755ffd09",
+ "generated_at_head_sha": "e3d5ed12518515398c866fd3a191691dbc908bf4",
  "holds": true,
- "inputs_hash": "f1483dbacac073116e3a224c6b519b0fc45d9181e6265bd17093412b4da14192",
+ "inputs_hash": "eb19ba6fec4a6579fdbef578eeb91fcdc2f89199f847614c8a96165c15bcaf1f",
  "non_nested_counterexample": {
   "bound_one_field": 0.2,
   "bound_two_fields": 0.002,
@@ -34,7 +34,7 @@
   }
  },
  "pointwise_checks": {
-  "B12": 12236,
+  "B12": 12308,
   "B3": 702464,
   "T2": 373248
  },

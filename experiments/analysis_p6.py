@@ -17,7 +17,9 @@ import json
 import math
 import random
 import sys
+import tomllib
 from collections.abc import Sequence
+from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
@@ -34,7 +36,11 @@ from experiments.constants_p6 import (
     SENSORS,
     SLOTS_JSON_PATH,
     TEMPLATE_PATH,
+    E2_REDUCTS,
+    E2_SELECTION_NOISE,
+    ROOT,
     cache_path,
+    manifest_path,
     tau_path,
 )
 from experiments.corpus_p6 import (
@@ -51,7 +57,8 @@ from experiments.run_p6 import NOISES, cached_calls, fit_policy, labels, registe
 from jev_probe.analysis import SLOT_RE, fill, fmt, fmt_p
 from jev_probe.cache import Cache
 from jev_probe.stats import binom_pmf, clopper_pearson, holm, mcnemar_exact, quantile, sd, two_sided_normal_p
-from sensed_authority.admission import admit, cp_upper, load_policy
+from sensed_authority.admission import CP_ALPHA, admit, cp_upper, load_policy, map_score
+from sensed_authority.record import SensedRecord, admitted_value
 
 NE = "not evaluated"
 NOISE_NAME = {"n00": "0%", "n10": "10%", "n30": "30%"}
@@ -73,17 +80,69 @@ def load_policies(path: Path) -> dict[str, dict[str, Any]]:
 
 
 def admitted(call: dict | None, thresholds: dict[str, tuple[float, float]]) -> str | None:
+    """The admitted value straight from the scores (kept for comparison; the analysis path is
+    `readings`, which goes through stamped records)."""
     if call is None or call["score"] is None:
         return None
     return admit(call["score"], thresholds)
 
 
-def readings(exp: str, items: list[Item], calls: dict, thresholds: dict[str, dict], split: str = "test"):
-    """{(sensor, label, i, noise): {field: admitted value or None}} for one split."""
+# ------------------------------------------------------------------ F1: the record boundary
+
+
+def request_binding(label: str, i: int, noise: str) -> tuple[str, str]:
+    """(request_id, resource_id) of the decision about item i at one noise level in one
+    experiment label: the stamps a sensed record must carry to be used for that decision."""
+    return f"p6:{label}:{i}:{noise}", f"p6:{label}:item:{i}"
+
+
+def policy_version(exp: str, sensor: str, variant: str = "") -> str:
+    return f"p6-v1.1/{exp}/{sensor}" + (f"/{variant}" if variant else "")
+
+
+@lru_cache(maxsize=4)
+def expected_sensor_versions(exp: str) -> dict[str, str]:
+    """The single model string each sensor returned in the run (manifest), which every record
+    used for a decision must carry."""
+    models = json.loads(manifest_path(exp).read_text(encoding="utf-8"))["returned_models"]
+    if any(len(v) != 1 for v in models.values()):
+        raise ValueError(f"{exp}: a sensor returned more than one model string: {models}")
+    return {s: v[0] for s, v in models.items()}
+
+
+def sensed_records(call: dict, thresholds: dict[str, tuple[float, float]], version: str) -> list[SensedRecord]:
+    """One stamped record per candidate value of the call's field, as the sensor's adapter writes
+    them: score, the admission the frozen policy gives that score, provenance and binding."""
+    if call["score"] is None:
+        return []
+    request_id, resource_id = request_binding(call["exp"], call["i"], call["noise"])
+    return [SensedRecord(field=call["field"], value=v, score=call["score"][v],
+                         admission=map_score(call["score"][v], thresholds[v]), sensor_id=call["arm"],
+                         sensor_version=call["returned_model"], source_document_sha256=call["record_sha256"],
+                         sensed_at=call["done_utc"], request_id=request_id, resource_id=resource_id,
+                         admission_policy_version=version)
+            for v in sorted(thresholds)]
+
+
+def readings(exp: str, items: list[Item], calls: dict, thresholds: dict[str, dict], split: str = "test",
+             variant: str = ""):
+    """{(sensor, label, i, noise): {field: admitted value or None}} for one split.
+
+    Round-two finding F1: every admitted value goes through the record boundary. Each cached
+    call becomes stamped `SensedRecord`s, and the gate reads the field with `admitted_value`,
+    whose binding check requires the field, request, resource, sensor version and admission
+    policy version of the decision being made; any mismatch, or not exactly one value admitted
+    true, is unknown."""
+    sensor_versions = expected_sensor_versions(exp)
     out: dict[tuple[str, str, int, str], dict[str, str | None]] = {}
     for it, noise, label, arm, sensor, field in registered_order(items, exp, (split,)):
         c = calls.get((label, field, sensor, it.i, noise))
-        out.setdefault((sensor, label, it.i, noise), {})[field] = admitted(c, thresholds[sensor][field])
+        version = policy_version(exp, sensor, variant)
+        records = [] if c is None else sensed_records(c, thresholds[sensor][field], version)
+        request_id, resource_id = request_binding(label, it.i, noise)
+        out.setdefault((sensor, label, it.i, noise), {})[field] = admitted_value(
+            records, field=field, request_id=request_id, resource_id=resource_id,
+            sensor_version=sensor_versions[sensor], admission_policy_version=version)
     return out
 
 
@@ -112,6 +171,27 @@ def bootstrap_diff(pairs: Sequence[tuple[bool, bool]], b: int = BOOTSTRAP_B) -> 
 
 
 # ------------------------------------------------------------------ E1
+
+
+def split_b_counts(estimates: dict, key: str, noise: str) -> tuple[int, int, int]:
+    e = estimates[key][noise]
+    return e.wrong, e.unknown, e.n
+
+
+def simultaneous_slots(out: dict[str, str], p: str, estimates: dict, label: str, fields: Sequence[str],
+                       noise: str, unsafe_key: str = "unsafe_bound_simul",
+                       change_key: str = "change_bound_simul") -> None:
+    """Round-two finding F4 (descriptive): Bonferroni-adjusted simultaneous versions of a cell's
+    registered bounds. B+ sums m = |F_s| one-sided upper limits, each at level 0.05/m; B sums
+    m = 2|F_s| limits (wrong and unknown), each at 0.05/m. The registered bounds are marginal
+    95% limits summed, with no simultaneous level."""
+    counts = [split_b_counts(estimates, f"{label}|{f}", noise) for f in fields]
+    m_plus, m = len(counts), 2 * len(counts)
+    b_plus = math.fsum(cp_upper(w, n, CP_ALPHA / m_plus) for w, _, n in counts)
+    b = math.fsum(cp_upper(w, n, CP_ALPHA / m) + cp_upper(u, n, CP_ALPHA / m) for w, u, n in counts)
+    out[f"{p}.{unsafe_key}"] = fmt(b_plus)
+    out[f"{p}.{change_key}"] = fmt(b)
+    out[f"{p}.{change_key}.label"] = " vacuous" if b > 1 else ""
 
 
 def e1_slots(out: dict[str, str], items: list[Item], calls: dict, pol: dict) -> dict[str, float]:
@@ -145,7 +225,7 @@ def e1_slots(out: dict[str, str], items: list[Item], calls: dict, pol: dict) -> 
             out[f"{p}.change_bound"] = fmt(bounds["change_bound"])
             for b in ("unsafe_bound", "change_bound"):
                 out[f"{p}.{b}.label"] = " vacuous" if bounds[b] > 1 else ""
-            out[f"{p}.s3_held"] = fmt(unsafe == 0)
+            simultaneous_slots(out, p, pol[s]["policy"]["estimates"], "E1", fields_for("E1"), noise)
             pvals[f"{s}.{noise}"] = upper_tail(unsafe, n, bounds["unsafe_bound"])
             out[f"{p}.h1_p"] = fmt_p(pvals[f"{s}.{noise}"])
     # looseness: the bound a sensor with no split-B errors still gets, one Clopper-Pearson floor per term
@@ -176,8 +256,17 @@ def e2_slots(out: dict[str, str], items: list[Item], calls: dict, pol: dict,
             out[f"{q}.picked"] = picked
             out[f"{q}.sensed.{picked}"] = ", ".join(sensed_sets(arm)[picked])
             out[f"{q}.sensed.{other}"] = ", ".join(sensed_sets(arm)[other])
+            estimates = pol[s]["policy"]["estimates"]
             for r in REDUCTS:
                 out[f"{q}.estimated_bound.{r}"] = fmt(pol[s]["picks"][label]["estimated_bounds"][r])
+                # F4: simultaneous version of the selection bound (30% noise), descriptive
+                simultaneous_slots(out, f"{q}.{E2_SELECTION_NOISE}.{r}", estimates, label, sensed_sets(arm)[r],
+                                   E2_SELECTION_NOISE)
+                # F7: post hoc split-B bounds at every noise level (registered only at 30%)
+                for noise in NOISES:
+                    est = [estimates[f"{label}|{f}"][noise] for f in sensed_sets(arm)[r]]
+                    out[f"{q}.{noise}.posthoc.{r}.unsafe_bound"] = fmt(math.fsum(e.e_hat for e in est))
+                    out[f"{q}.{noise}.posthoc.{r}.change_bound"] = fmt(math.fsum(e.e_hat + e.u_hat for e in est))
             for noise in NOISES:
                 outcomes = {r: [e2_outcome(it, r, reads[(s, label, it.i, noise)]) for it in test] for r in REDUCTS}
                 for role, r in (("picked", picked), ("other", other)):
@@ -203,8 +292,8 @@ def e3_slots(out: dict[str, str], items: list[Item], calls: dict, pol: dict) -> 
     by_eps = {CEILING: {s: pol[s]["policy"]["thresholds"] for s in SENSORS},
               CEILING_E3: {s: fit_policy("E1", items, calls, s, CEILING_E3)["thresholds"] for s in SENSORS}}
     for eps, thresholds in by_eps.items():
-        reads = readings("E1", items, calls, thresholds)
         tag = f"eps{round(eps * 100)}"
+        reads = readings("E1", items, calls, thresholds, variant="" if eps == CEILING else tag)
         for s in SENSORS:
             for noise in NOISES:
                 outs = []
@@ -224,15 +313,22 @@ def e3_slots(out: dict[str, str], items: list[Item], calls: dict, pol: dict) -> 
 
 
 def e4_slots(out: dict[str, str]) -> bool:
-    """The pipeline's own evaluation reproduces the N6 witnesses exactly as the checker computes them."""
+    """The pipeline's own evaluation reproduces the N6 witnesses as the checker computes them.
+
+    Registered check (kept): equal totals. Round-two finding F8: E4.per_item_match compares the
+    per-item outcome vectors with the checker's `simulate_items`. Both paths evaluate the
+    contract with the same `sensed_authority.bound.ContractModel`, so the check shows the
+    pipeline's sampling and bookkeeping agree with the checker's; it is not an independent test
+    of contract evaluation."""
     from checkers import n6_witness as w
 
     model = w.and_model()
     exact = w.run()
-    ok = True
+    ok = per_item_ok = True
     for tag, which, seed, key in (("a", "a", w.SEED_A, "a_disjoint"), ("b", "b", w.SEED_B, "b_joint")):
         rng = random.Random(seed)
         unsafe = wrong = 0
+        per_item: list[tuple[bool, bool, bool]] = []
         for _ in range(w.N_SIM):
             if which == "a":
                 t = {"f1": False, "f2": True} if rng.random() < 0.5 else {"f1": True, "f2": False}
@@ -246,7 +342,12 @@ def e4_slots(out: dict[str, str]) -> bool:
             got = model.evaluate(o)
             unsafe += truth_v == "deny" and got == "allow"
             wrong += (o["f1"] != t["f1"]) + (o["f2"] != t["f2"])
+            per_item.append((truth_v == "deny" and got == "allow", o["f1"] != t["f1"], o["f2"] != t["f2"]))
         sim = exact[key]["simulation"]
+        # F8: the per-item outcome vectors, not only their totals, must equal the checker's
+        item_match = per_item == w.simulate_items(model, which, seed)
+        out[f"E4.{tag}.per_item_match"] = fmt(item_match)
+        per_item_ok = per_item_ok and item_match
         same = unsafe == sim["unsafe"] and wrong == sim["wrong_f1"] + sim["wrong_f2"]
         ok &= same
         cp_slots(out, f"E4.{tag}.unsafe", unsafe, w.N_SIM)
@@ -254,6 +355,7 @@ def e4_slots(out: dict[str, str]) -> bool:
         out[f"E4.{tag}.exact_bound"] = exact[key]["exact"]["s1_unsafe_bound"]
         out[f"E4.{tag}.matches_checker"] = fmt(same)
     out["E4.check_passes"] = fmt(ok)
+    out["E4.per_item_match"] = fmt(per_item_ok)
     return ok
 
 
@@ -332,6 +434,36 @@ def hypothesis_slots(out: dict[str, str], h1_cells: dict[str, float] | None, h2:
 # ------------------------------------------------------------------ compute
 
 
+def paper5_slots(out: dict[str, str]) -> None:
+    """Round-two finding F10: paper 5's own CH-B1 choice (its CH-B2 minimum-cost contract at the
+    pinned sarc-authority-derivation commit) beside the sensing-aware picks."""
+    lock = tomllib.loads((ROOT / "engines.lock").read_text(encoding="utf-8"))["sarc-authority-derivation"]
+    check = json.loads(((ROOT / lock["path"]).resolve() / "out" / "checkers" / "ch_b2_check.json").read_text(encoding="utf-8"))
+    chosen = set(check["minimum_cost_contract"])
+    paper5 = next(r for r, fields in E2_REDUCTS.items() if set(fields) == chosen)
+    out["E2.paper5_pick"] = paper5
+    for label, arm in labels("E2"):
+        picks = {out.get(f"E2.{s}.{label}.picked") for s in SENSORS}
+        if None in picks:
+            continue
+        out[f"E2.pick_changed.{arm}"] = ("yes" if picks == {next(r for r in REDUCTS if r != paper5)}
+                                         else "no" if picks == {paper5} else "sensors differ")
+
+
+def denyward_slots(out: dict[str, str]) -> None:
+    """Round-two finding F3: S3's global condition evaluated exhaustively per contract and
+    sensed-field set (experiments/denyward_p6.py), in place of the per-cell zero-flip proxy."""
+    from experiments.denyward_p6 import denyward
+
+    for contract, sets in denyward().items():
+        for name, r in sets.items():
+            p = f"denyward.{contract}.{name}"
+            out[p] = fmt(r["deny_ward"])
+            out[f"{p}.deny_tuples"] = fmt(r["deny_tuples"])
+            out[f"{p}.witness_tuples"] = fmt(r["witness_tuples"])
+            out[f"{p}.used_in"] = r["used_in"]
+
+
 def compute(*, caches: dict[str, Path] | None = None, taus: dict[str, Path] | None = None,
             items: dict[str, list[Item]] | None = None, bootstrap_b: int = BOOTSTRAP_B) -> dict[str, str]:
     caches = caches or {e: cache_path(e) for e in ("E1", "E2")}
@@ -362,6 +494,8 @@ def compute(*, caches: dict[str, Path] | None = None, taus: dict[str, Path] | No
             h2 = e2_slots(out, its, calls, pol, bootstrap_b)
         e5_slots(out, exp, its, calls, bootstrap_b)
     e4_slots(out)
+    paper5_slots(out)
+    denyward_slots(out)
     out["hypotheses_evaluated"] = fmt(h1 is not None and h2 is not None)
     hypothesis_slots(out, h1, h2)
     return out
@@ -421,8 +555,8 @@ def build() -> str:
     a("## E1: the bound on CH-C1 (test split; Clopper-Pearson 95%)")
     a("")
     a("| sensor | noise | unsafe rate (all items) | split-B bound B+ | verdict-change rate | split-B bound B | "
-      "approval wrong / unknown | residency wrong / unknown | no unsafe change | H1 cell p |")
-    a("|---|---|---|---|---|---|---|---|---|---|")
+      "approval wrong / unknown | residency wrong / unknown | H1 cell p |")
+    a("|---|---|---|---|---|---|---|---|---|")
     for sen in SENSORS:
         for n in NOISES:
             p = f"E1.{sen}.{n}"
@@ -430,7 +564,7 @@ def build() -> str:
               f"{cp(p + '.change')} | {s(p + '.change_bound')} | "
               f"{s(p + '.approval_assertion.wrong')} / {s(p + '.approval_assertion.unknown')} | "
               f"{s(p + '.data_residency_region.wrong')} / {s(p + '.data_residency_region.unknown')} | "
-              f"{s(p + '.s3_held')} | {s(p + '.h1_p')} |")
+              f"{s(p + '.h1_p')} |")
     a("")
     a("Bound labels (a bound greater than 1 is vacuous: it holds for any sensor): " + "; ".join(
         f"{SENSOR_NAME[sen]} {NOISE_NAME[n]}: B+ {s(f'E1.{sen}.{n}.unsafe_bound')}{s(f'E1.{sen}.{n}.unsafe_bound.label')}, "
@@ -441,6 +575,28 @@ def build() -> str:
       f"Clopper-Pearson upper bound is {s('E1.floor.approval_assertion')} for approval_assertion and "
       f"{s('E1.floor.data_residency_region')} for data_residency_region, so a sensor with no split-B errors still "
       f"gets B+ = {s('E1.floor.unsafe_bound')} and B = {s('E1.floor.change_bound')}.")
+    a("")
+    a("Simultaneous bounds (round-two F4, descriptive): the same sums with each one-sided limit at level "
+      "0.05/m, m the number of limits summed (Bonferroni within the cell).")
+    a("")
+    a("| sensor | noise | B+ (registered) | B+ simultaneous | B (registered) | B simultaneous |")
+    a("|---|---|---|---|---|---|")
+    for sen in SENSORS:
+        for n in NOISES:
+            p = f"E1.{sen}.{n}"
+            a(f"| {SENSOR_NAME[sen]} | {NOISE_NAME[n]} | {s(p + '.unsafe_bound')} | {s(p + '.unsafe_bound_simul')} | "
+              f"{s(p + '.change_bound')} | {s(p + '.change_bound_simul')}{s(p + '.change_bound_simul.label')} |")
+    a("")
+    a("## S3: global deny-ward condition (round-two F3; exhaustive over the pinned reachable sets)")
+    a("")
+    a("| contract | sensed fields | used in | deny-ward | reachable deny tuples | deny tuples some joint reading allows |")
+    a("|---|---|---|---|---|---|")
+    for contract, sets in (("K", ("approval_residency",)), ("R_branch", ("approval", "approval_branch")),
+                           ("R_env", ("approval", "approval_environment"))):
+        for name in sets:
+            p = f"denyward.{contract}.{name}"
+            a(f"| {contract} | {name.replace('_', ', ')} | {s(p + '.used_in')} | {s(p)} | "
+              f"{s(p + '.deny_tuples')} | {s(p + '.witness_tuples')} |")
     a("")
     a("## E2: substitution test on CH-B1 (test split)")
     a("")
@@ -458,6 +614,24 @@ def build() -> str:
                   f"{cp(f'{q}.{n}.picked.unsafe')} | {cp(f'{q}.{n}.other.unsafe')} |")
     a("")
     a("The sensed-field columns list R_branch first, then R_env.")
+    a("")
+    a(f"Paper 5's own choice for CH-B1 (its CH-B2 minimum-cost contract at the pin; round-two F10): "
+      f"{s('E2.paper5_pick')}. Sensing-aware pick differs from it: arm 1 {s('E2.pick_changed.1')}, "
+      f"arm 2 {s('E2.pick_changed.2')}.")
+    a("")
+    a("Post hoc split-B bounds at every noise level (round-two F7; descriptive, not registered: the registered "
+      "estimated bound is at 30% only), and the simultaneous selection bound at 30%:")
+    a("")
+    a("| sensor | arm | reduct | B+ 0% | B+ 10% | B+ 30% | B 0% | B 10% | B 30% | B 30% simultaneous |")
+    a("|---|---|---|---|---|---|---|---|---|---|")
+    for sen in SENSORS:
+        for label, arm in labels("E2"):
+            q = f"E2.{sen}.{label}"
+            for r in REDUCTS:
+                a(f"| {SENSOR_NAME[sen]} | {arm} | {r} | "
+                  + " | ".join(s(f"{q}.{n}.posthoc.{r}.unsafe_bound") for n in NOISES) + " | "
+                  + " | ".join(s(f"{q}.{n}.posthoc.{r}.change_bound") for n in NOISES) + " | "
+                  + f"{s(f'{q}.n30.{r}.change_bound_simul')} |")
     a("")
     a("## E3: admission ablation (from the E1 caches; no new calls)")
     a("")
@@ -483,7 +657,9 @@ def build() -> str:
         a(f"| {name} | {cp(f'E4.{tag}.unsafe')} | {s(f'E4.{tag}.exact_unsafe')} | {s(f'E4.{tag}.exact_bound')} | "
           f"{s(f'E4.{tag}.matches_checker')} |")
     a("")
-    a(f"Check passes: {s('E4.check_passes')}.")
+    a(f"Check passes (registered, totals): {s('E4.check_passes')}. Per-item outcome vectors equal the checker's "
+      f"(round-two F8): {s('E4.per_item_match')} (a: {s('E4.a.per_item_match')}; b: {s('E4.b.per_item_match')}). "
+      "Both paths use the same ContractModel evaluator.")
     a("")
     a("## E5: calibration against the assertion label (test split; secondary)")
     a("")

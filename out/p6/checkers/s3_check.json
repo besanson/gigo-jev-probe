@@ -2,21 +2,21 @@
  "argument": "deny-ward (global) holds exactly when no vertex (t, o) turns deny into allow",
  "checker": "s3_check",
  "configurations": {
-  "B12": 528,
+  "B12": 564,
   "B3": 2048,
   "T2": 2048
  },
  "deny_ward": {
-  "B12": 376,
+  "B12": 412,
   "B3": 318,
   "T2": 530
  },
  "field_wise_deny_ward_but_not_global": {
   "B12": 4
  },
- "generated_at_head_sha": "2fac5a476b17abf7e361d27993860213755ffd09",
+ "generated_at_head_sha": "e3d5ed12518515398c866fd3a191691dbc908bf4",
  "holds": true,
- "inputs_hash": "c89663af95f9950b7c86c90aaa83cfe29d687c99499764858c49c844f5476b40",
+ "inputs_hash": "022586b6f7ea62cde14a123b0a58f30e131b813390cbe34df3875d9143862439",
  "mismatches": {},
  "provenance": "sarc-suite-one-pass: checkers/_provenance.py ported verbatim with attribution (sarc-suite-one-pass@782261e via sarc-authority-derivation@cfb321e)",
  "scope": "finite-models:B12,B3,T2",

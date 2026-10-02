@@ -13,6 +13,7 @@
   "simulation": {
    "bound_holds": true,
    "n": 10000,
+   "outcomes_sha256": "c662b95221305b84c8809b63d87285d02ec192bb017ebba74827b1e593f48816",
    "seed": 20261105,
    "unsafe": 452,
    "wrong_f1": 232,
@@ -35,6 +36,7 @@
   "simulation": {
    "bound_holds": true,
    "n": 10000,
+   "outcomes_sha256": "f11a24e083dd428cf5888bc56cd6a25a366125115ecdc1a1fc25b3e7ce5e7ebb",
    "seed": 20261108,
    "unsafe": 503,
    "wrong_f1": 503,
@@ -42,9 +44,9 @@
   }
  },
  "checker": "n6_witness",
- "generated_at_head_sha": "2fac5a476b17abf7e361d27993860213755ffd09",
+ "generated_at_head_sha": "e3d5ed12518515398c866fd3a191691dbc908bf4",
  "holds": true,
- "inputs_hash": "d33aee4f6a56f5072d1f7d2e9c52b147f18be822827643ee6c1848beefc70bcb",
+ "inputs_hash": "e730299a7d190a2092f32afe138e05e677504b2fa474ca7325f4dfd26d7ccb80",
  "provenance": "sarc-suite-one-pass: checkers/_provenance.py ported verbatim with attribution (sarc-suite-one-pass@782261e via sarc-authority-derivation@cfb321e)",
  "q": "1/20",
  "scope": "witness",

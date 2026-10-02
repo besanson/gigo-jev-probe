@@ -17,6 +17,7 @@ that a sampled implementation reproduces them.
 
 from __future__ import annotations
 
+import hashlib
 import random
 import sys
 from fractions import Fraction
@@ -74,9 +75,12 @@ def v1_directional_bound(model: ContractModel, joint: list[tuple[Fraction, dict,
     return total
 
 
-def simulate(model: ContractModel, which: str, seed: int) -> dict:
+def simulate_items(model: ContractModel, which: str, seed: int) -> list[tuple[bool, bool, bool]]:
+    """Per-item outcomes of the seeded simulation: (deny -> allow, f1 wrong, f2 wrong) for each of
+    the N_SIM items, in draw order (round-two finding F8: the pipeline check compares these
+    vectors, not only their totals)."""
     rng = random.Random(seed)
-    unsafe = wrong1 = wrong2 = 0
+    out = []
     for _ in range(N_SIM):
         if which == "a":
             t = {"f1": False, "f2": True} if rng.random() < 0.5 else {"f1": True, "f2": False}
@@ -86,11 +90,21 @@ def simulate(model: ContractModel, which: str, seed: int) -> dict:
         else:
             t = {"f1": False, "f2": False}
             o = {"f1": True, "f2": True} if rng.random() < float(Q) else dict(t)
-        unsafe += model.outcome(t, o)[1]
-        wrong1 += o["f1"] != t["f1"]
-        wrong2 += o["f2"] != t["f2"]
+        out.append((model.outcome(t, o)[1], o["f1"] != t["f1"], o["f2"] != t["f2"]))
+    return out
+
+
+def outcomes_sha256(items: list[tuple[bool, bool, bool]]) -> str:
+    return hashlib.sha256("".join("".join("1" if x else "0" for x in row) for row in items).encode()).hexdigest()
+
+
+def simulate(model: ContractModel, which: str, seed: int) -> dict:
+    items = simulate_items(model, which, seed)
+    unsafe = sum(u for u, _, _ in items)
+    wrong1 = sum(w for _, w, _ in items)
+    wrong2 = sum(w for _, _, w in items)
     return {"seed": seed, "n": N_SIM, "unsafe": unsafe, "wrong_f1": wrong1, "wrong_f2": wrong2,
-            "bound_holds": unsafe <= wrong1 + wrong2}
+            "bound_holds": unsafe <= wrong1 + wrong2, "outcomes_sha256": outcomes_sha256(items)}
 
 
 def run() -> dict:
