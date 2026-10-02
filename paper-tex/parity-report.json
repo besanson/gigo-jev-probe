@@ -12,10 +12,10 @@
           ],
           "missing_characters": [],
           "overfull_hbox_above_10pt": [],
-          "page_count": 22,
+          "page_count": 23,
           "passes_needed": 1,
           "pdf_produced": true,
-          "pdf_sha256": "76d57123ae7dd4813f741a988b2ea66ee5d8b126d8212edc5a9eeff25cc84864",
+          "pdf_sha256": "42090a2e2e3f22be366fbeec4599312ed97c71bd651fe015698ca35a9e6ec664",
           "pdf_unresolved_marker_count": 0,
           "undefined_citations": [],
           "undefined_references": []
@@ -29,10 +29,10 @@
           ],
           "missing_characters": [],
           "overfull_hbox_above_10pt": [],
-          "page_count": 22,
+          "page_count": 23,
           "passes_needed": 1,
           "pdf_produced": true,
-          "pdf_sha256": "76d57123ae7dd4813f741a988b2ea66ee5d8b126d8212edc5a9eeff25cc84864",
+          "pdf_sha256": "42090a2e2e3f22be366fbeec4599312ed97c71bd651fe015698ca35a9e6ec664",
           "pdf_unresolved_marker_count": 0,
           "undefined_citations": [],
           "undefined_references": []
@@ -49,10 +49,10 @@
       ],
       "missing_characters": [],
       "overfull_hbox_above_10pt": [],
-      "page_count": 22,
+      "page_count": 23,
       "pass": true,
       "pdf_produced": true,
-      "pdf_sha256": "76d57123ae7dd4813f741a988b2ea66ee5d8b126d8212edc5a9eeff25cc84864",
+      "pdf_sha256": "42090a2e2e3f22be366fbeec4599312ed97c71bd651fe015698ca35a9e6ec664",
       "pdf_unresolved_marker_count": 0,
       "source_date_epoch": "1786609963",
       "two_build_identical": true
@@ -128,9 +128,9 @@
           "within_band": true
         },
         "11 Reproducibility": {
-          "md_words": 281,
+          "md_words": 370,
           "pct_of_source": 100.0,
-          "pdf_words": 281,
+          "pdf_words": 370,
           "within_band": true
         },
         "2 Setting": {
@@ -186,63 +186,46 @@
         {
           "found": true,
           "identifiers": [],
-          "index": 0,
+          "index": 44,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [],
+          "sentence": "The sensor writes an observation; the deterministic contract computes the verdict."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 91,
           "missing_identifiers": [],
           "missing_numbers": [],
           "numbers": [
-            "1",
+            "2",
+            "20",
             "5"
           ],
-          "sentence": "Papers 1 to 5 of this series govern agent actions with facts read from systems of record."
+          "sentence": "The arm health rule stops a run before any further call if more than 2 invalid replies occur in the first 20 validation records of a sensor, or if more than 5% "
         },
         {
           "found": true,
           "identifiers": [],
-          "index": 24,
+          "index": 104,
           "missing_identifiers": [],
           "missing_numbers": [],
           "numbers": [
-            "7"
+            "700"
           ],
-          "sentence": "Thresholds must therefore be fitted, not assumed (Section 7)."
+          "sentence": "Each cell is a sensor at a noise level, on the 700 test items."
         },
         {
           "found": true,
           "identifiers": [],
-          "index": 50,
-          "missing_identifiers": [],
-          "missing_numbers": [],
-          "numbers": [],
-          "sentence": "The model is not asked whether an approval is valid, current or sufficient."
-        },
-        {
-          "found": true,
-          "identifiers": [],
-          "index": 107,
+          "index": 106,
           "missing_identifiers": [],
           "missing_numbers": [],
           "numbers": [
-            "7.8"
+            "5"
           ],
-          "sentence": "No cell's unsafe rate exceeded its B\u207a (H1, Section 7.8)."
-        },
-        {
-          "found": true,
-          "identifiers": [],
-          "index": 116,
-          "missing_identifiers": [],
-          "missing_numbers": [],
-          "numbers": [],
-          "sentence": "This programme had recorded no deny-to-allow change from sensing before this paper."
-        },
-        {
-          "found": true,
-          "identifiers": [],
-          "index": 123,
-          "missing_identifiers": [],
-          "missing_numbers": [],
-          "numbers": [],
-          "sentence": "Each record stated two incompatible things about the approval, and the sensors admitted the statement in the appended comment."
+          "sentence": "B\u207a and B are the split-B bounds of Section 5."
         },
         {
           "found": true,
@@ -256,32 +239,57 @@
         {
           "found": true,
           "identifiers": [],
-          "index": 128,
+          "index": 144,
           "missing_identifiers": [],
           "missing_numbers": [],
           "numbers": [],
-          "sentence": "On the test split, the verdict-change and unsafe rates were:"
+          "sentence": "The unsafe rate did not move between the two ceilings."
         },
         {
           "found": true,
           "identifiers": [],
-          "index": 177,
+          "index": 155,
           "missing_identifiers": [],
           "missing_numbers": [],
-          "numbers": [],
-          "sentence": "The composition of a sensor with a deciding check is therefore not claimed as new."
+          "numbers": [
+            "6"
+          ],
+          "sentence": "H1 combines the 6 E1 cells' exact one-sided binomial tests with a Bonferroni factor."
         },
         {
           "found": true,
           "identifiers": [],
-          "index": 214,
+          "index": 191,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [
+            "0.0395",
+            "0.0014"
+          ],
+          "sentence": "Every B\u207a in E1 is at least 0.0395, while the largest observed unsafe rate is 0.0014."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 211,
           "missing_identifiers": [],
           "missing_numbers": [],
           "numbers": [],
-          "sentence": "The general proofs in Appendix A are tagged pending-human-review."
+          "sentence": "The paired test accounts for this; the count of flips does not measure independent events."
+        },
+        {
+          "found": true,
+          "identifiers": [
+            "CH-C1"
+          ],
+          "index": 242,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [],
+          "sentence": "E1 statement banks (CH-C1). {approver}, {doc} and {ref} are drawn per item; {d} is the item's approval date."
         }
       ],
-      "source_sha256": "b7dd70d260bc69a6434b9bf8923da9f03740ba5b3aa500dc5e3754fb81e3d848"
+      "source_sha256": "d005e4a753c063a87a43014e1c385f7ab0011a1f8ecd3c7d442207523cc1a94f"
     },
     "G5_structure_parity": {
       "counts": {

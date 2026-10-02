@@ -92,3 +92,21 @@ def test_paper_tools_reports_kpsewhich_lookup() -> None:
 
     tools = preflight.paper_tools(which=which, run=lambda *a, **k: R())
     assert tools["lmodern.sty"] == "/texlive/lmodern.sty" and tools["pandoc"] is None
+
+
+def test_pandoc_must_be_3_1() -> None:  # R3-1
+    assert preflight.pandoc_matches("3.1.3") and preflight.pandoc_matches("3.1.11")
+    for bad in ("3.7.0.2", "2.19.2", "3.2", None):
+        assert not preflight.pandoc_matches(bad)
+
+
+def test_tool_version_parses_the_first_dotted_number() -> None:  # R3-1
+    class R:
+        stdout = "pandoc 3.1.3\nFeatures: +server\n"
+
+    assert preflight.tool_version(["pandoc", "--version"], run=lambda *a, **k: R()) == "3.1.3"
+
+    def missing(*a, **k):
+        raise FileNotFoundError
+
+    assert preflight.tool_version(["nope"], run=missing) is None

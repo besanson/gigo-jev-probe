@@ -93,17 +93,24 @@ Every registration from jev-v3 onward includes an arm health check with a hard s
 Manuscript v0.1: [`paper/paper6-draft-v0.1.md`](paper/paper6-draft-v0.1.md) holds every number as a `{{slot}}`; `python paper/populate.py` fills it from `results/p6.slots.json`, the checker outputs, the mutation result and the E0 slots at tag `jev-probes-final` into [`paper/paper6-draft-v0.1-populated.md`](paper/paper6-draft-v0.1-populated.md). The LaTeX release kit in [`paper-tex/`](paper-tex/) is ported with attribution from `sarc-authority-derivation` at its pin.
 
 ```bash
+make bootstrap        # siblings at their pins, .venv, dev extras, pin check, toolchain preflight
 make paper            # figure, populated draft, refs.bib, main.tex (pandoc), sidecars, PDF (Tectonic), arXiv tarball
 make gates            # release gates G1 to G9 plus terminology, proof-status, typed-numerals and freshness lints
-make release-check    # tests, checkers, results regeneration, lints and gates; no model call, no network
+make release-check    # tests, checkers, results regeneration, lints and gates; no inference call
 python paper-tex/verify_citations.py   # re-fetch and re-verify every citation (needs network)
 ```
 
+**Canonical document toolchain** (round-three finding R3-1): **Pandoc 3.1.3** and **Tectonic 0.17.0**. Under these, `paper-tex/main.tex`, `main.pdf` and `arxiv.tar.gz` regenerate byte for byte. Other Pandoc writers produce a different `main.tex` (Pandoc 3.7.0.2, 2.19.2 and 2.17.1.1 were observed to), so `make release-check` starts with `python preflight.py --paper` and stops with a message naming Pandoc 3.1.3 when Pandoc's major.minor is not 3.1. A different Tectonic version is reported, not refused.
+
+`release-check` makes no inference call (R3-2). It is not offline by default: Tectonic needs its TeX bundle, `default_bundle_v33`, either already in its cache or fetched over the network on the first build.
+
 Tools beyond Python, all reported by `python preflight.py --paper`:
 
-- a TeX engine: Tectonic (canonical; it fetches `lmodern.sty` from its own bundle) or `latexmk` with a TeX Live that provides `lmodern.sty` (found with `kpsewhich`);
-- `pandoc`;
+- a TeX engine: Tectonic 0.17.0 (canonical; it fetches `lmodern.sty` from its bundle) or `latexmk` with a TeX Live that provides `lmodern.sty` (found with `kpsewhich`);
+- `pandoc` 3.1.3;
 - `pdftotext` and `pdfinfo` (poppler-utils).
+
+`make bootstrap` (R3-3) runs the install sequence of the Reproduction path above in one step: it clones both siblings at their `engines.lock` pins if absent, creates `.venv`, installs the dev extras and `dqSarc`, and runs the pin check and `preflight.py --paper`.
 
 Figure 1 is drawn by `paper/figs/fig1_pipeline.py` with matplotlib (pinned in the `dev` extras), which writes both the SVG and the PDF with its bundled fonts and fixed metadata; no SVG converter is needed.
 

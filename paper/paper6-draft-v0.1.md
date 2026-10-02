@@ -361,11 +361,11 @@ Correctness is relative to the declared loss model, candidate representation and
 
 **Checkers and mutation testing.** `make formal` runs the S1, S2, S3 and N6 checkers twice and requires identical output. The S1 checker evaluated {{chk.s1_check.pointwise_checks.B12}}, {{chk.s1_check.pointwise_checks.B3}} and {{chk.s1_check.pointwise_checks.T2}} pointwise cases on the three finite model families. Mutation testing of `src/sensed_authority` with {{mut.tool}} killed {{mut.killed}} of {{mut.total}} mutants with {{mut.no_tests}} untested, a kill score of {{mut.kill_score}} against a threshold of {{mut.threshold}}.
 
-**Review and re-registration.** The external fence review, its attestation, the superseded registration and the re-registration are all committed and tagged. Departures are logged in `prereg/DEVIATIONS.md`; none was recorded for this paper.
+**Review and re-registration.** The external fence review, its attestation, the superseded registration and the re-registration are all committed and tagged. Three review rounds then examined the manuscript: R1 by the author's adjudicating model session, R2 by an external model (the reviewer of the fence), and R3 a mechanical replication from a fresh clone, which recomputed every reported table independently of this repository's code. All three are committed unedited, with attestations, under `review-secondary/`. Departures are logged in `prereg/DEVIATIONS.md`; none was recorded for this paper.
 
 **Standing policy.** The arm health rule, introduced after KI-1, is now standing policy for every registered model run in this programme: a smoke check on the first 20 validation records and a 5% invalid ceiling on the validation split, both final.
 
-**Build.** `make paper` regenerates the manuscript, the figure, the bibliography and the PDF. `make release-check` runs the tests, the checkers, the analysis regeneration, the lints and the release gates.
+**Build.** `make paper` regenerates the manuscript, the figure, the bibliography and the PDF. The canonical document toolchain is Pandoc `3.1.3` and Tectonic `0.17.0` with its `default_bundle_v33` bundle; under it the LaTeX source, the PDF and the arXiv archive regenerate byte for byte, and `make release-check` refuses another Pandoc minor version. `make release-check` runs the tests, the checkers, the analysis regeneration, the lints and the release gates.
 
 # Acknowledgements {.unnumbered}
 

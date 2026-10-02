@@ -13,11 +13,19 @@ The paper report (round-one finding F2) lists the tools `make paper` and `make r
 need: a TeX engine (tectonic, the canonical one, or latexmk), lmodern.sty as kpsewhich finds it
 (a TeX Live install; Tectonic fetches lmodern from its own bundle instead), pandoc and pdftotext
 (with pdfinfo, from poppler-utils). It exits 3 if the engine, pandoc or pdftotext is missing.
+
+Round-three finding R3-1: the document toolchain is declared. Canonical: Pandoc 3.1.3 and
+Tectonic 0.17.0. `--paper` prints both versions, and exits 3 with a message naming the
+canonical version when Pandoc's major.minor is not 3.1, because other Pandoc writers produce a
+different main.tex (release-check runs `preflight.py --paper` first). A different Tectonic
+version is reported, not refused. Tectonic also needs its bundle (`default_bundle_v33`) either
+cached or reachable over the network.
 """
 
 from __future__ import annotations
 
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -83,6 +91,26 @@ def paper_tools(which=shutil.which, run=subprocess.run) -> dict[str, str | None]
     return found
 
 
+CANONICAL_PANDOC = "3.1.3"
+CANONICAL_TECTONIC = "0.17.0"
+TECTONIC_BUNDLE = "default_bundle_v33"
+
+
+def tool_version(cmd: list[str], run=subprocess.run) -> str | None:
+    """The first dotted version number a tool prints for `cmd`, or None if it cannot run."""
+    try:
+        out = run(cmd, capture_output=True, text=True, check=False).stdout
+    except OSError:
+        return None
+    m = re.search(r"(\d+(?:\.\d+)+)", out or "")
+    return m.group(1) if m else None
+
+
+def pandoc_matches(version: str | None, canonical: str = CANONICAL_PANDOC) -> bool:
+    """major.minor must equal the canonical Pandoc's (3.1)."""
+    return version is not None and version.split(".")[:2] == canonical.split(".")[:2]
+
+
 def paper_report(tools: dict[str, str | None]) -> tuple[list[str], bool]:
     engine = tools.get("tectonic") or tools.get("latexmk")
     lines = [f"  {name}: {path or 'not found'}" for name, path in tools.items()]
@@ -97,8 +125,20 @@ def paper_report(tools: dict[str, str | None]) -> tuple[list[str], bool]:
 def main(env: dict[str, str] | None = None, argv: list[str] | None = None) -> int:
     argv = sys.argv[1:] if argv is None else argv
     if "--paper" in argv:
-        lines, ok = paper_report(paper_tools())
-        print("preflight --paper: " + ("ok" if ok else "missing tools (see README, Paper 6)"))
+        tools = paper_tools()
+        lines, ok = paper_report(tools)
+        pandoc = tool_version(["pandoc", "--version"]) if tools.get("pandoc") else None
+        tectonic = tool_version(["tectonic", "--version"]) if tools.get("tectonic") else None
+        lines.append(f"  pandoc version: {pandoc or 'unknown'} (canonical {CANONICAL_PANDOC})")
+        lines.append(f"  tectonic version: {tectonic or 'not found'} (canonical {CANONICAL_TECTONIC}; "
+                     f"bundle {TECTONIC_BUNDLE}, cached or over the network)")
+        if tools.get("pandoc") and not pandoc_matches(pandoc):
+            lines.append(f"  ERROR: Pandoc {pandoc} is not {CANONICAL_PANDOC.rsplit('.', 1)[0]}.x; install Pandoc "
+                         f"{CANONICAL_PANDOC} (other writers produce a different paper-tex/main.tex, see README)")
+            ok = False
+        if tectonic and tectonic != CANONICAL_TECTONIC:
+            lines.append(f"  note: Tectonic {tectonic} is not the canonical {CANONICAL_TECTONIC}")
+        print("preflight --paper: " + ("ok" if ok else "toolchain not ready (see README, Paper 6)"))
         print("\n".join(lines))
         return 0 if ok else 3
     env = dict(os.environ) if env is None else env

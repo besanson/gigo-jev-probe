@@ -1,6 +1,25 @@
-.PHONY: formal mutate run6 paper gates release-check
+.PHONY: bootstrap formal mutate run6 paper gates release-check
 
 PY ?= python
+
+# R3-3: the README install sequence as one target. Clones both siblings beside this repository
+# if absent, checks out their engines.lock pins, creates .venv, installs the dev extras and
+# dqSarc, then runs the pin check and the paper toolchain preflight. Needs network access
+# (git, pip). Activate .venv afterwards (`. .venv/bin/activate`) before the other targets.
+BOOT_PY = .venv/bin/python
+bootstrap:
+	@set -e; for name in dqSarc sarc-authority-derivation; do \
+	  url=$$(python3 -c "import tomllib,sys;print(tomllib.load(open('engines.lock','rb'))[sys.argv[1]]['url'])" $$name); \
+	  commit=$$(python3 -c "import tomllib,sys;print(tomllib.load(open('engines.lock','rb'))[sys.argv[1]]['commit'])" $$name); \
+	  [ -d ../$$name/.git ] || git clone $$url ../$$name; \
+	  git -C ../$$name fetch -q origin $$commit 2>/dev/null || true; \
+	  git -C ../$$name checkout -q --detach $$commit; \
+	done
+	[ -x $(BOOT_PY) ] || python3 -m venv .venv
+	$(BOOT_PY) -m pip install -q -e ".[dev,live,live-v2]" -e ../dqSarc
+	$(BOOT_PY) -c "import preflight,sys; e=preflight.check_pin(); print('bootstrap: ' + (e or 'both siblings at their pins')); sys.exit(2 if e else 0)"
+	$(BOOT_PY) preflight.py --paper
+	@echo "bootstrap: done. Activate with: . .venv/bin/activate"
 
 # Paper 6 Phase B: run every checker twice and require byte-identical output, then install it.
 formal:
@@ -37,9 +56,13 @@ paper:
 gates:
 	$(PY) paper-tex/gates/run_gates.py
 
-# Everything, from the committed caches; makes no model call and needs no network. Tracked files
-# are regenerated in place and must come out byte-identical (git diff --exit-code).
+# Everything, from the committed caches; makes no inference call (R3-2). Tectonic needs its bundle
+# (default_bundle_v33) already cached or network access to fetch it. Tracked files are regenerated
+# in place and must come out byte-identical (git diff --exit-code). The document toolchain is
+# declared (R3-1): Pandoc 3.1.3 and Tectonic 0.17.0; the first step refuses another Pandoc 3.x.
 release-check:
+	@echo "=== release-check: document toolchain (Pandoc 3.1, Tectonic) ==="
+	$(PY) preflight.py --paper
 	@echo "=== release-check: test suite ==="
 	$(PY) -m pytest -q
 	@echo "=== release-check: checkers, two runs byte-identical and equal to the committed outputs ==="
