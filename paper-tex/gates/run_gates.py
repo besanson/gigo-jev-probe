@@ -52,9 +52,9 @@ What paper 6 changes, and why:
   verified citation to be cited.
 - G9 reads the bibliography audit from paper-tex/bib-audit.json (written by
   paper-tex/verify_citations.py) and requires a passing audit record for every citation.
-- Repository lints run as gate rows: terminology (lint/terminology.py) and proof status
-  (checkers/proof_status_lint.py). G3's reverse direction uses lint/typed_numerals.py, which is
-  added with the manuscript.
+- Four repository lints run as gate rows: terminology (lint/terminology.py), proof status
+  (checkers/proof_status_lint.py), typed numerals (lint/typed_numerals.py) and populated-draft
+  freshness (paper/populate.py --check).
 """
 from __future__ import annotations
 
@@ -843,6 +843,14 @@ def lint_proof_status() -> dict:
     return _lint(["-m", "checkers.proof_status_lint"])
 
 
+def lint_typed_numerals() -> dict:
+    return _lint(["-m", "lint.typed_numerals"])
+
+
+def lint_populated_freshness() -> dict:
+    return _lint(["paper/populate.py", "--check"])
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
@@ -859,6 +867,8 @@ GATES = {
     "G9_bibliography_quality": gate_g9_bibliography_quality,
     "L_terminology": lint_terminology,
     "L_proof_status": lint_proof_status,
+    "L_typed_numerals": lint_typed_numerals,
+    "L_populated_freshness": lint_populated_freshness,
 }
 
 

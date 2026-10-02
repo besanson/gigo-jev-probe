@@ -1,0 +1,311 @@
+{
+ "flips": [
+  {
+   "admitted": {
+    "approval_assertion": "not_recorded",
+    "data_residency_region": "us"
+   },
+   "approval_token": {
+    "from_admitted": "absent",
+    "true": "expired"
+   },
+   "arm": null,
+   "experiment": "E1",
+   "item": 6042,
+   "label": "E1",
+   "noise": "n30",
+   "perturbation": {
+    "approval_assertion": "contradictory",
+    "data_residency_region": "none"
+   },
+   "reduct": null,
+   "sensor": "jev",
+   "truth": {
+    "approval_assertion": "recorded:2026-08-15",
+    "data_residency_region": "us"
+   }
+  },
+  {
+   "admitted": {
+    "approval_assertion": "recorded",
+    "branch": "main"
+   },
+   "arm": 1,
+   "experiment": "E2",
+   "item": 1595,
+   "label": "E2.1",
+   "noise": "n30",
+   "perturbation": {
+    "approval_assertion": "contradictory",
+    "branch": "none"
+   },
+   "reduct": "R_branch",
+   "sensor": "jev",
+   "truth": {
+    "approval_assertion": "not_recorded",
+    "branch": "main"
+   }
+  },
+  {
+   "admitted": {
+    "approval_assertion": "recorded",
+    "branch": "main"
+   },
+   "arm": 1,
+   "experiment": "E2",
+   "item": 1595,
+   "label": "E2.1",
+   "noise": "n30",
+   "perturbation": {
+    "approval_assertion": "contradictory",
+    "branch": "none"
+   },
+   "reduct": "R_env",
+   "sensor": "jev",
+   "truth": {
+    "approval_assertion": "not_recorded",
+    "branch": "main"
+   }
+  },
+  {
+   "admitted": {
+    "approval_assertion": "recorded",
+    "environment": "production"
+   },
+   "arm": 2,
+   "experiment": "E2",
+   "item": 2312,
+   "label": "E2.2",
+   "noise": "n10",
+   "perturbation": {
+    "approval_assertion": "contradictory",
+    "environment": "none"
+   },
+   "reduct": "R_branch",
+   "sensor": "jev",
+   "truth": {
+    "approval_assertion": "not_recorded",
+    "environment": "production"
+   }
+  },
+  {
+   "admitted": {
+    "approval_assertion": "recorded",
+    "environment": "production"
+   },
+   "arm": 2,
+   "experiment": "E2",
+   "item": 2312,
+   "label": "E2.2",
+   "noise": "n10",
+   "perturbation": {
+    "approval_assertion": "contradictory",
+    "environment": "none"
+   },
+   "reduct": "R_env",
+   "sensor": "jev",
+   "truth": {
+    "approval_assertion": "not_recorded",
+    "environment": "production"
+   }
+  },
+  {
+   "admitted": {
+    "approval_assertion": "recorded",
+    "environment": "production"
+   },
+   "arm": 2,
+   "experiment": "E2",
+   "item": 2312,
+   "label": "E2.2",
+   "noise": "n30",
+   "perturbation": {
+    "approval_assertion": "contradictory",
+    "environment": "none"
+   },
+   "reduct": "R_branch",
+   "sensor": "jev",
+   "truth": {
+    "approval_assertion": "not_recorded",
+    "environment": "production"
+   }
+  },
+  {
+   "admitted": {
+    "approval_assertion": "recorded",
+    "environment": "production"
+   },
+   "arm": 2,
+   "experiment": "E2",
+   "item": 2312,
+   "label": "E2.2",
+   "noise": "n30",
+   "perturbation": {
+    "approval_assertion": "contradictory",
+    "environment": "none"
+   },
+   "reduct": "R_env",
+   "sensor": "jev",
+   "truth": {
+    "approval_assertion": "not_recorded",
+    "environment": "production"
+   }
+  },
+  {
+   "admitted": {
+    "approval_assertion": "recorded",
+    "branch": "main"
+   },
+   "arm": 1,
+   "experiment": "E2",
+   "item": 1595,
+   "label": "E2.1",
+   "noise": "n30",
+   "perturbation": {
+    "approval_assertion": "contradictory",
+    "branch": "none"
+   },
+   "reduct": "R_branch",
+   "sensor": "llm",
+   "truth": {
+    "approval_assertion": "not_recorded",
+    "branch": "main"
+   }
+  },
+  {
+   "admitted": {
+    "approval_assertion": "recorded",
+    "branch": "main"
+   },
+   "arm": 1,
+   "experiment": "E2",
+   "item": 1595,
+   "label": "E2.1",
+   "noise": "n30",
+   "perturbation": {
+    "approval_assertion": "contradictory",
+    "branch": "none"
+   },
+   "reduct": "R_env",
+   "sensor": "llm",
+   "truth": {
+    "approval_assertion": "not_recorded",
+    "branch": "main"
+   }
+  },
+  {
+   "admitted": {
+    "approval_assertion": "recorded",
+    "environment": "production"
+   },
+   "arm": 2,
+   "experiment": "E2",
+   "item": 2312,
+   "label": "E2.2",
+   "noise": "n10",
+   "perturbation": {
+    "approval_assertion": "contradictory",
+    "environment": "none"
+   },
+   "reduct": "R_branch",
+   "sensor": "llm",
+   "truth": {
+    "approval_assertion": "not_recorded",
+    "environment": "production"
+   }
+  },
+  {
+   "admitted": {
+    "approval_assertion": "recorded",
+    "environment": "production"
+   },
+   "arm": 2,
+   "experiment": "E2",
+   "item": 2312,
+   "label": "E2.2",
+   "noise": "n10",
+   "perturbation": {
+    "approval_assertion": "contradictory",
+    "environment": "none"
+   },
+   "reduct": "R_env",
+   "sensor": "llm",
+   "truth": {
+    "approval_assertion": "not_recorded",
+    "environment": "production"
+   }
+  },
+  {
+   "admitted": {
+    "approval_assertion": "recorded",
+    "environment": "production"
+   },
+   "arm": 2,
+   "experiment": "E2",
+   "item": 2312,
+   "label": "E2.2",
+   "noise": "n30",
+   "perturbation": {
+    "approval_assertion": "contradictory",
+    "environment": "none"
+   },
+   "reduct": "R_branch",
+   "sensor": "llm",
+   "truth": {
+    "approval_assertion": "not_recorded",
+    "environment": "production"
+   }
+  },
+  {
+   "admitted": {
+    "approval_assertion": "recorded",
+    "environment": "production"
+   },
+   "arm": 2,
+   "experiment": "E2",
+   "item": 2312,
+   "label": "E2.2",
+   "noise": "n30",
+   "perturbation": {
+    "approval_assertion": "contradictory",
+    "environment": "none"
+   },
+   "reduct": "R_env",
+   "sensor": "llm",
+   "truth": {
+    "approval_assertion": "not_recorded",
+    "environment": "production"
+   }
+  }
+ ],
+ "source": "experiments/flips_p6.py (caches and frozen thresholds only; no model call)",
+ "summary": {
+  "all_on_contradictory_approval_statement": true,
+  "all_wrong_field_is_approval_assertion": true,
+  "distinct_records": 3,
+  "e2_both_reducts_on_every_flip": true,
+  "e2_both_sensors_on_every_flip": true,
+  "flips": 13,
+  "flips_by_experiment": {
+   "E1": 1,
+   "E2": 12
+  },
+  "records": [
+   {
+    "arm": null,
+    "experiment": "E1",
+    "item": 6042
+   },
+   {
+    "arm": 1,
+    "experiment": "E2",
+    "item": 1595
+   },
+   {
+    "arm": 2,
+    "experiment": "E2",
+    "item": 2312
+   }
+  ]
+ }
+}

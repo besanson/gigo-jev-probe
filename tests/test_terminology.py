@@ -47,3 +47,28 @@ def test_package_init_defines_only_a_version() -> None:
     assigned = [t.id for node in tree.body if isinstance(node, ast.Assign) for t in node.targets]
     assert assigned == ["__version__"]
     assert not [n for n in tree.body if isinstance(n, (ast.Import, ast.ImportFrom, ast.FunctionDef, ast.ClassDef))]
+
+
+@pytest.mark.parametrize("text, hit", [
+    ("The inferred value is admitted.", "inferred value"),
+    ("This proves the bound.", "proves"),
+    ("It guarantees nothing.", "guarantee"),
+    ("We pick the smallest reduct.", "the smallest"),
+    ("A pause — then more.", "—"),
+    ("The behavior of the sensor.", "behavior"),
+    ("We minimize the bound.", "minimize"),
+])
+def test_manuscript_rules(text: str, hit: str) -> None:
+    assert hit in terminology.manuscript_hits(text)
+
+
+def test_manuscript_rules_skip_code_and_the_quoted_non_claims() -> None:
+    claims = (terminology.ROOT / "CLAIMS.md").read_text(encoding="utf-8")
+    sentence = claims.rsplit("stated in the paper: ", 1)[1].strip()
+    assert terminology.manuscript_hits(f'Non-claims: "{sentence}" and `minimize_cost()`.') == []
+    assert "safe in general" in terminology.manuscript_hits("Sensing is safe in general.")
+
+
+def test_the_manuscript_is_linted() -> None:
+    names = {str(p.relative_to(terminology.ROOT)) for p in terminology.files()}
+    assert terminology.MANUSCRIPT in names
