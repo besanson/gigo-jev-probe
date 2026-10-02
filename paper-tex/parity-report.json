@@ -1,0 +1,431 @@
+{
+  "all_pass": true,
+  "gates": {
+    "G1_build": {
+      "builds": [
+        {
+          "errors": [],
+          "exit_code": 0,
+          "file_list": [
+            "main.pdf",
+            "main.tex"
+          ],
+          "missing_characters": [],
+          "overfull_hbox_above_10pt": [],
+          "page_count": 20,
+          "passes_needed": 1,
+          "pdf_produced": true,
+          "pdf_sha256": "55c194436f5f33adab4617ea824091668f5e3edf5a36d98a722aaeddb17d4be1",
+          "pdf_unresolved_marker_count": 0,
+          "undefined_citations": [],
+          "undefined_references": []
+        },
+        {
+          "errors": [],
+          "exit_code": 0,
+          "file_list": [
+            "main.pdf",
+            "main.tex"
+          ],
+          "missing_characters": [],
+          "overfull_hbox_above_10pt": [],
+          "page_count": 20,
+          "passes_needed": 1,
+          "pdf_produced": true,
+          "pdf_sha256": "55c194436f5f33adab4617ea824091668f5e3edf5a36d98a722aaeddb17d4be1",
+          "pdf_unresolved_marker_count": 0,
+          "undefined_citations": [],
+          "undefined_references": []
+        }
+      ],
+      "compiler": "tectonic",
+      "compiler_log_undefined_citations": [],
+      "compiler_log_undefined_references": [],
+      "errors": [],
+      "exit_code_zero": true,
+      "file_list": [
+        "main.pdf",
+        "main.tex"
+      ],
+      "missing_characters": [],
+      "overfull_hbox_above_10pt": [],
+      "page_count": 20,
+      "pass": true,
+      "pdf_produced": true,
+      "pdf_sha256": "55c194436f5f33adab4617ea824091668f5e3edf5a36d98a722aaeddb17d4be1",
+      "pdf_unresolved_marker_count": 0,
+      "source_date_epoch": "1786609963",
+      "two_build_identical": true
+    },
+    "G2_token_purity": {
+      "cite_needed_placeholder_count": 0,
+      "forbidden_token_counts": {
+        "**": 0,
+        "TODO": 0,
+        "[@": 0,
+        "[GENERATED": 0,
+        "```": 0,
+        "{{": 0
+      },
+      "pass": true
+    },
+    "G3_number_parity": {
+      "pass": true,
+      "pdf_numbers_not_in_slots_or_registered": [],
+      "slot_number_count": 243,
+      "slot_numbers_missing_from_pdf": {},
+      "tag_counts": {
+        "checked-scope-only": {
+          "pdf_count": 4,
+          "source_count": 4
+        },
+        "machine-checked": {
+          "pdf_count": 5,
+          "source_count": 5
+        },
+        "pending-human-review": {
+          "pdf_count": 5,
+          "source_count": 5
+        }
+      },
+      "used_slot_count": 534
+    },
+    "G4_prose_parity": {
+      "front_matter_metadata_check": {
+        "affiliation": {
+          "match": true,
+          "md": "Universidad Torcuato Di Tella",
+          "tex": "Universidad Torcuato Di Tella"
+        },
+        "author_name": {
+          "match": true,
+          "md": "Gaston Besanson",
+          "tex": "Gaston Besanson"
+        },
+        "pass": true,
+        "title": {
+          "match": true,
+          "md": "Probabilistic Sensing, Deterministic Authority: Admitting Model-Produced Observations into Sufficiency-Checked Governance Contracts",
+          "tex": "Probabilistic Sensing, Deterministic Authority: Admitting Model-Produced Observations into Sufficiency-Checked Governance Contracts"
+        }
+      },
+      "pass": true,
+      "section_word_ratio_band_pct": [
+        80.0,
+        125.0
+      ],
+      "sections": {
+        "1 Introduction": {
+          "md_words": 468,
+          "pct_of_source": 101.068,
+          "pdf_words": 473,
+          "within_band": true
+        },
+        "10 Limitations": {
+          "md_words": 286,
+          "pct_of_source": 100.35,
+          "pdf_words": 287,
+          "within_band": true
+        },
+        "11 Reproducibility": {
+          "md_words": 281,
+          "pct_of_source": 100.0,
+          "pdf_words": 281,
+          "within_band": true
+        },
+        "2 Setting": {
+          "md_words": 441,
+          "pct_of_source": 121.088,
+          "pdf_words": 534,
+          "within_band": true
+        },
+        "3 Invariants": {
+          "md_words": 243,
+          "pct_of_source": 100.0,
+          "pdf_words": 243,
+          "within_band": true
+        },
+        "4 Propositions": {
+          "md_words": 637,
+          "pct_of_source": 100.471,
+          "pdf_words": 640,
+          "within_band": true
+        },
+        "5 Admission policy and estimation": {
+          "md_words": 295,
+          "pct_of_source": 101.356,
+          "pdf_words": 299,
+          "within_band": true
+        },
+        "6 Experimental design": {
+          "md_words": 594,
+          "pct_of_source": 100.168,
+          "pdf_words": 595,
+          "within_band": true
+        },
+        "7 Results": {
+          "md_words": 1995,
+          "pct_of_source": 99.098,
+          "pdf_words": 1977,
+          "within_band": true
+        },
+        "8 Related work and fence": {
+          "md_words": 361,
+          "pct_of_source": 100.0,
+          "pdf_words": 361,
+          "within_band": true
+        },
+        "9 Claims versus non-claims": {
+          "md_words": 274,
+          "pct_of_source": 98.175,
+          "pdf_words": 269,
+          "within_band": true
+        }
+      },
+      "sentence_sample": [
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 12,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [],
+          "sentence": "The invariant this paper adds is one sentence."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 17,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [
+            "2",
+            "3"
+          ],
+          "sentence": "The model never emits a verdict (Sections 2 and 3)."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 47,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [],
+          "sentence": "I2 answers the obvious objection to letting a model near an authority gate."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 48,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [],
+          "sentence": "The model is not asked whether an approval is valid, current or sufficient."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 77,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [],
+          "sentence": "The earlier probes jev-v1, jev-v2 and jev-v3 are quoted from tag jev-probes-final (commit e1fc75b)."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 83,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [],
+          "sentence": "The record carries no property value except the sensed statements."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 99,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [
+            "15.0268",
+            "1.47e-50"
+          ],
+          "sentence": "Calibration was refuted for Jev in jev-v1 (Spiegelhalter Z = -15.0268, Holm-adjusted p = 1.47e-50, verdict: refuted)."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 123,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [],
+          "sentence": "On the test split, the verdict-change and unsafe rates were:"
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 161,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [],
+          "sentence": "Conformal prediction and risk control give distribution-free coverage for set-valued predictions [@vovk2022algorithmic; @angelopoulos2023gentle]."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 175,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [],
+          "sentence": "Claims versus non-claims"
+        }
+      ],
+      "source_sha256": "f2a1751705f073bea81a4821a7d9e9d98328f47175e647186b11933290c493a7"
+    },
+    "G5_structure_parity": {
+      "counts": {
+        "figures": {
+          "equal": true,
+          "source": 1,
+          "tex": 1
+        },
+        "footnotes": {
+          "equal": true,
+          "source": 1,
+          "tex": 1
+        },
+        "propositions": {
+          "equal": true,
+          "source": 5,
+          "tex": 5
+        },
+        "sections": {
+          "equal": true,
+          "source": 14,
+          "tex": 14
+        },
+        "subsections": {
+          "equal": true,
+          "source": 8,
+          "tex": 8
+        },
+        "tables": {
+          "equal": true,
+          "source": 17,
+          "tex": 17
+        }
+      },
+      "pass": true
+    },
+    "G6_disclosure_and_banners": {
+      "pass": true,
+      "sentences": {
+        "ai_assistance": {
+          "in_manuscript": true,
+          "in_pdf": true
+        },
+        "external_review": {
+          "in_manuscript": true,
+          "in_pdf": true
+        },
+        "fence": {
+          "in_manuscript": true,
+          "in_pdf": true
+        },
+        "invariant": {
+          "in_manuscript": true,
+          "in_pdf": true
+        },
+        "non_claim": {
+          "in_manuscript": true,
+          "in_pdf": true
+        }
+      }
+    },
+    "G7_sidecar_sync": {
+      "abstract_at_most_200_words": true,
+      "abstract_char_count": 1258,
+      "abstract_has_required_phrase": true,
+      "abstract_within_max_chars": true,
+      "abstract_word_count": 190,
+      "in_sync": {
+        "arxiv-abstract.txt": true,
+        "arxiv-metadata.txt": true
+      },
+      "metadata_has_required_author_line": true,
+      "pass": true,
+      "sidecars_match_generator": true
+    },
+    "G8_citation_completeness": {
+      "citation_check_tokens_clean": true,
+      "cite_placeholder_count": 0,
+      "cite_placeholders": [],
+      "cited_keys": [
+        "angelopoulos2023gentle",
+        "artikis2012event",
+        "astorga2023perception",
+        "barthe2016program",
+        "besanson2026compiling",
+        "brier1950verification",
+        "chow1970optimum",
+        "clopper1934use",
+        "geifman2017selective",
+        "guo2017calibration",
+        "holm1979simple",
+        "madras2018predict",
+        "mcnemar1947note",
+        "mozannar2020consistent",
+        "pawlak1982rough",
+        "spiegelhalter1986probabilistic",
+        "vovk2022algorithmic",
+        "waite2025state",
+        "zhu2024probabilistic"
+      ],
+      "keys_not_verified": [],
+      "pass": true,
+      "verified_but_uncited": []
+    },
+    "G9_bibliography_quality": {
+      "audit_failed": [],
+      "audit_missing": [],
+      "audited": 19,
+      "doi_mismatches": [],
+      "invalid_entry_type": [],
+      "misc_with_venue_info": [],
+      "missing_authors": [],
+      "missing_venue_fields": [],
+      "pass": true,
+      "refs_bib_matches_generator": true,
+      "total_citations": 19,
+      "truncated_author_list": []
+    },
+    "L_populated_freshness": {
+      "command": "python paper/populate.py --check",
+      "output_tail": [
+        "populate: ok (paper/paper6-draft-v0.1-populated.md)"
+      ],
+      "pass": true
+    },
+    "L_proof_status": {
+      "command": "python -m checkers.proof_status_lint",
+      "output_tail": [
+        "proof_status: ok"
+      ],
+      "pass": true
+    },
+    "L_terminology": {
+      "command": "python -m lint.terminology",
+      "output_tail": [
+        "terminology: ok (20 files)"
+      ],
+      "pass": true
+    },
+    "L_typed_numerals": {
+      "command": "python -m lint.typed_numerals",
+      "output_tail": [
+        "typed_numerals: ok (paper/paper6-draft-v0.1.md)"
+      ],
+      "pass": true
+    }
+  }
+}
