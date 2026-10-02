@@ -1,0 +1,63 @@
+% Pandoc template for paper 6. Generated main.tex is never hand-edited:
+%   python paper-tex/build_main_tex.py   (or `make paper`)
+% Preamble ported with attribution from sarc-authority-derivation's paper-tex/main.tex at the
+% engines.lock pin (commit cfb321e): same document class, packages, hyperref set-up and
+% emergency stretch. Additions are only what pandoc's LaTeX writer needs (longtable/calc
+% column widths, graphicx bounding, \tightlist), natbib for pandoc's --natbib citations,
+% and fvextra so verbatim blocks wrap instead of overflowing the margin.
+% Canonical build toolchain: Tectonic (gates/run_gates.py, G1).
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{calc}
+\usepackage{etoolbox}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{fvextra}
+\usepackage{microtype}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[margin=1in]{geometry}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\setlength{\emergencystretch}{8em}
+
+% pandoc support
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\DefineVerbatimEnvironment{verbatim}{Verbatim}{breaklines,breakanywhere,fontsize=\small}
+\AtBeginEnvironment{longtable}{\small}
+% identifiers such as data_residency_region may break after an underscore
+\renewcommand{\_}{\textunderscore\allowbreak}
+% figures stay where the manuscript places them (gate G4 compares sections)
+\floatplacement{figure}{H}
+\setlength{\LTleft}{0pt}
+\setlength{\LTright}{0pt}
+
+\title{$title$}
+\author{$author$\thanks{$thanks$}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+$abstract$
+\end{abstract}
+
+$body$
+
+\bibliographystyle{plainnat}
+\bibliography{refs}
+
+\end{document}
