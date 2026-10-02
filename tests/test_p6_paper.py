@@ -93,12 +93,13 @@ def test_manuscript_passes_the_numeral_lint() -> None:
     assert typed_numerals.main() == 0
 
 
-def test_figure_is_current_and_has_no_number() -> None:
+def test_figure_is_current_deterministic_and_has_no_number() -> None:
     fig = _load("fig1_pipeline", ROOT / "paper" / "figs" / "fig1_pipeline.py")
-    doc = fig.svg()
-    assert fig.text_has_no_digit(doc)
-    assert not fig.text_has_no_digit(doc.replace(">verdict<", ">verdict 2<"))
-    assert fig.OUT.read_text(encoding="utf-8") == doc
+    first, second = fig.render(), fig.render()
+    assert first == second
+    assert fig.text_has_no_digit(fig.LABELS)
+    assert not fig.text_has_no_digit([*fig.LABELS, "verdict 2"])
+    assert all(path.read_bytes() == data for path, data in first.items())
 
 
 def test_citation_comparison_detects_mismatches() -> None:

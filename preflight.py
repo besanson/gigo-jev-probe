@@ -6,11 +6,19 @@ for presence and never printed, logged, or echoed in any form.
 
 Exit codes: 0 ready · 1 missing or invalid configuration · 2 a sibling engine (dqSarc or
 sarc-authority-derivation) missing or not at its pin.
+
+    python preflight.py --paper   # report the paper 6 build toolchain; no key needed, no call made
+
+The paper report (round-one finding F2) lists the tools `make paper` and `make release-check`
+need: a TeX engine (tectonic, the canonical one, or latexmk), lmodern.sty as kpsewhich finds it
+(a TeX Live install; Tectonic fetches lmodern from its own bundle instead), pandoc and pdftotext
+(with pdfinfo, from poppler-utils). It exits 3 if the engine, pandoc or pdftotext is missing.
 """
 
 from __future__ import annotations
 
 import os
+import shutil
 import subprocess
 import sys
 import tomllib
@@ -63,7 +71,36 @@ def check_pin(lock_path: Path = ROOT / "engines.lock", names: tuple[str, ...] = 
     return None
 
 
-def main(env: dict[str, str] | None = None) -> int:
+def paper_tools(which=shutil.which, run=subprocess.run) -> dict[str, str | None]:
+    """Where each paper build tool is found (None if absent). lmodern.sty is looked up with
+    kpsewhich, which only a TeX Live style installation has."""
+    found: dict[str, str | None] = {name: which(name) for name in ("tectonic", "latexmk", "pandoc", "pdftotext", "pdfinfo")}
+    lmodern = None
+    if which("kpsewhich"):
+        out = run(["kpsewhich", "lmodern.sty"], capture_output=True, text=True, check=False).stdout.strip()
+        lmodern = out or None
+    found["lmodern.sty"] = lmodern
+    return found
+
+
+def paper_report(tools: dict[str, str | None]) -> tuple[list[str], bool]:
+    engine = tools.get("tectonic") or tools.get("latexmk")
+    lines = [f"  {name}: {path or 'not found'}" for name, path in tools.items()]
+    if tools.get("lmodern.sty") is None and tools.get("tectonic"):
+        lines.append("  (lmodern.sty not on a TeX Live path; Tectonic supplies it from its bundle)")
+    ok = bool(engine) and bool(tools.get("pandoc")) and bool(tools.get("pdftotext"))
+    if tools.get("latexmk") and not tools.get("tectonic") and tools.get("lmodern.sty") is None:
+        ok = False
+    return lines, ok
+
+
+def main(env: dict[str, str] | None = None, argv: list[str] | None = None) -> int:
+    argv = sys.argv[1:] if argv is None else argv
+    if "--paper" in argv:
+        lines, ok = paper_report(paper_tools())
+        print("preflight --paper: " + ("ok" if ok else "missing tools (see README, Paper 6)"))
+        print("\n".join(lines))
+        return 0 if ok else 3
     env = dict(os.environ) if env is None else env
     missing = check_env(env)
     if missing:

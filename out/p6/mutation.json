@@ -1,5 +1,5 @@
 {
- "generated_at_head_sha": "93737dbadcc200b4403fdaae589d7d839589d462",
+ "generated_at_head_sha": "11e51d6b17ad3253a79ac62160453c6f5e7075c7",
  "inputs": [
   "checkers/mutation_gate.py",
   "pyproject.toml",
@@ -14,7 +14,7 @@
   "tests/test_p6_record.py",
   "tests/test_p6_selection.py"
  ],
- "inputs_hash": "f6e59cffd1e5ab47886b8aca8feae28637b42cf725e6b4024d816b6d4325e27e",
+ "inputs_hash": "d30180d14536f3f5471f2ea1fcfc08546790d4f540a9d676e3ebb3b98bb05a1b",
  "kill_score": 0.9569471624266145,
  "killed": 489,
  "no_tests": 0,

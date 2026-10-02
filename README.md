@@ -99,7 +99,13 @@ make release-check    # tests, checkers, results regeneration, lints and gates; 
 python paper-tex/verify_citations.py   # re-fetch and re-verify every citation (needs network)
 ```
 
-Tools beyond Python: `pandoc`, `pdfinfo`/`pdftotext` (poppler-utils), `rsvg-convert` (librsvg2-bin) and Tectonic.
+Tools beyond Python, all reported by `python preflight.py --paper`:
+
+- a TeX engine: Tectonic (canonical; it fetches `lmodern.sty` from its own bundle) or `latexmk` with a TeX Live that provides `lmodern.sty` (found with `kpsewhich`);
+- `pandoc`;
+- `pdftotext` and `pdfinfo` (poppler-utils).
+
+Figure 1 is drawn by `paper/figs/fig1_pipeline.py` with matplotlib (pinned in the `dev` extras), which writes both the SVG and the PDF with its bundled fonts and fixed metadata; no SVG converter is needed.
 
 ## Status
 

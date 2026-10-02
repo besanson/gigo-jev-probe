@@ -386,6 +386,44 @@
    },
    "retrieved_on": "2026-10-02",
    "source": "arxiv"
+  },
+  {
+   "error": null,
+   "fetched": "https://export.arxiv.org/api/query?id_list=2607.26313",
+   "id": "besanson2026sarcdq",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "Gaston Besanson"
+    ],
+    "pages": null,
+    "title": "SARC-DQ: Runtime Data-Quality Gating for Agentic AI: Silent Evidence Defects, the Incompetence Shield, and Downstream-Only Remediation",
+    "venue": "arXiv",
+    "volume": null,
+    "year": 2026
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "arxiv"
+  },
+  {
+   "error": null,
+   "fetched": "https://export.arxiv.org/api/query?id_list=2608.18360",
+   "id": "besanson2026onegate",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "Gaston Besanson"
+    ],
+    "pages": null,
+    "title": "One Gate Is Not Enough: Composing Stateful Pre-Action Controls for Agentic AI",
+    "venue": "arXiv",
+    "volume": null,
+    "year": 2026
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "arxiv"
   }
  ],
  "tool": "paper-tex/verify_citations.py"

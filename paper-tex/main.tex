@@ -54,13 +54,13 @@
 \maketitle
 
 \begin{abstract}
-When a field that an authority contract needs exists only in unstructured evidence, a model can sense it. We admit the model's output only as an observation record with a score. An admission policy, with thresholds fitted on a held-out split at a declared false-positive ceiling, maps each score to true, false or unknown. Unknown denies. A deterministic, sufficiency-checked contract decides. The probability that sensing changes the verdict is bounded by the sum, over the contract's sensed fields, of the admitted-wrong and unknown rates. This is an instantiation of union-bound reasoning, indexed by the contract. Minimising the estimated bound is a valid cost model for choosing among sufficient contracts. In a registered study on two constructed domains with two sensor families (36,000 model calls), no cell refuted the bound. Deny-to-allow flips appeared for the first time in this programme: 13 of 21,000 test verdicts, all from 3 contradictory records, each under its bound. Sensing-aware selection picked the lower-exposure contract in 4 of 4 registered tests. Both sensors' scores were informative but not calibrated. Correctness is relative to the declared loss model, candidate representation and reachable states; all domains are constructed.
+When a field that an authority contract needs exists only in unstructured evidence, a model can sense it. We admit the model's output only as an observation record with a score. An admission policy, with thresholds fitted on a held-out split at a declared false-positive ceiling, maps each score to true, false or unknown. Unknown denies. A deterministic, sufficiency-checked contract decides. The probability that sensing changes the verdict is bounded by the sum, over the contract's sensed fields, of the admitted-wrong and unknown rates. This is an instantiation of union-bound reasoning, indexed by the contract. Minimising the estimated bound is a valid cost model for choosing among sufficient contracts. In a registered study on two constructed domains with two sensor families (36,000 model calls), no cell refuted the bound. Deny-to-allow changes from sensing appeared for the first time in this programme: 13 of 21,000 test verdicts, all from 3 contradictory records, each under its bound. Sensing-aware selection picked the lower-exposure contract in 4 of 4 registered tests. Both sensors' scores were informative but not calibrated. Correctness is relative to the declared loss model, candidate representation and reachable states; all domains are constructed.
 \end{abstract}
 
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
 
-Papers 1 to 5 of this series govern agent actions with facts read from systems of record. Paper 5 compiles, from a declared loss model and a declared reachable-state model, the observation contracts that are sufficient to reproduce a verdict, and selects among them by cardinality or declared cost \citep{besanson2026compiling}. Every field those contracts read is recorded: it comes from a system that stores it, with metadata a data-quality check can test. That leaves a gap. Some fields an authority contract needs are written down only in unstructured evidence: a change ticket that says an approval was given, a contract that says where data are stored.
+Papers 1 to 5 of this series govern agent actions with facts read from systems of record. Paper 3 gates the quality of the evidence an agent acts on \citep{besanson2026sarcdq}. Paper 4 composes several pre-action controls on one action \citep{besanson2026onegate}. Paper 5 compiles, from a declared loss model and a declared reachable-state model, the observation contracts that are sufficient to reproduce a verdict, and selects among them by cardinality or declared cost \citep{besanson2026compiling}. Every field those contracts read is recorded: it comes from a system that stores it, with metadata a data-quality check can test. That leaves a gap. Some fields an authority contract needs are written down only in unstructured evidence: a change ticket that says an approval was given, a contract that says where data are stored.
 
 \textbf{What changes.} This paper adds a third kind of input. A model may read the document and \emph{sense} the field. The sensor writes an observation record with a score per candidate value. An admission policy, a pair of thresholds per value fitted on held-out data, maps the score to true, false or unknown. The contract then decides exactly as before.
 
@@ -257,7 +257,7 @@ change 95\% CI
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
 \(B\)
 \end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-no unsafe change
+S3 condition held
 \end{minipage} \\
 \midrule\noalign{}
 \endhead
@@ -271,7 +271,7 @@ Haiku & 10\% & 0/700 & {[}0.0000, 0.0053{]} & 0.0798 & 0.0943 (66/700) & {[}0.07
 Haiku & 30\% & 0/700 & {[}0.0000, 0.0053{]} & 0.0707 & 0.1471 (103/700) & {[}0.1217, 0.1756{]} & 1.0761 vacuous & yes \\
 \end{longtable}
 
-A bound greater than one is marked vacuous: it holds for any sensor. Vacuous bounds in E1: \(B\) for Haiku at 30\% noise. The floor of Section 5 applies to every cell: with no split-B error among 150 records per field, the bound is 0.0198 for \texttt{approval\_assertion} and 0.0198 for \texttt{data\_residency\_region}, so \(B^{+}\) cannot fall below 0.0395 and \(B\) below 0.0791.
+The last column reports, per cell, whether the test split showed the S3 condition holding in its observable form: no deny-to-allow change. A bound greater than one is marked vacuous: it holds for any sensor. Vacuous bounds in E1: \(B\) for Haiku at 30\% noise. The floor of Section 5 applies to every cell: with no split-B error among 150 records per field, the bound is 0.0198 for \texttt{approval\_assertion} and 0.0198 for \texttt{data\_residency\_region}, so \(B^{+}\) cannot fall below 0.0395 and \(B\) below 0.0791.
 
 No cell's unsafe rate exceeded its \(B^{+}\) (H1, Section 7.8). The bounds are valid, not tight. Every \(B^{+}\) is at least 0.0395, while the largest unsafe rate observed in any cell is 0.0014. Where verdicts changed at all, \(B\) was 6.6 to 7.3 times the observed change rate.
 
@@ -315,9 +315,9 @@ Haiku's unknown rate on the approval field is high even without noise. The thres
 \hypertarget{the-first-flips}{%
 \subsection{The first flips}\label{the-first-flips}}
 
-This programme had recorded no deny-to-allow change before this paper. E1 and E2 together recorded 13 of 21,000 test verdicts: 1 of 4,200 in E1 (Jev at 30\% noise) and 12 of 16,800 in E2. No cell had more than 1 flip in 700, and every flip lay under its cell's registered bound.
+This programme had recorded no deny-to-allow change from sensing before this paper. E1 and E2 together recorded 13 of 21,000 test verdicts: 1 of 4,200 in E1 (Jev at 30\% noise) and 12 of 16,800 in E2. No cell had more than 1 flip in 700, and every flip lay under its cell's registered bound.
 
-The count overstates the number of independent events. The item-level record (\texttt{results/p6-flips.json}, written from the caches by \texttt{python\ -m\ experiments.flips\_p6}) traces all 13 flips to 3 records: item 6042 in E1, item 1595 in E2 arm 1 and item 2312 in E2 arm 2. Every flip was on a record whose approval statement had been made contradictory (all on contradictory approval statement: yes), and in every flip the approval field was the only wrongly admitted field (yes). In E2, both sensors flipped on each such record (yes), under both reducts (yes), because both reducts read the same approval field. The E1 record shows the mechanism. Its true approval had been recorded but had expired at the request date, so the true verdict was deny. The appended comment said the approval log was empty. Jev admitted \texttt{not\_recorded}, the derived token became absent, and contract K allows that combination.
+The count overstates the number of independent events. The item-level record (\texttt{results/p6-flips.json}, written from the caches by \texttt{python\ -m\ experiments.flips\_p6}) traces all 13 flips to 3 records: item 6042 in E1, item 1595 in E2 arm 1 and item 2312 in E2 arm 2. Every flip was on a record whose approval statement had been made contradictory, and in every flip the approval field was the only wrongly admitted field. In E2, both sensors flipped on every such record, and under both reducts in every case, because both reducts read the same approval field. The E1 record shows the mechanism. Its true approval had been recorded but had expired at the request date, so the true verdict was deny. The appended comment said the approval log was empty. Jev admitted \texttt{not\_recorded}, the derived token became absent, and contract K allows that combination.
 
 \emph{Interpretation.} The flips are not misreadings of a clear document. Each record stated two incompatible things about the approval, and the sensors admitted the statement in the appended comment. The truth label counts that as a wrong admission, as registered: exposure is measured against what is true, not against what the document says. The paired flips in E2 are one event per record, seen through two reducts and two sensors, not 12 independent failures. Both reducts read the same approval field, so neither choice of reduct can avoid this failure mode.
 
@@ -492,7 +492,7 @@ pipeline matches checker
 (b) joint errors, AND contract & 0.0503 {[}0.0461, 0.0548{]} (503/10000) & 1/20 & 1/10 & yes \\
 \end{longtable}
 
-The registered check is that the pipeline's per-item outcomes equal the checker's own simulation, and it passed for both witnesses (check passes: yes). In witness (b) the S1 bound is twice the exact rate and holds; the v1 directional bound, 0, lies below the exact rate and fails. One reading needs care. In witness (a) the exact rate lies just above the simulation's 95\% interval. That is a property of one seeded draw of 10,000 items, not of the pipeline: the checker's own simulation, with the same seed, gives the same 452 flips.
+The registered check is that the pipeline's per-item outcomes equal the checker's own simulation, and it passed for both witnesses. In witness (b) the S1 bound is twice the exact rate and holds; the v1 directional bound, 0, lies below the exact rate and fails. One reading needs care. In witness (a) the exact rate lies just above the simulation's 95\% interval. That is a property of one seeded draw of 10,000 items, not of the pipeline: the checker's own simulation, with the same seed, gives the same 452 flips.
 
 \hypertarget{e5-calibration}{%
 \subsection{E5: calibration}\label{e5-calibration}}
@@ -572,6 +572,8 @@ H2, Claude Haiku 4.5, arm 1: picked reduct has lower exposure at 30\% noise & -0
 H2, Claude Haiku 4.5, arm 2: picked reduct has lower exposure at 30\% noise & -0.0743 (b = 0, c = 52, n = 700) & {[}-0.0943, -0.0557{]} & 4.44e-16 & 1.33e-15 & supported: picked reduct lower \\
 \end{longtable}
 
+S2 makes the H2 comparison close to deterministic. The two reducts of an arm read the same documents, and the picked reduct's sensed fields are a subset of the other's, so its readings are a restriction of the other's readings. The pointwise argument of S2 then predicts that an item changes verdict under the picked reduct only if it also changes under the other, so b should be zero. It was zero in all four tests (b = 0, 0, 0 and 0), and c counts the changes that the second sensed field adds.
+
 ``Not refuted'' for H1 means no violation was detected on 700 items per cell. It is never presented as evidence that the bound holds in general. Everything outside this table is descriptive.
 
 \hypertarget{related-work-and-fence}{%
@@ -629,6 +631,38 @@ Correctness is relative to the declared loss model, candidate representation and
 \textbf{Constructed corpora.} All documents are synthetic, in templated English, one statement per sensed field. Validation and test phrase banks are disjoint, but the rest of the document is shared across splits: the header lines, the filler bank, the noise templates, the date set, the names and the layout. A sensor can benefit from surface regularities that carry over from validation to test. No prevalence claim is made.
 
 \textbf{Loose bounds.} The bounds are valid, not tight. Every \(B^{+}\) in E1 is at least 0.0395, while the largest observed unsafe rate is 0.0014. Where verdicts changed, \(B\) was 6.6 to 7.3 times the observed change rate. Three causes add up. The Clopper-Pearson floor charges every sensed field a cost even with no observed error. The union bound adds per-field terms that overlap in practice. And the truth label counts every faithful reading of a contradictory record as a wrong admission, although most such readings do not change the verdict.
+
+\textbf{Power of H1.} H1 is a one-sided test against a loose bound, so it can detect only large violations. The table gives, per E1 cell, the fewest flips among the 700 test items whose rate would exceed the cell's \(B^{+}\). H1 can fail only under a violation of that size.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1404}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1228}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1579}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.3860}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 8\tabcolsep) * \real{0.1930}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+sensor
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+noise
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(B^{+}\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+fewest flips in 700 above \(B^{+}\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+flips observed
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Jev & 0\% & 0.0395 & 28 & 0 \\
+Jev & 10\% & 0.0611 & 43 & 0 \\
+Jev & 30\% & 0.1056 & 74 & 1 \\
+Haiku & 0\% & 0.0395 & 28 & 0 \\
+Haiku & 10\% & 0.0798 & 56 & 0 \\
+Haiku & 30\% & 0.0707 & 50 & 0 \\
+\end{longtable}
 
 \textbf{Two sensor configurations.} One configuration of each sensor family was tested, through the vendors' interfaces as pinned, on the run dates recorded in the manifests. Nothing is claimed about other versions, prompts or models.
 
