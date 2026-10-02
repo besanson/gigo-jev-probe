@@ -12,10 +12,10 @@
           ],
           "missing_characters": [],
           "overfull_hbox_above_10pt": [],
-          "page_count": 21,
+          "page_count": 22,
           "passes_needed": 1,
           "pdf_produced": true,
-          "pdf_sha256": "d03a451c50da1fddffd4b45c313371bc2148a5c42b5676dc2315acd93f50525f",
+          "pdf_sha256": "76d57123ae7dd4813f741a988b2ea66ee5d8b126d8212edc5a9eeff25cc84864",
           "pdf_unresolved_marker_count": 0,
           "undefined_citations": [],
           "undefined_references": []
@@ -29,10 +29,10 @@
           ],
           "missing_characters": [],
           "overfull_hbox_above_10pt": [],
-          "page_count": 21,
+          "page_count": 22,
           "passes_needed": 1,
           "pdf_produced": true,
-          "pdf_sha256": "d03a451c50da1fddffd4b45c313371bc2148a5c42b5676dc2315acd93f50525f",
+          "pdf_sha256": "76d57123ae7dd4813f741a988b2ea66ee5d8b126d8212edc5a9eeff25cc84864",
           "pdf_unresolved_marker_count": 0,
           "undefined_citations": [],
           "undefined_references": []
@@ -49,10 +49,10 @@
       ],
       "missing_characters": [],
       "overfull_hbox_above_10pt": [],
-      "page_count": 21,
+      "page_count": 22,
       "pass": true,
       "pdf_produced": true,
-      "pdf_sha256": "d03a451c50da1fddffd4b45c313371bc2148a5c42b5676dc2315acd93f50525f",
+      "pdf_sha256": "76d57123ae7dd4813f741a988b2ea66ee5d8b126d8212edc5a9eeff25cc84864",
       "pdf_unresolved_marker_count": 0,
       "source_date_epoch": "1786609963",
       "two_build_identical": true
@@ -72,7 +72,7 @@
     "G3_number_parity": {
       "pass": true,
       "pdf_numbers_not_in_slots_or_registered": [],
-      "slot_number_count": 247,
+      "slot_number_count": 271,
       "slot_numbers_missing_from_pdf": {},
       "tag_counts": {
         "checked-scope-only": {
@@ -88,7 +88,7 @@
           "source_count": 5
         }
       },
-      "used_slot_count": 540
+      "used_slot_count": 628
     },
     "G4_prose_parity": {
       "front_matter_metadata_check": {
@@ -116,15 +116,15 @@
       ],
       "sections": {
         "1 Introduction": {
-          "md_words": 491,
-          "pct_of_source": 101.018,
-          "pdf_words": 496,
+          "md_words": 494,
+          "pct_of_source": 101.012,
+          "pdf_words": 499,
           "within_band": true
         },
         "10 Limitations": {
-          "md_words": 383,
-          "pct_of_source": 99.478,
-          "pdf_words": 381,
+          "md_words": 496,
+          "pct_of_source": 102.419,
+          "pdf_words": 508,
           "within_band": true
         },
         "11 Reproducibility": {
@@ -134,9 +134,9 @@
           "within_band": true
         },
         "2 Setting": {
-          "md_words": 441,
-          "pct_of_source": 121.088,
-          "pdf_words": 534,
+          "md_words": 473,
+          "pct_of_source": 119.662,
+          "pdf_words": 566,
           "within_band": true
         },
         "3 Invariants": {
@@ -146,15 +146,15 @@
           "within_band": true
         },
         "4 Propositions": {
-          "md_words": 637,
-          "pct_of_source": 100.471,
-          "pdf_words": 640,
+          "md_words": 712,
+          "pct_of_source": 100.983,
+          "pdf_words": 719,
           "within_band": true
         },
         "5 Admission policy and estimation": {
-          "md_words": 295,
-          "pct_of_source": 101.356,
-          "pdf_words": 299,
+          "md_words": 389,
+          "pct_of_source": 101.285,
+          "pdf_words": 394,
           "within_band": true
         },
         "6 Experimental design": {
@@ -164,21 +164,21 @@
           "within_band": true
         },
         "7 Results": {
-          "md_words": 2105,
-          "pct_of_source": 99.525,
-          "pdf_words": 2095,
+          "md_words": 2613,
+          "pct_of_source": 97.053,
+          "pdf_words": 2536,
           "within_band": true
         },
         "8 Related work and fence": {
-          "md_words": 361,
+          "md_words": 410,
           "pct_of_source": 100.0,
-          "pdf_words": 361,
+          "pdf_words": 410,
           "within_band": true
         },
         "9 Claims versus non-claims": {
-          "md_words": 274,
-          "pct_of_source": 99.635,
-          "pdf_words": 273,
+          "md_words": 304,
+          "pct_of_source": 98.355,
+          "pdf_words": 299,
           "within_band": true
         }
       },
@@ -186,77 +186,77 @@
         {
           "found": true,
           "identifiers": [],
-          "index": 10,
-          "missing_identifiers": [],
-          "missing_numbers": [],
-          "numbers": [],
-          "sentence": "The contract then decides exactly as before."
-        },
-        {
-          "found": true,
-          "identifiers": [],
-          "index": 29,
+          "index": 0,
           "missing_identifiers": [],
           "missing_numbers": [],
           "numbers": [
-            "6",
-            "7"
-          ],
-          "sentence": "Section 6 summarises the registered design and Section 7 the results."
-        },
-        {
-          "found": true,
-          "identifiers": [],
-          "index": 43,
-          "missing_identifiers": [],
-          "missing_numbers": [],
-          "numbers": [],
-          "sentence": "Validity is never elicited from a model."
-        },
-        {
-          "found": true,
-          "identifiers": [],
-          "index": 51,
-          "missing_identifiers": [],
-          "missing_numbers": [],
-          "numbers": [],
-          "sentence": "It is asked what a document says, which is a reading task with a checkable label."
-        },
-        {
-          "found": true,
-          "identifiers": [],
-          "index": 93,
-          "missing_identifiers": [],
-          "missing_numbers": [],
-          "numbers": [
-            "2",
-            "20",
+            "1",
             "5"
           ],
-          "sentence": "The arm health rule stops a run before any further call if more than 2 invalid replies occur in the first 20 validation records of a sensor, or if more than 5% "
+          "sentence": "Papers 1 to 5 of this series govern agent actions with facts read from systems of record."
         },
         {
           "found": true,
           "identifiers": [],
-          "index": 98,
+          "index": 24,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [
+            "7"
+          ],
+          "sentence": "Thresholds must therefore be fitted, not assumed (Section 7)."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 50,
           "missing_identifiers": [],
           "missing_numbers": [],
           "numbers": [],
-          "sentence": "E0: the earlier probes"
+          "sentence": "The model is not asked whether an approval is valid, current or sufficient."
         },
         {
           "found": true,
           "identifiers": [],
-          "index": 121,
+          "index": 107,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [
+            "7.8"
+          ],
+          "sentence": "No cell's unsafe rate exceeded its B\u207a (H1, Section 7.8)."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 116,
           "missing_identifiers": [],
           "missing_numbers": [],
           "numbers": [],
-          "sentence": "Both reducts read the same approval field, so neither choice of reduct can avoid this failure mode."
+          "sentence": "This programme had recorded no deny-to-allow change from sensing before this paper."
         },
         {
           "found": true,
           "identifiers": [],
-          "index": 125,
+          "index": 123,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [],
+          "sentence": "Each record stated two incompatible things about the approval, and the sensors admitted the statement in the appended comment."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 124,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [],
+          "sentence": "The truth label counts that as a wrong admission, as registered: exposure is measured against what is true, not against what the document says."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 128,
           "missing_identifiers": [],
           "missing_numbers": [],
           "numbers": [],
@@ -265,25 +265,23 @@
         {
           "found": true,
           "identifiers": [],
-          "index": 145,
+          "index": 177,
           "missing_identifiers": [],
           "missing_numbers": [],
-          "numbers": [
-            "95"
-          ],
-          "sentence": "In witness (a) the exact rate lies just above the simulation's 95% interval."
+          "numbers": [],
+          "sentence": "The composition of a sensor with a deciding check is therefore not claimed as new."
         },
         {
           "found": true,
           "identifiers": [],
-          "index": 167,
+          "index": 214,
           "missing_identifiers": [],
           "missing_numbers": [],
           "numbers": [],
-          "sentence": "Conformal prediction and risk control give distribution-free coverage for set-valued predictions [@vovk2022algorithmic; @angelopoulos2023gentle]."
+          "sentence": "The general proofs in Appendix A are tagged pending-human-review."
         }
       ],
-      "source_sha256": "6804df10a883875af9461ee42c8f1bfb185d415cda9b03021332bf690ba48b5d"
+      "source_sha256": "b7dd70d260bc69a6434b9bf8923da9f03740ba5b3aa500dc5e3754fb81e3d848"
     },
     "G5_structure_parity": {
       "counts": {
@@ -314,8 +312,8 @@
         },
         "tables": {
           "equal": true,
-          "source": 18,
-          "tex": 18
+          "source": 21,
+          "tex": 21
         }
       },
       "pass": true
@@ -347,10 +345,10 @@
     },
     "G7_sidecar_sync": {
       "abstract_at_most_200_words": true,
-      "abstract_char_count": 1273,
+      "abstract_char_count": 1309,
       "abstract_has_required_phrase": true,
       "abstract_within_max_chars": true,
-      "abstract_word_count": 192,
+      "abstract_word_count": 200,
       "in_sync": {
         "arxiv-abstract.txt": true,
         "arxiv-metadata.txt": true
@@ -384,6 +382,7 @@
         "spiegelhalter1986probabilistic",
         "vovk2022algorithmic",
         "waite2025state",
+        "zhao2013test",
         "zhu2024probabilistic"
       ],
       "keys_not_verified": [],
@@ -393,7 +392,7 @@
     "G9_bibliography_quality": {
       "audit_failed": [],
       "audit_missing": [],
-      "audited": 21,
+      "audited": 22,
       "doi_mismatches": [],
       "invalid_entry_type": [],
       "misc_with_venue_info": [],
@@ -401,7 +400,7 @@
       "missing_venue_fields": [],
       "pass": true,
       "refs_bib_matches_generator": true,
-      "total_citations": 21,
+      "total_citations": 22,
       "truncated_author_list": []
     },
     "L_populated_freshness": {
@@ -421,7 +420,7 @@
     "L_terminology": {
       "command": "python -m lint.terminology",
       "output_tail": [
-        "terminology: ok (20 files)"
+        "terminology: ok (21 files)"
       ],
       "pass": true
     },

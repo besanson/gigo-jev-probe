@@ -710,7 +710,7 @@ DISCLOSURE_SENTENCES = {
         "This paper does not introduce abstention, calibration, conformal control or reducts. "
         "It shows how an abstaining sensor composes with a sufficiency-checked contract, bounds "
         "the resulting exposure by the contract's sensed fields, and selects contracts to "
-        "minimise it."
+        "minimise its estimated bound."  # round-two F2: was "minimise it" (NOVELTY.md's wording)
     ),
 }
 

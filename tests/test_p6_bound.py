@@ -123,3 +123,18 @@ def test_deny_ward_implies_no_unsafe_outcome() -> None:
     m = and_model()
     assert is_deny_ward(m, []) and not is_deny_ward(m, ["f1"])
     assert not single_field_deny_ward(m, ["f1", "f2"])
+
+
+def test_s2_does_not_imply_verdict_dominance() -> None:  # round-two finding F2
+    """Nested sensed sets, identical readings: the smaller set can change a verdict the larger
+    keeps. Reachable tuples have z = y; allow iff x = y. {x, z} senses only x; {x, y} senses both."""
+    from sensed_authority.bound import ContractModel
+
+    reach = [{"x": x, "y": y, "z": y} for x in (0, 1) for y in (0, 1)]
+    verdict = lambda t: "allow" if t["x"] == t["y"] else "deny"  # noqa: E731
+    small = ContractModel(("x", "z"), reach, verdict, {"x": (0, 1), "z": (0, 1)})
+    large = ContractModel(("x", "y"), reach, verdict, {"x": (0, 1), "y": (0, 1)})
+    t = {"x": 0, "y": 0, "z": 0}
+    reading = {"x": 1, "y": 1}  # one joint misreading, shared by both contracts
+    assert small.outcome(t, {"x": reading["x"]}) == (True, False)  # changes: allow -> deny
+    assert large.outcome(t, reading) == (False, False)  # keeps the true verdict

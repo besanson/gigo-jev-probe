@@ -424,6 +424,27 @@
    },
    "retrieved_on": "2026-10-02",
    "source": "arxiv"
+  },
+  {
+   "error": null,
+   "fetched": "https://api.crossref.org/works/10.1155/2013/946070",
+   "id": "zhao2013test",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "Hong Zhao",
+     "Fan Min",
+     "William Zhu"
+    ],
+    "pages": "1-12",
+    "title": "Test-Cost-Sensitive Attribute Reduction of Data with Normal Distribution Measurement Errors",
+    "venue": "Mathematical Problems in Engineering",
+    "volume": "2013",
+    "year": 2013
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "crossref"
   }
  ],
  "tool": "paper-tex/verify_citations.py"

@@ -19,7 +19,8 @@ namespace:
   flips.*  results/p6-flips.json (experiments/flips_p6.py, from the caches)
   tau.*    results/p6-E1.tau.json and results/p6-E2.tau.json (frozen thresholds, Appendix B)
   d.*      sums and counts of the slots above, computed here (d.f1.*: round-one finding F1)
-  w.*      booleans of the slots above rendered as words for the main text (finding F3)
+  w.*      booleans of the slots above rendered as words for the main text (finding F3;
+           round two: pick changes, E4 per-item match)
   pin.*    engines.lock and the registration tags (commit identifiers)
   appB.*   Appendix B tables, rendered from experiments/constants_p6.py, the registered text
            that tests/test_p6_corpus.py checks verbatim against prereg/p6-v1.1.md
@@ -171,6 +172,39 @@ def f1_thresholds(p6: dict[str, str]) -> dict[str, str]:
     return out
 
 
+def round_two(p6: dict[str, str]) -> dict[str, str]:
+    """Round-two findings F7 and F10: E2 flips per reduct (not per picked/other role), the split
+    of all flips by whether their cell has a registered bound (every E1 cell; E2 only at the
+    30% selection noise), and the pick-change words."""
+    out: dict[str, str] = {}
+    registered = unregistered = 0
+    for key, v in p6.items():
+        if not key.endswith(".unsafe.k") or not key.startswith(("E1.", "E2.")):
+            continue
+        k = int(v)
+        if key.startswith("E1.") or ".n30." in key:
+            registered += k
+        else:
+            unregistered += k
+    out["d.flips_registered_cells"] = str(registered)
+    out["d.flips_unregistered_cells"] = str(unregistered)
+    for s in SENSORS:
+        for label in ("E2.1", "E2.2"):
+            picked = p6[f"E2.{s}.{label}.picked"]
+            for n in NOISES:
+                for r in ("R_branch", "R_env"):
+                    role = "picked" if r == picked else "other"
+                    out[f"d.e2.{s}.{label}.{n}.{r}.unsafe_k"] = p6[f"E2.{s}.{label}.{n}.{role}.unsafe.k"]
+    words = {"yes": "changes", "no": "coincides with", "sensors differ": "differs by sensor from"}
+    for arm in ("1", "2"):
+        out[f"w.pick_changed.{arm}"] = words[p6[f"E2.pick_changed.{arm}"]]
+    out["w.E4.per_item"] = {"yes": "equal", "no": "differ from"}[p6["E4.per_item_match"]]
+    denyward = [k for k in p6 if k.startswith("denyward.") and k.count(".") == 2]
+    out["d.denyward_configurations"] = str(len(denyward))
+    out["d.denyward_met"] = str(sum(p6[k] == "yes" for k in denyward))
+    return out
+
+
 def words(slots: dict[str, str]) -> dict[str, str]:
     """Round-one F3: booleans rendered as words for the main text (raw yes/no stays in Appendix A)."""
     every = {"yes": "every", "no": "not every"}
@@ -272,6 +306,7 @@ def build_slots() -> dict[str, str]:
     slots.update(tau_slots())
     slots.update(derived(p6))
     slots.update(f1_thresholds(p6))
+    slots.update(round_two(p6))
     slots.update(words(slots))
     slots.update(pins())
     slots.update(appendix_b())

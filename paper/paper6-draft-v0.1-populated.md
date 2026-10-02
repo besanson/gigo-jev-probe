@@ -3,7 +3,7 @@ title: "Probabilistic Sensing, Deterministic Authority: Admitting Model-Produced
 author: Gaston Besanson
 thanks: Universidad Torcuato Di Tella
 abstract: |
-  When a field that an authority contract needs exists only in unstructured evidence, a model can sense it. We admit the model's output only as an observation record with a score. An admission policy, with thresholds fitted on a held-out split at a declared false-positive ceiling, maps each score to true, false or unknown. Unknown denies. A deterministic, sufficiency-checked contract decides. The probability that sensing changes the verdict is bounded by the sum, over the contract's sensed fields, of the admitted-wrong and unknown rates. This is an instantiation of union-bound reasoning, indexed by the contract. Minimising the estimated bound is a valid cost model for choosing among sufficient contracts. In a registered study on two constructed domains with two sensor families (36,000 model calls), no cell refuted the bound. Deny-to-allow changes from sensing appeared for the first time in this programme: 13 of 21,000 test verdicts, all from 3 contradictory records, each under its bound. Sensing-aware selection picked the lower-exposure contract in 4 of 4 registered tests. Both sensors' scores were informative but not calibrated. Correctness is relative to the declared loss model, candidate representation and reachable states; all domains are constructed.
+  When a field that an authority contract needs exists only in unstructured evidence, a model can sense it. We admit the model's output only as an observation record with a score. An admission policy, with thresholds fitted on a held-out split at a declared false-positive ceiling, maps each score to true, false or unknown. Unknown denies. A deterministic, sufficiency-checked contract decides. The probability that sensing changes the verdict is bounded by the sum, over the contract's sensed fields, of the admitted-wrong and unknown rates. This is an instantiation of union-bound reasoning, indexed by the contract. Minimising the estimated bound is a valid cost model for choosing among sufficient contracts. In a registered study on two constructed domains with two sensor families (36,000 model calls), no cell refuted the bound. Deny-to-allow changes from sensing appeared for the first time in this programme: 13 of 21,000 test verdicts, all from 3 contradictory records; each flip in a cell with a registered bound lay under it. Sensing-aware selection picked the lower-exposure contract in 4 of 4 registered tests. Both sensors' scores were informative but not calibrated. Correctness is relative to the declared loss model, candidate representation and reachable states; all domains are constructed.
 ---
 
 # Introduction
@@ -18,7 +18,7 @@ Papers 1 to 5 of this series govern agent actions with facts read from systems o
 
 - *Architecture (claim C1).* A sensed field enters the gate only as a stamped observation record with provenance, score and admission decision. The model never emits a verdict (Sections 2 and 3).
 - *Bound and selection (claims C2 and C3).* Proposition S1 bounds the probability that sensing changes the verdict by the sum, over the contract's sensed fields, of the rates of wrong admission and of unknown. Proposition S2 makes the estimated bound a valid cost model for paper 5's selection, for nested sensed-field sets (Section 4).
-- *Registered evidence (claims C4, C5 and C7).* On two constructed domains, with two sensor families and three noise levels, no registered cell refuted the bound; the first deny-to-allow flips of the programme appeared, rarely and each under its bound; and sensing-aware selection picked the contract with lower measured exposure in every registered test (Section 7).
+- *Registered evidence (claims C4, C5 and C7).* On two constructed domains, with two sensor families and three noise levels, no registered cell refuted the bound; the first deny-to-allow flips of the programme appeared, rarely, and under the registered bound wherever one exists; and sensing-aware selection picked the contract with lower measured exposure in every registered test (Section 7).
 - *Calibration (claim C6).* Neither sensor family's scores were calibrated, although both were informative. Thresholds must therefore be fitted, not assumed (Section 7).
 
 **Reader's map.** Section 2 sets out the objects and Figure 1 the pipeline. Section 3 states the invariants. Section 4 gives the propositions and their proof status. Section 5 describes admission and estimation. Section 6 summarises the registered design and Section 7 the results. Sections 8 to 11 cover related work, claims, limitations and reproducibility. Appendix A carries the proofs and Appendix B the verbatim registered materials.
@@ -33,7 +33,7 @@ We inherit paper 5's notation. $A$ is the set of candidate attributes, $R$ the s
 
 **Evaluation from observations.** Given an observed value for every field of $C$ (recorded values as recorded, sensed values as admitted, derived values computed as in Section 3), the verdict is $g(t')$ for any $t' \in R$ that agrees with the observations on $C$. Sufficiency makes this well defined. If a sensed field is unknown, or no reachable tuple agrees, the verdict is deny.
 
-**Exposure.** For a request with true tuple $t$, exposure is the event that the verdict from recorded and sensed values differs from the verdict from recorded and true values. A change from deny to allow is *unsafe*; a change from allow to deny is *fail-closed*. For sensed field $i$ and a distribution over requests, $e_i$ is the probability that the field is admitted with a wrong value and $u_i$ the probability that it is unknown.
+**Exposure.** For a request with true tuple $t$, exposure is the event that the verdict from recorded and sensed values differs from the verdict from recorded and true values. Throughout, recorded fields are taken at their true values, and every derivation is truth-preserving: a true assertion derives the true value of the property it determines. The reference verdict is therefore $g(t)$. A change from deny to allow is *unsafe*; a change from allow to deny is *fail-closed*. For sensed field $i$ and a distribution over requests, $e_i$ is the probability that the field is admitted with a wrong value and $u_i$ the probability that it is unknown.
 
 ![The sensing pipeline. The top row is the sensing path from document to verdict; dashed boxes are probabilistic and solid boxes deterministic. The bottom row is the Evidence Set line: the contract reads a recorded field and a sensed field side by side, and the sensed field reaches it only as the admitted value of a stamped record.](figs/fig1-pipeline.svg)
 
@@ -53,7 +53,7 @@ I2 answers the obvious objection to letting a model near an authority gate. The 
 $$P(\text{verdict change}) \le \sum_{i \in F_s} (e_i + u_i), \qquad P(\text{deny} \to \text{allow}) \le \sum_{i \in F_s} e_i .$$
 *Sketch.* If every sensed field is admitted with its true value, the observations agree with the true tuple on $C$, so sufficiency gives the true verdict. A verdict change therefore requires at least one sensed field that is wrong or unknown. A change to allow also requires that no field is unknown, because unknown denies, so it requires at least one wrongly admitted field. Both inequalities follow from the union bound. The argument is pointwise: the event inclusion holds at every pair of a true tuple and an observation vector, and both sides are linear in the joint distribution, so the inequalities hold for every distribution, including any dependence between fields. S1 is an instantiation of union-bound reasoning over program events [@barthe2016program], indexed by the contract's sensed fields. It is not a new inequality.
 
-**Proposition S2 (monotonicity for nested sets).** For two sufficient contracts whose sensed-field sets are nested, $F_s' \subseteq F_s$, read by the same sensors on the same documents, the S1 bound of $F_s'$ does not exceed that of $F_s$. The selection objective is the *estimated* bound $\sum_{i \in F_s} (\hat e_i + \hat u_i)$ of Section 5. It fits paper 5's observation-cost interface, so no new solver is needed. No claim is made for sets that are not nested. The S2 checker records why: with the per-field rates below, a rule that prefers fewer sensed fields picks the one-field set, while the registered objective picks the two-field set, whose bound is a hundred times lower.
+**Proposition S2 (monotonicity for nested sets).** For two sufficient contracts whose sensed-field sets are nested, $F_s' \subseteq F_s$, read by the same sensors on the same documents through the same admission policy and the same derivation, the S1 bound of $F_s'$ does not exceed that of $F_s$. The selection objective is the *estimated* bound $\sum_{i \in F_s} (\hat e_i + \hat u_i)$ of Section 5. It fits paper 5's observation-cost interface, so no new solver is needed. The interface charges each contract property the estimated terms of the sensed field it is derived from (`approval_assertion` for `approval_token`), plus a floor kept below half of every gap between distinct estimated bounds, so the floor breaks only exact ties. No claim is made for sets that are not nested. The S2 checker records why: with the per-field rates below, a rule that prefers fewer sensed fields picks the one-field set, while the registered objective picks the two-field set, whose bound is a hundred times lower.
 
 | sensed-field set | fields | $e$ per field | S1 bound | picked by |
 |:-------------|:---------|:-----------------|:---------|:---------------------|
@@ -62,7 +62,7 @@ $$P(\text{verdict change}) \le \sum_{i \in F_s} (e_i + u_i), \qquad P(\text{deny
 
 The rate columns list $e$ and then $u$ for each field, as the checker records them.
 
-**Proposition S3 (fail-closed).** Call a sensing configuration *deny-ward* if, for every reachable tuple $t$ with $g(t) = \mathit{deny}$ and every observation vector that agrees with $t$ on $F_r$ and whose sensed fields are each either true or admitted with any wrong value, jointly, the contract evaluates to deny. If unknown routes to deny and the configuration is deny-ward, then deny-to-allow changes have probability zero. The condition is global over $R$ and over joint errors, not field by field.
+**Proposition S3 (fail-closed).** Call a sensing configuration *deny-ward* if, for every reachable tuple $t$ with $g(t) = \mathit{deny}$ and every observation vector that agrees with $t$ on $F_r$ and whose sensed fields are each either true or admitted with any wrong value, jointly, the contract evaluates to deny. If unknown routes to deny and the configuration is deny-ward, then deny-to-allow changes have probability zero. The condition is global over $R$ and over joint errors, not field by field. Section 7 evaluates it exhaustively for every registered configuration; where it fails, S3 does not apply, and zero observed deny-to-allow changes are an empirical result only.
 
 **N6 (negative witnesses).** Two constructions mark the edges of S1 and S3. In witness (a), two binary fields with disjoint wrong admissions attain the S1 deny-to-allow bound exactly. In witness (b), an AND contract with true values (false, false) meets a sensor that admits both fields wrongly together with probability $q$ and never one alone. Every single-field error is harmless, so a field-by-field direction test calls the configuration deny-ward, yet the deny-to-allow probability is $q$. The first registration of this paper used such a directional bound; witness (b) defeats it. The external review of the novelty fence raised the point, and the re-registration from `prereg-p6-v1` to `prereg-p6-v1.1` replaced the directional term with S1 and made S3's condition global.
 
@@ -89,7 +89,9 @@ Each experiment's validation split is divided once, before any model call, into 
 
 **Split B estimates the error rates against the truth label.** With the thresholds frozen, $\hat e_i$ and $\hat u_i$ are one-sided 95% Clopper-Pearson upper bounds [@clopper1934use] on the split-B rates of wrong admission and of unknown, per sensor, field and noise level. The truth label is the item's true value. A faithful reading of a contradictory document can therefore count as a wrong admission. The registered bounds per cell are $B^{+} = \sum_{i \in F_s} \hat e_i$ for deny to allow and $B = \sum_{i \in F_s} (\hat e_i + \hat u_i)$ for any change. Thresholds and estimates were written to a committed file before any test-split call.
 
-**The floor.** A Clopper-Pearson upper bound is never zero. With no error among 150 split-B records, the bound for one field is 0.0198. With two sensed fields, a sensor that made no split-B error still gets $B^{+}$ = 0.0395 and $B$ = 0.0791. The bounds are therefore valid, not tight. Section 7 shows how far apart the two are.
+**The floor.** A Clopper-Pearson upper bound is never zero. With no error among 150 split-B records, the bound for one field is 0.0198. With two sensed fields, a sensor that made no split-B error still gets $B^{+}$ = 0.0395 and $B$ = 0.0791.
+
+**From S1 to the estimated bounds.** S1 is valid, not tight. The estimated bounds $B^{+}$ and $B$ replace S1's population rates with split-B upper limits, and that step needs two assumptions. First, *transfer*: the sensors' error and unknown rates on the test documents are no higher than on split B, although test documents are drawn from a disjoint phrase bank. Second, *simultaneity*: each limit is a marginal 95% limit, so a sum of them carries no joint 95% level, and neither does a family of cells. Section 7 reports, beside each registered bound, a Bonferroni-adjusted simultaneous version, in which each of the $m$ summed limits is taken at level $0.05/m$.
 
 # Experimental design
 
@@ -121,18 +123,41 @@ The earlier probes are quoted from tag `jev-probes-final`. Across two sensors, t
 
 Each cell is a sensor at a noise level, on the 700 test items. Rates carry Clopper-Pearson 95% intervals. $B^{+}$ and $B$ are the split-B bounds of Section 5.
 
-| sensor | noise | unsafe ($k/n$) | unsafe 95% CI | $B^{+}$ | change rate ($k/n$) | change 95% CI | $B$ | S3 condition held |
+| sensor | noise | unsafe ($k/n$) | unsafe 95% CI | $B^{+}$ | change rate ($k/n$) | change 95% CI | $B$ |
 |:------|:-----|:-------|:---------------|:-------|:-----------|:---------------|:-----------|:--------|
-| Jev | 0% | 0/700 | [0.0000, 0.0053] | 0.0395 | 0.0000 (0/700) | [0.0000, 0.0053] | 0.0791 | yes |
-| Jev | 10% | 0/700 | [0.0000, 0.0053] | 0.0611 | 0.0429 (30/700) | [0.0291, 0.0606] | 0.3045 | yes |
-| Jev | 30% | 1/700 | [0.0000, 0.0079] | 0.1056 | 0.1071 (75/700) | [0.0852, 0.1324] | 0.7837 | no |
-| Haiku | 0% | 0/700 | [0.0000, 0.0053] | 0.0395 | 0.0643 (45/700) | [0.0473, 0.0851] | 0.4268 | yes |
-| Haiku | 10% | 0/700 | [0.0000, 0.0053] | 0.0798 | 0.0943 (66/700) | [0.0737, 0.1184] | 0.6324 | yes |
-| Haiku | 30% | 0/700 | [0.0000, 0.0053] | 0.0707 | 0.1471 (103/700) | [0.1217, 0.1756] | 1.0761 vacuous | yes |
+| Jev | 0% | 0/700 | [0.0000, 0.0053] | 0.0395 | 0.0000 (0/700) | [0.0000, 0.0053] | 0.0791 |
+| Jev | 10% | 0/700 | [0.0000, 0.0053] | 0.0611 | 0.0429 (30/700) | [0.0291, 0.0606] | 0.3045 |
+| Jev | 30% | 1/700 | [0.0000, 0.0079] | 0.1056 | 0.1071 (75/700) | [0.0852, 0.1324] | 0.7837 |
+| Haiku | 0% | 0/700 | [0.0000, 0.0053] | 0.0395 | 0.0643 (45/700) | [0.0473, 0.0851] | 0.4268 |
+| Haiku | 10% | 0/700 | [0.0000, 0.0053] | 0.0798 | 0.0943 (66/700) | [0.0737, 0.1184] | 0.6324 |
+| Haiku | 30% | 0/700 | [0.0000, 0.0053] | 0.0707 | 0.1471 (103/700) | [0.1217, 0.1756] | 1.0761 vacuous |
 
-The last column reports, per cell, whether the test split showed the S3 condition holding in its observable form: no deny-to-allow change. A bound greater than one is marked vacuous: it holds for any sensor. Vacuous bounds in E1: $B$ for Haiku at 30% noise. The floor of Section 5 applies to every cell: with no split-B error among 150 records per field, the bound is 0.0198 for `approval_assertion` and 0.0198 for `data_residency_region`, so $B^{+}$ cannot fall below 0.0395 and $B$ below 0.0791.
+A bound greater than one is marked vacuous: it holds for any sensor. Vacuous bounds in E1: $B$ for Haiku at 30% noise. The floor of Section 5 applies to every cell: with no split-B error among 150 records per field, the bound is 0.0198 for `approval_assertion` and 0.0198 for `data_residency_region`, so $B^{+}$ cannot fall below 0.0395 and $B$ below 0.0791.
 
-No cell's unsafe rate exceeded its $B^{+}$ (H1, Section 7.8). The bounds are valid, not tight. Every $B^{+}$ is at least 0.0395, while the largest unsafe rate observed in any cell is 0.0014. Where verdicts changed at all, $B$ was 6.6 to 7.3 times the observed change rate.
+No cell's unsafe rate exceeded its $B^{+}$ (H1, Section 7.8). The comparison rests on the two assumptions of Section 5. The registered bounds and their simultaneous versions are:
+
+| sensor | noise | $B^{+}$ | $B^{+}$ simultaneous | $B$ | $B$ simultaneous |
+|:-------|:------|:--------|:-------------------|:-------|:-------------------|
+| Jev | 0% | 0.0395 | 0.0486 | 0.0791 | 0.1152 |
+| Jev | 10% | 0.0611 | 0.0716 | 0.3045 | 0.3596 |
+| Jev | 30% | 0.1056 | 0.1181 | 0.7837 | 0.8550 |
+| Haiku | 0% | 0.0395 | 0.0486 | 0.4268 | 0.4778 |
+| Haiku | 10% | 0.0798 | 0.0912 | 0.6324 | 0.6981 |
+| Haiku | 30% | 0.0707 | 0.0816 | 1.0761 | 1.1456 vacuous |
+
+The simultaneous versions are descriptive; the registered test uses the marginal ones. Every $B^{+}$ is at least 0.0395, while the largest unsafe rate observed in any cell is 0.0014. Where verdicts changed at all, $B$ was 6.6 to 7.3 times the observed change rate.
+
+**The S3 condition.** S3 needs a global property: every reachable deny tuple stays deny under every joint wrong reading of the sensed fields. Zero observed flips cannot establish it, so it is evaluated directly, exhaustively over the pinned reachable sets (`experiments/denyward_p6.py`). The condition holds in 0 of the 5 registered configurations.
+
+| contract | sensed fields | used in | deny-ward | reachable deny tuples | deny tuples some joint reading turns to allow |
+|:---------|:--------------|:--------|:----------|:----------------------|:----------------------------------------------|
+| K | approval, residency | E1 | no | 20040 | 4029 |
+| $R_{\mathrm{branch}}$ | approval | E2 arm 2 | no | 8568 | 216 |
+| $R_{\mathrm{branch}}$ | approval, branch | E2 arm 1 | no | 8568 | 216 |
+| $R_{\mathrm{env}}$ | approval | E2 arm 1 | no | 8568 | 216 |
+| $R_{\mathrm{env}}$ | approval, environment | E2 arm 2 | no | 8568 | 216 |
+
+S3 therefore does not apply to any registered configuration. Every cell without a deny-to-allow change is an empirical observation, not an instance of S3.
 
 Per field, on the test split, the rates of wrong admission and of unknown were:
 
@@ -149,7 +174,7 @@ Haiku's unknown rate on the approval field is high even without noise. The thres
 
 ## The first flips
 
-This programme had recorded no deny-to-allow change from sensing before this paper. E1 and E2 together recorded 13 of 21,000 test verdicts: 1 of 4,200 in E1 (Jev at 30% noise) and 12 of 16,800 in E2. No cell had more than 1 flip in 700, and every flip lay under its cell's registered bound.
+This programme had recorded no deny-to-allow change from sensing before this paper. E1 and E2 together recorded 13 of 21,000 test verdicts: 1 of 4,200 in E1 (Jev at 30% noise) and 12 of 16,800 in E2. No cell had more than 1 flip in 700. Registered bounds exist for every E1 cell and for E2 at 30% noise only, where the selection bound was estimated. The 9 flips in those cells each lay under their registered bound. The other 4 flips are in E2 at 10% noise, where no bound was registered; Section 7.4 compares them with post hoc bounds.
 
 The count overstates the number of independent events. The item-level record (`results/p6-flips.json`, written from the caches by `python -m experiments.flips_p6`) traces all 13 flips to 3 records: item 6042 in E1, item 1595 in E2 arm 1 and item 2312 in E2 arm 2. Every flip was on a record whose approval statement had been made contradictory, and in every flip the approval field was the only wrongly admitted field. In E2, both sensors flipped on every such record, and under both reducts in every case, because both reducts read the same approval field. The E1 record shows the mechanism. Its true approval had been recorded but had expired at the request date, so the true verdict was deny. The appended comment said the approval log was empty. Jev admitted `not_recorded`, the derived token became absent, and contract K allows that combination.
 
@@ -157,14 +182,14 @@ The count overstates the number of independent events. The item-level record (`r
 
 ## E2: substitution test on CH-B1
 
-The picks were fixed on split B at 30% noise, before any test-split call. In both arms and for both sensors, the rule picked the reduct that senses only the approval field.
+The picks were fixed on split B at 30% noise, before any test-split call. In both arms and for both sensors, the rule picked the reduct that senses only the approval field. Paper 5's own choice for CH-B1, its minimum-cost contract under the declared observation costs at the pinned commit, is R_branch in both arms. Sensing-aware selection therefore changes paper 5's choice in arm 1 and coincides with it in arm 2.
 
-| sensor | arm | estimated bound, $R_{\mathrm{branch}}$ | estimated bound, $R_{\mathrm{env}}$ | picked |
-|:-----------|:-------|:---------------------|:---------------------|:-----------|
-| Jev | arm 1 | 0.7504 | 0.3171 | R_env |
-| Jev | arm 2 | 0.3170 | 0.7157 | R_branch |
-| Haiku | arm 1 | 0.9182 | 0.4837 | R_env |
-| Haiku | arm 2 | 0.5476 | 0.9884 | R_branch |
+| sensor | arm | estimated bound, $R_{\mathrm{branch}}$ | estimated bound, $R_{\mathrm{env}}$ | picked | paper 5's choice |
+|:-----------|:-------|:---------------------|:---------------------|:-----------|:-----------|
+| Jev | arm 1 | 0.7504 | 0.3171 | R_env | R_branch |
+| Jev | arm 2 | 0.3170 | 0.7157 | R_branch | R_branch |
+| Haiku | arm 1 | 0.9182 | 0.4837 | R_env | R_branch |
+| Haiku | arm 2 | 0.5476 | 0.9884 | R_branch | R_branch |
 
 On the test split, the verdict-change and unsafe rates were:
 
@@ -184,6 +209,20 @@ On the test split, the verdict-change and unsafe rates were:
 | Haiku | arm 2 | 30% | 0.1471 (103) | 0.2214 (155) | 1 | 1 |
 
 Counts are out of 700 test items per cell. At 30% noise the picked reduct changed fewer verdicts than the other in all four registered comparisons (H2, Section 7.8). The unsafe columns are equal in every row, because every flip came from the shared approval field. E2 is a substitution test between two reducts with nested sensed-field sets. It is not a general selection experiment.
+
+Only the 30% bounds were registered. The table below gives post hoc split-B bounds $B^{+}$ at every noise level, computed the same way but not registered, beside the flips per reduct. They are descriptive.
+
+| sensor | arm | reduct | post hoc $B^{+}$, 0% | 10% | 30% | flips at 0% / 10% / 30% |
+|:-------|:--------|:-------|:--------------------|:-------|:-------|:------------------------|
+| Jev | arm 1 | $R_{\mathrm{branch}}$ | 0.0395 | 0.0395 | 0.0726 | 0 / 0 / 1 |
+| Jev | arm 1 | $R_{\mathrm{env}}$ | 0.0198 | 0.0198 | 0.0414 | 0 / 0 / 1 |
+| Jev | arm 2 | $R_{\mathrm{branch}}$ | 0.0198 | 0.0198 | 0.0198 | 0 / 1 / 1 |
+| Jev | arm 2 | $R_{\mathrm{env}}$ | 0.0395 | 0.0395 | 0.0510 | 0 / 1 / 1 |
+| Haiku | arm 1 | $R_{\mathrm{branch}}$ | 0.0395 | 0.0611 | 0.1623 | 0 / 0 / 1 |
+| Haiku | arm 1 | $R_{\mathrm{env}}$ | 0.0198 | 0.0198 | 0.1024 | 0 / 0 / 1 |
+| Haiku | arm 2 | $R_{\mathrm{branch}}$ | 0.0198 | 0.0509 | 0.0774 | 0 / 1 / 1 |
+| Haiku | arm 2 | $R_{\mathrm{env}}$ | 0.0395 | 0.1018 | 0.1716 | 0 / 1 / 1 |
+
 
 ## E3: admission ablation
 
@@ -227,7 +266,7 @@ E4 runs the two N6 witnesses through the experiment pipeline, with no model.
 | (a) disjoint errors | 0.0452 [0.0412, 0.0495] (452/10000) | 1/20 | 1/20 | yes |
 | (b) joint errors, AND contract | 0.0503 [0.0461, 0.0548] (503/10000) | 1/20 | 1/10 | yes |
 
-The registered check is that the pipeline's per-item outcomes equal the checker's own simulation, and it passed for both witnesses. In witness (b) the S1 bound is twice the exact rate and holds; the v1 directional bound, 0, lies below the exact rate and fails. One reading needs care. In witness (a) the exact rate lies just above the simulation's 95% interval. That is a property of one seeded draw of 10,000 items, not of the pipeline: the checker's own simulation, with the same seed, gives the same 452 flips.
+The registered check compares the pipeline's totals with the checker's own simulation, and it passed for both witnesses. A stricter comparison of the per-item outcome vectors, item by item over the 10,000 draws, found them equal to the checker's. Both paths evaluate the contract with the same evaluator, `sensed_authority.bound.ContractModel`, so the check shows that the pipeline's sampling and bookkeeping agree with the checker's; it is not an independent test of contract evaluation. In witness (b) the S1 bound is twice the exact rate and holds; the v1 directional bound, 0, lies below the exact rate and fails. One reading needs care. In witness (a) the exact rate lies just above the simulation's 95% interval. That is a property of one seeded draw of 10,000 items, not of the pipeline: the checker's own simulation, with the same seed, gives the same 452 flips.
 
 ## E5: calibration
 
@@ -254,19 +293,19 @@ The registered family is H1 and the four H2 tests, with Holm's correction [@holm
 | H2, Claude Haiku 4.5, arm 1: picked reduct has lower exposure at 30% noise | -0.0657 (b = 0, c = 46, n = 700) | [-0.0843, -0.0486] | 2.84e-14 | 5.68e-14 | supported: picked reduct lower |
 | H2, Claude Haiku 4.5, arm 2: picked reduct has lower exposure at 30% noise | -0.0743 (b = 0, c = 52, n = 700) | [-0.0943, -0.0557] | 4.44e-16 | 1.33e-15 | supported: picked reduct lower |
 
-S2 makes the H2 comparison close to deterministic. The two reducts of an arm read the same documents, and the picked reduct's sensed fields are a subset of the other's, so its readings are a restriction of the other's readings. The pointwise argument of S2 then predicts that an item changes verdict under the picked reduct only if it also changes under the other, so b should be zero. It was zero in all four tests (b = 0, 0, 0 and 0), and c counts the changes that the second sensed field adds.
+S2 orders the estimated bounds of nested contracts. It does not say that an item whose verdict changes under the smaller sensed set also changes under the larger one. A zero b in all four tests (b = 0, 0, 0 and 0) is therefore an empirical observation, not a consequence of S2: with reachable tuples on which z equals y and a verdict that allows if and only if x equals y, the contracts {x, z} and {x, y} are both sufficient, and at a true tuple with all three fields false, one joint misreading of x and y as true changes the verdict of the first, which senses only x, but not of the second.
 
 "Not refuted" for H1 means no violation was detected on 700 items per cell. It is never presented as evidence that the bound holds in general. Everything outside this table is descriptive.
 
 # Related work and fence
 
-**Not claimed as new.** Thresholding a score with a reject option goes back to Chow [@chow1970optimum] and is studied for deep networks as selective classification [@geifman2017selective]. Conformal prediction and risk control give distribution-free coverage for set-valued predictions [@vovk2022algorithmic; @angelopoulos2023gentle]. Learning to defer trains a model to hand cases to a human [@madras2018predict; @mozannar2020consistent]. Calibration measurement is standard [@spiegelhalter1986probabilistic; @brier1950verification; @guo2017calibration]. Confidence-scored information extraction and human-in-the-loop escalation are common practice. Runtime enforcement and shields were fenced in paper 4, and reduct theory and cost-sensitive reduction [@pawlak1982rough] in paper 5.
+**Not claimed as new.** Thresholding a score with a reject option goes back to Chow [@chow1970optimum] and is studied for deep networks as selective classification [@geifman2017selective]. Conformal prediction and risk control give distribution-free coverage for set-valued predictions [@vovk2022algorithmic; @angelopoulos2023gentle]. Learning to defer trains a model to hand cases to a human [@madras2018predict; @mozannar2020consistent]. Calibration measurement is standard [@spiegelhalter1986probabilistic; @brier1950verification; @guo2017calibration]. Confidence-scored information extraction and human-in-the-loop escalation are common practice. Runtime enforcement and shields were fenced in paper 4, and reduct theory and cost-sensitive reduction [@pawlak1982rough] in paper 5. Closest to the selection component, Zhao, Min and Zhu choose test-cost-sensitive reducts for data with normally distributed measurement errors, under a constraint that preserves decision information [@zhao2013test]; there, measurement error enters reduct selection, but nothing abstains, no verdict-exposure bound is stated, and no sufficiency-checked authority contract decides.
 
 **Prior compositions.** Composing an uncertain sensing component with a symbolic check that decides has been done before. Zhu and Zhang add probabilistic attributes, inferred by learned models, to access policies with automated reasoning support; their location example obtains an access-control attribute through probabilistic sensing [@zhu2024probabilistic]. Astorga et al. synthesise perception contracts and check that they preserve a downstream invariant [@astorga2023perception]. Artikis et al. threshold uncertain observations and process the admitted events deterministically [@artikis2012event]. The composition of a sensor with a deciding check is therefore not claimed as new.
 
 **Union bounds.** Barthe et al. give a program logic whose judgements carry a failure budget that adds under composition [@barthe2016program]. Assigning each sensed field the assertion "correct and definite" and using sufficiency to imply verdict agreement instantiates that reasoning; S1 restricts the sum to the contract's sensed fields. Waite et al. combine perception-error union bounds with deterministic verification of autonomous systems [@waite2025state]. Neither states a bound indexed by an authority contract's sensed fields, but both occupy the broader statistical-to-symbolic composition.
 
-**What is claimed** is the conjunction: an abstaining admission policy between a sensor and a sufficiency-checked authority contract; an exposure bound stated over that contract's sensed fields; and sensing-aware selection among sufficient contracts as a paper 5 cost model, for nested sensed-field sets. Neither the admission policy alone, nor the bound alone, nor the composition with a symbolic decision layer alone is claimed. This paper does not introduce abstention, calibration, conformal control or reducts. It shows how an abstaining sensor composes with a sufficiency-checked contract, bounds the resulting exposure by the contract's sensed fields, and selects contracts to minimise it.
+**What is claimed** is the conjunction: an abstaining admission policy between a sensor and a sufficiency-checked authority contract; an exposure bound stated over that contract's sensed fields; and sensing-aware selection among sufficient contracts as a paper 5 cost model, for nested sensed-field sets. Neither the admission policy alone, nor the bound alone, nor the composition with a symbolic decision layer alone is claimed. This paper does not introduce abstention, calibration, conformal control or reducts. It shows how an abstaining sensor composes with a sufficiency-checked contract, bounds the resulting exposure by the contract's sensed fields, and selects contracts to minimise its estimated bound.
 
 # Claims versus non-claims
 
@@ -277,10 +316,10 @@ Each claim's status is taken from `CLAIMS.md`, where the evidence column names t
 | C1 | A sensed field enters the gate only as an observation record with provenance, score and admission stamp; the model never emits a verdict. | architecture | supported |
 | C2 | Proposition S1 bounds the probability of a verdict change by the sum of the sensed fields' wrong and unknown rates, and of a deny-to-allow change by the sum of their wrong rates. | instantiation | instantiation |
 | C3 | For nested sensed-field sets, the bound does not increase as sensed fields are removed; minimising the estimated bound is a paper 5 cost model. | formal | supported (finite models, nested sets) |
-| C4 | On CH-B1 and CH-C1, with two sensor families and three noise levels, the observed unsafe rate never exceeds the bound. | empirical, registered | not refuted |
-| C5 | Deny-to-allow flips were rare (13 of 21,000 test verdicts, each 1 in 700) and every one lay under its registered bound. | empirical, registered | supported |
+| C4 | In every cell with a registered bound (all of E1; E2 at 30% noise), with two sensor families, the observed unsafe rate does not exceed it. | empirical, registered | not refuted |
+| C5 | Deny-to-allow flips were rare (13 of 21,000 test verdicts, each 1 in 700) and each one in a cell with a registered bound lay under it. | empirical, registered | supported |
 | C6 | Scores from both sensor families are not calibrated, so admission thresholds must be set empirically. | empirical | supported |
-| C7 | Sensing-aware reduct selection changes which reduct is chosen on CH-B1 and reduces measured exposure. | empirical, registered | supported |
+| C7 | Sensing-aware reduct selection changes the choice in arm 1 and coincides in arm 2, relative to paper 5's choice on CH-B1, and the picked reduct had lower measured exposure in all four tests. | empirical, registered | supported |
 | C8 | Everything reproduces from committed caches; no number is hand-entered. | reproducibility | supported |
 
 The non-claims, verbatim from `CLAIMS.md`: "no prevalence in live systems; no claim that sensing is safe in general; no claim about Jev or Haiku beyond the tested configurations; no claim that the bound is tight."
@@ -291,7 +330,7 @@ Correctness is relative to the declared loss model, candidate representation and
 
 **Constructed corpora.** All documents are synthetic, in templated English, one statement per sensed field. Validation and test phrase banks are disjoint, but the rest of the document is shared across splits: the header lines, the filler bank, the noise templates, the date set, the names and the layout. A sensor can benefit from surface regularities that carry over from validation to test. No prevalence claim is made.
 
-**Loose bounds.** The bounds are valid, not tight. Every $B^{+}$ in E1 is at least 0.0395, while the largest observed unsafe rate is 0.0014. Where verdicts changed, $B$ was 6.6 to 7.3 times the observed change rate. Three causes add up. The Clopper-Pearson floor charges every sensed field a cost even with no observed error. The union bound adds per-field terms that overlap in practice. And the truth label counts every faithful reading of a contradictory record as a wrong admission, although most such readings do not change the verdict.
+**Loose bounds.** S1 is valid, not tight, and the estimated bounds inherit its looseness. Every $B^{+}$ in E1 is at least 0.0395, while the largest observed unsafe rate is 0.0014. Where verdicts changed, $B$ was 6.6 to 7.3 times the observed change rate. Three causes add up. The Clopper-Pearson floor charges every sensed field a cost even with no observed error. The union bound adds per-field terms that overlap in practice. And the truth label counts every faithful reading of a contradictory record as a wrong admission, although most such readings do not change the verdict.
 
 **Power of H1.** H1 is a one-sided test against a loose bound, so it can detect only large violations. The table gives, per E1 cell, the fewest flips among the 700 test items whose rate would exceed the cell's $B^{+}$. H1 can fail only under a violation of that size.
 
@@ -303,6 +342,8 @@ Correctness is relative to the declared loss model, candidate representation and
 | Haiku | 0% | 0.0395 | 28 | 0 |
 | Haiku | 10% | 0.0798 | 56 | 0 |
 | Haiku | 30% | 0.0707 | 50 | 0 |
+
+**Transfer and simultaneity.** The estimated bounds hold for the test split only if the sensors' error rates there are no higher than on split B. Split B used the validation phrase bank and the test split a disjoint one, and nothing in the design ensures that transfer; the observed rates are consistent with it but do not establish it. The 95% limits are marginal: the sums $B^{+}$ and $B$, and the family of cells, carry no joint confidence level. The Bonferroni-adjusted versions in Section 7.2 give a simultaneous level within each cell; no adjustment across cells is made. Bounds for E2 below 30% noise are post hoc.
 
 **Two sensor configurations.** One configuration of each sensor family was tested, through the vendors' interfaces as pinned, on the run dates recorded in the manifests. Nothing is claimed about other versions, prompts or models.
 
@@ -318,7 +359,7 @@ Correctness is relative to the declared loss model, candidate representation and
 
 **Caches and slots.** The raw responses are committed append-only in `responses/p6-E1.jsonl` and `responses/p6-E2.jsonl`, with run manifests. `python -m experiments.analysis_p6` reads only the caches, the frozen thresholds and the pinned siblings, and writes `results/p6.md` and `results/p6.slots.json`; two runs give identical bytes. This manuscript is filled from those slots, the checker outputs and the E0 slots at the pinned tag by `python paper/populate.py`; a lint rejects any typed numeral that is not a registered design parameter. A reproduction from the caches calls no model.
 
-**Checkers and mutation testing.** `make formal` runs the S1, S2, S3 and N6 checkers twice and requires identical output. The S1 checker evaluated 4400, 131072 and 115200 pointwise cases on the three finite model families. Mutation testing of `src/sensed_authority` with mutmut 3.7.0 killed 489 of 511 mutants with 0 untested, a kill score of 0.957 against a threshold of 0.85.
+**Checkers and mutation testing.** `make formal` runs the S1, S2, S3 and N6 checkers twice and requires identical output. The S1 checker evaluated 4472, 131072 and 115200 pointwise cases on the three finite model families. Mutation testing of `src/sensed_authority` with mutmut 3.7.0 killed 544 of 575 mutants with 0 untested, a kill score of 0.946 against a threshold of 0.85.
 
 **Review and re-registration.** The external fence review, its attestation, the superseded registration and the re-registration are all committed and tagged. Departures are logged in `prereg/DEVIATIONS.md`; none was recorded for this paper.
 
@@ -336,15 +377,15 @@ An external model review of the novelty fence was commissioned before registrati
 
 # Proofs and checker provenance
 
-**Proof of S1.** Fix a request with true tuple $t$ and let $o$ be the observation vector: recorded fields at their recorded values, sensed fields at their admitted values or unknown, derived fields computed from these. Let $W_i$ be the event that sensed field $i$ is admitted with a wrong value and $U_i$ the event that it is unknown. Suppose no $W_i$ and no $U_i$ occurs. Then $o$ agrees with $t$ on every field of $C$. Since $t \in R$ agrees with $o$, the verdict from observations is $g(t')$ for some $t'$ that agrees with $t$ on $C$, and sufficiency gives $g(t') = g(t)$. So the change event lies inside $\bigcup_i (W_i \cup U_i)$. If the verdict from observations is allow, no field is unknown, because unknown denies. So the deny-to-allow event lies inside $\bigcup_i W_i$. The union bound gives both inequalities. The inclusions hold at every pair $(t, o)$, and both sides are linear in the joint distribution of $(t, o)$, so the inequalities hold for every distribution, including any dependence between fields. $\square$
+**Proof of S1.** Fix a request with true tuple $t$ and let $o$ be the observation vector: recorded fields at their recorded values, sensed fields at their admitted values or unknown, derived fields computed from these. Let $W_i$ be the event that sensed field $i$ is admitted with a wrong value and $U_i$ the event that it is unknown. Suppose no $W_i$ and no $U_i$ occurs. Recorded fields are at their true values (Section 2), and each derivation is truth-preserving, so a correctly admitted assertion derives the true value of its property. Then $o$ agrees with $t$ on every field of $C$. Since $t \in R$ agrees with $o$, the verdict from observations is $g(t')$ for some $t'$ that agrees with $t$ on $C$, and sufficiency gives $g(t') = g(t)$. So the change event lies inside $\bigcup_i (W_i \cup U_i)$. If the verdict from observations is allow, no field is unknown, because unknown denies. So the deny-to-allow event lies inside $\bigcup_i W_i$. The union bound gives both inequalities. The inclusions hold at every pair $(t, o)$, and both sides are linear in the joint distribution of $(t, o)$, so the inequalities hold for every distribution, including any dependence between fields. $\square$
 
-**Proof of S2.** Let $F_s' \subseteq F_s$ be nested sensed-field sets read by the same sensors on the same documents. Each field's admitted value is the same under both contracts, so $e_i$ and $u_i$ are the same per field, and the readings of the smaller set are the restriction of the larger. The S1 bound is a sum of non-negative terms over the set, so removing fields cannot increase it. The estimated bound uses the same per-field split-B estimates, so it is monotone in the same way. For sets that are not nested the per-field terms differ, and Section 4 shows a counterexample to the fewest-fields rule. $\square$
+**Proof of S2.** Let $F_s' \subseteq F_s$ be nested sensed-field sets read by the same sensors on the same documents, through the same admission policy and the same derivation. Under these premises each field's admitted value is the same under both contracts; with a different policy or derivation it need not be, so $e_i$ and $u_i$ are the same per field, and the readings of the smaller set are the restriction of the larger. The S1 bound is a sum of non-negative terms over the set, so removing fields cannot increase it. The estimated bound uses the same per-field split-B estimates, so it is monotone in the same way. For sets that are not nested the per-field terms differ, and Section 4 shows a counterexample to the fewest-fields rule. $\square$
 
 **Proof of S3.** Suppose unknown routes to deny and the configuration is deny-ward. Take any true tuple $t$ with $g(t) = \mathit{deny}$ and any realised observation. If a sensed field is unknown, the verdict is deny. Otherwise every sensed field is either true or admitted with some wrong value, and the recorded fields agree with $t$; by the deny-ward condition, applied jointly to all sensed fields, the verdict is deny. So no realisation turns deny into allow, and the probability is zero. $\square$
 
 **N6 constructions.** Witness (a): fields $f_1, f_2$, contract allow if and only if both are true; true values are (false, true) or (true, false) with equal probability; the sensor reads the item's false field as true with probability 0.05 and is otherwise correct, never unknown. Each field is wrong with probability 1/40, the S1 deny-to-allow bound is 1/20, and the exact rate is 1/20: the bound is attained (attained: yes). Witness (b): the same contract with true values (false, false); with probability $q$ = 1/20 both fields are admitted as true, otherwise both are correct. Each field is wrong with probability 1/20; the S1 bound is 1/10; the exact rate is 1/20; the v1 directional bound is 0; the configuration is not deny-ward in the global sense (globally deny-ward: no).
 
-**Checker provenance.** The checkers enumerate three finite model families, B12, B3 and T2. `s1_check` verified the S1 inclusions at 4400, 131072 and 115200 pairs of tuple and observation (holds: yes). `s2_check` verified S2 for nested sets at 12236, 702464 and 373248 cases (holds: yes) and recorded the counterexample of Section 4. `s3_check` enumerated 528, 2048 and 2048 configurations, of which 376, 318 and 530 were deny-ward, and confirmed that deny-ward holds exactly when no pair turns deny into allow (holds: yes). On B12 it found 4 configurations that a field-by-field test would call deny-ward but that are not deny-ward globally. `n6_witness` computes both witnesses exactly and by simulation (holds: yes). Each output records its statement, scope, inputs hash and provenance; the provenance helper is ported with attribution from `sarc-suite-one-pass` through `sarc-authority-derivation`.
+**Checker provenance.** The checkers enumerate three finite model families, B12, B3 and T2. B12 includes every sufficient contract, the empty one among them, which is sufficient exactly when the verdict is constant on the reachable set. `s1_check` verified the S1 inclusions at 4472, 131072 and 115200 pairs of tuple and observation (holds: yes). `s2_check` verified S2 for nested sets at 12308, 702464 and 373248 cases (holds: yes) and recorded the counterexample of Section 4. `s3_check` enumerated 564, 2048 and 2048 configurations, of which 412, 318 and 530 were deny-ward, and confirmed that deny-ward holds exactly when no pair turns deny into allow (holds: yes). On B12 it found 4 configurations that a field-by-field test would call deny-ward but that are not deny-ward globally. `n6_witness` computes both witnesses exactly and by simulation (holds: yes). Each output records its statement, scope, inputs hash and provenance; the provenance helper is ported with attribution from `sarc-suite-one-pass` through `sarc-authority-derivation`.
 
 # Registered materials
 
