@@ -6,7 +6,7 @@ external human reproduction, which is pending.
 
 | # | item | status | evidence |
 |---|---|---|---|
-| 1 | Invention-log entry made before paper 6 material is public (brief §8). | met | On the author's attestation; the invention log is kept outside this repository and was not inspected by the session that wrote this table. |
+| 1 | Disclosure choice: paper 6 is published openly under the programme's open-research policy; no patent is sought on any mechanism in it. | met | Author's decision, recorded here. |
 | 2 | External novelty review of `NOVELTY.md` and `prereg/p6-v1.md` committed under `review-secondary/` and adjudicated. | met | `review-secondary/p6-fence-review-2026-10-01/` (review and attestation); adjudicated by re-registering as `prereg/p6-v1.1.md`, findings marked `[F1]` to `[F13]`. |
 | 3 | `prereg-p6-v1` tagged by the author before any paper 6 experiment code or model call. | met | Tag `prereg-p6-v1` on `ddcddf4` (2026-09-30 21:10 UTC) precedes the first paper 6 code commit `93737db` and the first p6 cache commit `881fbb2`; the binding registration is `prereg-p6-v1.1` on `2fac5a4`. |
 | 4 | Propositions S1, S2, S3 and N6: finite checkers committed, each statement tagged `machine-checked`, `checked-scope-only` or `pending-human-review`. | met | `checkers/`, `out/p6/checkers/*.json` (all hold; B12 includes the empty contract after round-two F12), `proof_status.json`, `python -m checkers.proof_status_lint` green. |
