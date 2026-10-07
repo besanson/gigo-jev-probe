@@ -1,11 +1,13 @@
-.PHONY: bootstrap formal mutate run6 paper gates release-check
+.PHONY: bootstrap bootstrap-paper formal mutate run6 paper gates release-check
 
 PY ?= python
 
 # R3-3: the README install sequence as one target. Clones both siblings beside this repository
 # if absent, checks out their engines.lock pins, creates .venv, installs the dev extras and
-# dqSarc, then runs the pin check and the paper toolchain preflight. Needs network access
-# (git, pip). Activate .venv afterwards (`. .venv/bin/activate`) before the other targets.
+# dqSarc, then runs the pin check (exit 2 only if a sibling is off its pin). Needs network
+# access (git, pip). Activate .venv afterwards (`. .venv/bin/activate`) before the other
+# targets. Enough for a cached-analysis reproduction; the document toolchain is checked
+# separately by bootstrap-paper (issue #2).
 BOOT_PY = .venv/bin/python
 bootstrap:
 	@set -e; for name in dqSarc sarc-authority-derivation; do \
@@ -18,8 +20,12 @@ bootstrap:
 	[ -x $(BOOT_PY) ] || python3 -m venv .venv
 	$(BOOT_PY) -m pip install -q -e ".[dev,live,live-v2]" -e ../dqSarc
 	$(BOOT_PY) -c "import preflight,sys; e=preflight.check_pin(); print('bootstrap: ' + (e or 'both siblings at their pins')); sys.exit(2 if e else 0)"
-	$(BOOT_PY) preflight.py --paper
 	@echo "bootstrap: done. Activate with: . .venv/bin/activate"
+
+# The document toolchain (Pandoc 3.1.3, Tectonic 0.17.0, poppler-utils) for make paper and
+# make release-check; run after bootstrap.
+bootstrap-paper:
+	$(BOOT_PY) preflight.py --paper
 
 # Paper 6 Phase B: run every checker twice and require byte-identical output, then install it.
 formal:

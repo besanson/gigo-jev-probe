@@ -61,6 +61,10 @@ git -C ../sarc-authority-derivation checkout cfb321ec220e83e81a771a048276571f6ed
 python -m venv .venv && . .venv/bin/activate
 pip install -e ".[dev,live,live-v2]" -e ../dqSarc
 pytest
+#    Steps 1 and 2 in one command: `make bootstrap` (siblings at their pins, .venv, extras,
+#    pin check; exits 2 only if a sibling is off its pin). A cached-analysis reproduction
+#    needs only `make bootstrap`. `make bootstrap-paper` then checks the document toolchain
+#    (`python preflight.py --paper`), needed only for `make paper` and `make release-check`.
 
 # 3. Configuration: copy .env.example to .env, fill in real values, then load them
 set -a; . ./.env; set +a
@@ -93,7 +97,8 @@ Every registration from jev-v3 onward includes an arm health check with a hard s
 Manuscript v0.1: [`paper/paper6-draft-v0.1.md`](paper/paper6-draft-v0.1.md) holds every number as a `{{slot}}`; `python paper/populate.py` fills it from `results/p6.slots.json`, the checker outputs, the mutation result and the E0 slots at tag `jev-probes-final` into [`paper/paper6-draft-v0.1-populated.md`](paper/paper6-draft-v0.1-populated.md). The LaTeX release kit in [`paper-tex/`](paper-tex/) is ported with attribution from `sarc-authority-derivation` at its pin.
 
 ```bash
-make bootstrap        # siblings at their pins, .venv, dev extras, pin check, toolchain preflight
+make bootstrap        # siblings at their pins, .venv, dev extras, pin check
+make bootstrap-paper  # document toolchain preflight (python preflight.py --paper)
 make paper            # figure, populated draft, refs.bib, main.tex (pandoc), sidecars, PDF (Tectonic), arXiv tarball
 make gates            # release gates G1 to G9 plus terminology, proof-status, typed-numerals and freshness lints
 make release-check    # tests, checkers, results regeneration, lints and gates; no inference call
@@ -110,7 +115,7 @@ Tools beyond Python, all reported by `python preflight.py --paper`:
 - `pandoc` 3.1.3;
 - `pdftotext` and `pdfinfo` (poppler-utils).
 
-`make bootstrap` (R3-3) runs the install sequence of the Reproduction path above in one step: it clones both siblings at their `engines.lock` pins if absent, creates `.venv`, installs the dev extras and `dqSarc`, and runs the pin check and `preflight.py --paper`.
+`make bootstrap` (R3-3) runs the install sequence of the Reproduction path above in one step: it clones both siblings at their `engines.lock` pins if absent, creates `.venv`, installs the dev extras and `dqSarc`, and runs the pin check; it exits 2 only when a sibling is off its pin, and it does not need the document toolchain, so a cached-analysis reproduction needs only `make bootstrap` (issue #2). `make bootstrap-paper` runs `preflight.py --paper` for `make paper` and `make release-check`.
 
 Figure 1 is drawn by `paper/figs/fig1_pipeline.py` with matplotlib (pinned in the `dev` extras), which writes both the SVG and the PDF with its bundled fonts and fixed metadata; no SVG converter is needed.
 
