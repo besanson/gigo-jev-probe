@@ -15,7 +15,7 @@
           "page_count": 23,
           "passes_needed": 1,
           "pdf_produced": true,
-          "pdf_sha256": "42090a2e2e3f22be366fbeec4599312ed97c71bd651fe015698ca35a9e6ec664",
+          "pdf_sha256": "d50592a467c4f9b39beba2fd2e5608bc58941680b2958efbb20352a50dab43de",
           "pdf_unresolved_marker_count": 0,
           "undefined_citations": [],
           "undefined_references": []
@@ -32,7 +32,7 @@
           "page_count": 23,
           "passes_needed": 1,
           "pdf_produced": true,
-          "pdf_sha256": "42090a2e2e3f22be366fbeec4599312ed97c71bd651fe015698ca35a9e6ec664",
+          "pdf_sha256": "d50592a467c4f9b39beba2fd2e5608bc58941680b2958efbb20352a50dab43de",
           "pdf_unresolved_marker_count": 0,
           "undefined_citations": [],
           "undefined_references": []
@@ -52,7 +52,7 @@
       "page_count": 23,
       "pass": true,
       "pdf_produced": true,
-      "pdf_sha256": "42090a2e2e3f22be366fbeec4599312ed97c71bd651fe015698ca35a9e6ec664",
+      "pdf_sha256": "d50592a467c4f9b39beba2fd2e5608bc58941680b2958efbb20352a50dab43de",
       "pdf_unresolved_marker_count": 0,
       "source_date_epoch": "1786609963",
       "two_build_identical": true
@@ -128,9 +128,9 @@
           "within_band": true
         },
         "11 Reproducibility": {
-          "md_words": 370,
+          "md_words": 422,
           "pct_of_source": 100.0,
-          "pdf_words": 370,
+          "pdf_words": 422,
           "within_band": true
         },
         "2 Setting": {
@@ -186,110 +186,99 @@
         {
           "found": true,
           "identifiers": [],
-          "index": 44,
+          "index": 11,
           "missing_identifiers": [],
           "missing_numbers": [],
           "numbers": [],
-          "sentence": "The sensor writes an observation; the deterministic contract computes the verdict."
+          "sentence": "What does not change."
         },
         {
           "found": true,
           "identifiers": [],
-          "index": 91,
-          "missing_identifiers": [],
-          "missing_numbers": [],
-          "numbers": [
-            "2",
-            "20",
-            "5"
-          ],
-          "sentence": "The arm health rule stops a run before any further call if more than 2 invalid replies occur in the first 20 validation records of a sensor, or if more than 5% "
-        },
-        {
-          "found": true,
-          "identifiers": [],
-          "index": 104,
-          "missing_identifiers": [],
-          "missing_numbers": [],
-          "numbers": [
-            "700"
-          ],
-          "sentence": "Each cell is a sensor at a noise level, on the 700 test items."
-        },
-        {
-          "found": true,
-          "identifiers": [],
-          "index": 106,
+          "index": 32,
           "missing_identifiers": [],
           "missing_numbers": [],
           "numbers": [
             "5"
           ],
-          "sentence": "B\u207a and B are the split-B bounds of Section 5."
+          "sentence": "We inherit paper 5's notation."
         },
         {
           "found": true,
           "identifiers": [],
-          "index": 124,
+          "index": 76,
           "missing_identifiers": [],
           "missing_numbers": [],
           "numbers": [],
-          "sentence": "The truth label counts that as a wrong admission, as registered: exposure is measured against what is true, not against what the document says."
+          "sentence": "E0, motivating evidence."
         },
         {
           "found": true,
           "identifiers": [],
-          "index": 144,
+          "index": 122,
           "missing_identifiers": [],
           "missing_numbers": [],
           "numbers": [],
-          "sentence": "The unsafe rate did not move between the two ceilings."
+          "sentence": "The flips are not misreadings of a clear document."
         },
         {
           "found": true,
           "identifiers": [],
-          "index": 155,
+          "index": 134,
           "missing_identifiers": [],
           "missing_numbers": [],
           "numbers": [
-            "6"
+            "30"
           ],
-          "sentence": "H1 combines the 6 E1 cells' exact one-sided binomial tests with a Bonferroni factor."
+          "sentence": "Only the 30% bounds were registered."
         },
         {
           "found": true,
           "identifiers": [],
-          "index": 191,
+          "index": 135,
           "missing_identifiers": [],
           "missing_numbers": [],
-          "numbers": [
-            "0.0395",
-            "0.0014"
-          ],
-          "sentence": "Every B\u207a in E1 is at least 0.0395, while the largest observed unsafe rate is 0.0014."
+          "numbers": [],
+          "sentence": "The table below gives post hoc split-B bounds B\u207a at every noise level, computed the same way but not registered, beside the flips per reduct."
         },
         {
           "found": true,
           "identifiers": [],
-          "index": 211,
+          "index": 177,
           "missing_identifiers": [],
           "missing_numbers": [],
           "numbers": [],
-          "sentence": "The paired test accounts for this; the count of flips does not measure independent events."
+          "sentence": "The composition of a sensor with a deciding check is therefore not claimed as new."
         },
         {
           "found": true,
-          "identifiers": [
-            "CH-C1"
-          ],
-          "index": 242,
+          "identifiers": [],
+          "index": 196,
           "missing_identifiers": [],
           "missing_numbers": [],
           "numbers": [],
-          "sentence": "E1 statement banks (CH-C1). {approver}, {doc} and {ref} are drawn per item; {d} is the item's approval date."
+          "sentence": "H1 is a one-sided test against a loose bound, so it can detect only large violations."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 199,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [],
+          "sentence": "Transfer and simultaneity."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 241,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [],
+          "sentence": "No text after the object."
         }
       ],
-      "source_sha256": "d005e4a753c063a87a43014e1c385f7ab0011a1f8ecd3c7d442207523cc1a94f"
+      "source_sha256": "a02f124c4a515734834a127395cbb20168c30e1b39e2ebeb0494c83180f40804"
     },
     "G5_structure_parity": {
       "counts": {

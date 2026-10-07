@@ -15,8 +15,8 @@ targets; pandoc citations.
 Allowed, applied to what remains:
 
 1. Structural numbers: Section, Sections, Appendix, Table, Figure, Proposition, Claim, Phase,
-   Step and Item references; E2's arm labels ("arm 1", "arm 2"); a registration section
-   ("§5.2"); "paper 5" and "papers 1 to 5" in the series; a heading's or an
+   Step and Item references; E2's arm labels ("arm 1", "arm 2"); a repository issue number
+   ("issue #2"); a registration section ("§5.2"); "paper 5" and "papers 1 to 5" in the series; a heading's or an
    ordered list item's own number; in the PDF, a section heading's number at the start of a line
    and a numeric citation such as "[3]" or "[3, 7]".
 2. Years 1900 to 2099 and ISO dates (the registered date set D and the run dates).
@@ -57,6 +57,7 @@ STRUCTURAL = [
                r"\d+(?:\.\d+)*(?:\s*(?:to|and|-)\s*\d+(?:\.\d+)*)?\b"),
     re.compile(r"\b[Pp]apers?\s+\d+(?:\s*(?:to|and|-)\s*\d+)?\b"),
     re.compile(r"\b[Aa]rms?\s+\d\b"),
+    re.compile(r"\b[Ii]ssues?\s+#\d+\b"),
     re.compile(r"§\s?\d+(?:\.\d+)*"),
     re.compile(r"^#+\s*\d+(?:\.\d+)*\.?\s", re.MULTILINE),
     re.compile(r"^\s*\d+\.\s", re.MULTILINE),

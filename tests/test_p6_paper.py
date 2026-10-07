@@ -76,6 +76,7 @@ def test_typed_numerals_catches_a_hand_typed_number(text: str) -> None:
 @pytest.mark.parametrize("text", [
     "The rate is {{E1.jev.n00.unsafe.rate}}.",
     "Section 7 and papers 1 to 5; arm 2 of E2; seed 20261107.",
+    "Reproduced in repository issue #2.",
     "Noise levels 0%, 10% and 30%; ceilings 1% and 5%; a 95% interval at 0.05.",
     "Splits of 150, 300 and 700 items from 1,000; 27,000 tuples; 10,000 witness items.",
     "The tag `prereg-p6-v1.1` and commit `2fac5a4`; Claude Haiku 4.5; SHA-256; within 30 days.",

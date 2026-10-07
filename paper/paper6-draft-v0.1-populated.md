@@ -357,7 +357,7 @@ Correctness is relative to the declared loss model, candidate representation and
 
 **Siblings and pins.** `engines.lock` pins `sarc-authority-derivation` at `cfb321e` (CH-B1 and CH-C1), `dqSarc` at `db6c396`, and this repository's own Jev probe record at `e1fc75b` (tag `jev-probes-final`). A run aborts before any model call if a pin differs.
 
-**Caches and slots.** The raw responses are committed append-only in `responses/p6-E1.jsonl` and `responses/p6-E2.jsonl`, with run manifests. `python -m experiments.analysis_p6` reads only the caches, the frozen thresholds and the pinned siblings, and writes `results/p6.md` and `results/p6.slots.json`; two runs give identical bytes. This manuscript is filled from those slots, the checker outputs and the E0 slots at the pinned tag by `python paper/populate.py`; a lint rejects any typed numeral that is not a registered design parameter. A reproduction from the caches calls no model.
+**Caches and slots.** The raw responses are committed append-only in `responses/p6-E1.jsonl` and `responses/p6-E2.jsonl`, with run manifests. `python -m experiments.analysis_p6` reads only the caches, the frozen thresholds and the pinned siblings, and writes `results/p6.md` and `results/p6.slots.json`; two runs give identical bytes. This manuscript is filled from those slots, the checker outputs and the E0 slots at the pinned tag by `python paper/populate.py`; a lint rejects any typed numeral that is not a registered design parameter. A reproduction from the caches calls no model. An independent researcher reproduced it from a fresh clone of the `v1.0-rc2` release on macOS under Python `3.13`, outside the Python `3.11` environment in which the repository was developed and checked (repository issue #2): both runs of the analysis matched the committed results byte for byte, and the PDF was not rebuilt.
 
 **Checkers and mutation testing.** `make formal` runs the S1, S2, S3 and N6 checkers twice and requires identical output. The S1 checker evaluated 4472, 131072 and 115200 pointwise cases on the three finite model families. Mutation testing of `src/sensed_authority` with mutmut 3.7.0 killed 544 of 575 mutants with 0 untested, a kill score of 0.946 against a threshold of 0.85.
 
@@ -369,7 +369,7 @@ Correctness is relative to the declared loss model, candidate representation and
 
 # Acknowledgements {.unnumbered}
 
-An external model review of the novelty fence was commissioned before registration, committed unedited and not applied; the author re-registered after reading it. An independent reproducer will be named in a later version, with permission. AI assistance was used for drafting and engineering, under the author's direction; the author is solely responsible for the content.
+An external model review of the novelty fence was commissioned before registration, committed unedited and not applied; the author re-registered after reading it. Eduardo Arana, independent researcher, reproduced the cached analysis from a fresh environment (repository issue #2) and had no role in developing the repository; named with permission. AI assistance was used for drafting and engineering, under the author's direction; the author is solely responsible for the content.
 
 ```{=latex}
 \appendix
