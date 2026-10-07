@@ -1,8 +1,7 @@
 # Final audit (paper 6)
 
-Every item must be met, with evidence, before release. Status at the v1.0 release candidate
-(manuscript v0.1.2 plus the round-three toolchain declaration): every item met except the
-external human reproduction, which is pending.
+Every item must be met, with evidence, before release. Status after the v1.0-rc2 release
+candidate (manuscript v0.1.2 plus the round-three toolchain declaration): every item met.
 
 | # | item | status | evidence |
 |---|---|---|---|
@@ -17,4 +16,6 @@ external human reproduction, which is pending.
 | 9 | Every departure from the registration logged in `prereg/DEVIATIONS.md` before the affected data are analysed. | met | `prereg/DEVIATIONS.md`: "p6 (v1.1): no deviations". Post hoc material (round-two F4 and F7) is labelled descriptive or post hoc in the results and the paper, not registered. |
 | 10 | Terminology lint green on every paper 6 file. | met | `python -m lint.terminology` (gate row L_terminology). |
 | 11 | Frozen Jev probe paths unchanged since `jev-probes-final`. | met | `git diff jev-probes-final HEAD -- src/jev_probe results/jev-* responses/jev-v*.jsonl docs/jev-note* prereg/jev-*` is empty. |
-| 12 | Independent human reproduction of at least E1 or E2 from a fresh environment, filed as an issue. | **external reproduction: pending** | Not yet filed. The round-three replication (`review-secondary/p6-replication-r3/`) is a mechanical replication by Perplexity Computer, not the independent human reproduction this item requires. |
+| 12 | Independent human reproduction of at least E1 or E2 from a fresh environment, filed as an issue. | met | [Issue #2](https://github.com/besanson/gigo-jev-probe/issues/2): Eduardo Arana, independent researcher; macOS 26.7.1 ARM64, Python 3.13.16; fresh clone at `e49bb97` (`v1.0-rc2`); two runs of `python -m experiments.analysis_p6`, each byte-identical to the committed `results/p6.md` (sha256 `57471c788a66d7097b2672b762545664ef4064ded408f8ea5ea52f262570fd37`); 296 tests passed. The PDF was not reproduced by the reproducer (document toolchain not installed). |
+
+Python 3.13 reproduction recorded outside the CI matrix (the repository runs no CI workflow; development and `make release-check` use Python 3.11).
