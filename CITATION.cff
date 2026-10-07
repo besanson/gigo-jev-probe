@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: >-
+  If you use this repository (code, caches, checkers, or the paper 6 manuscript), please
+  cite it using the metadata below.
+title: >-
+  Probabilistic Sensing, Deterministic Authority: Admitting Model-Produced
+  Observations into Sufficiency-Checked Governance Contracts
+authors:
+  - family-names: Besanson
+    given-names: Gaston
+    affiliation: Universidad Torcuato Di Tella
+version: 1.0.0
+repository-code: https://github.com/besanson/gigo-jev-probe
+license: Apache-2.0
+# Zenodo archival DOI: left empty until the release is archived. The CFF schema rejects an
+# empty value, so the field stays commented out; uncomment it and fill it in after Zenodo.
+# doi: 10.5281/zenodo.
