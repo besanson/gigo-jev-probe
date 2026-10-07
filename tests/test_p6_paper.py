@@ -77,6 +77,7 @@ def test_typed_numerals_catches_a_hand_typed_number(text: str) -> None:
     "The rate is {{E1.jev.n00.unsafe.rate}}.",
     "Section 7 and papers 1 to 5; arm 2 of E2; seed 20261107.",
     "Reproduced in repository issue #2.",
+    "The repository is archived at DOI 10.5281/zenodo.23224016; this version is tag v1.0.1.",
     "Noise levels 0%, 10% and 30%; ceilings 1% and 5%; a 95% interval at 0.05.",
     "Splits of 150, 300 and 700 items from 1,000; 27,000 tuples; 10,000 witness items.",
     "The tag `prereg-p6-v1.1` and commit `2fac5a4`; Claude Haiku 4.5; SHA-256; within 30 days.",
@@ -84,6 +85,20 @@ def test_typed_numerals_catches_a_hand_typed_number(text: str) -> None:
 ])
 def test_typed_numerals_allows_structural_and_registered_numbers(text: str) -> None:
     assert typed_numerals.find_violations(text) == []
+
+
+def test_citation_check_allows_only_the_repository_archive_doi(tmp_path: Path) -> None:
+    cc = _load("citation_check", ROOT / "paper-tex" / "citation_check.py")
+    whitelist = tmp_path / "w.json"
+    whitelist.write_text('{"citations": []}')
+    cff = tmp_path / "CITATION.cff"
+    cff.write_text("cff-version: 1.2.0\ndoi: 10.5281/zenodo.23224016\n")
+    paper = tmp_path / "p.md"
+    paper.write_text("Archived at DOI 10.5281/zenodo.23224016; see also doi:10.1000/other.")
+    result = cc.check(str(paper), str(whitelist), str(cff))
+    assert result["unverified_dois"] == ["10.1000/other"]
+    cff.write_text("cff-version: 1.2.0\n# doi: 10.5281/zenodo.23224016\n")
+    assert "10.5281/zenodo.23224016" in cc.check(str(paper), str(whitelist), str(cff))["unverified_dois"]
 
 
 def test_typed_numerals_treats_scientific_notation_as_a_number() -> None:

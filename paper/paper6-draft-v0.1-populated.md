@@ -367,6 +367,8 @@ Correctness is relative to the declared loss model, candidate representation and
 
 **Build.** `make paper` regenerates the manuscript, the figure, the bibliography and the PDF. The canonical document toolchain is Pandoc `3.1.3` and Tectonic `0.17.0` with its `default_bundle_v33` bundle; under it the LaTeX source, the PDF and the arXiv archive regenerate byte for byte, and `make release-check` refuses another Pandoc minor version. `make release-check` runs the tests, the checkers, the analysis regeneration, the lints and the release gates.
 
+**Archive.** The repository is archived at DOI 10.5281/zenodo.23224016; this version corresponds to tag v1.0.1.
+
 # Acknowledgements {.unnumbered}
 
 An external model review of the novelty fence was commissioned before registration, committed unedited and not applied; the author re-registered after reading it. Eduardo Arana, independent researcher, reproduced the cached analysis from a fresh environment (repository issue #2) and had no role in developing the repository; named with permission. AI assistance was used for drafting and engineering, under the author's direction; the author is solely responsible for the content.

@@ -15,7 +15,7 @@
           "page_count": 23,
           "passes_needed": 1,
           "pdf_produced": true,
-          "pdf_sha256": "d50592a467c4f9b39beba2fd2e5608bc58941680b2958efbb20352a50dab43de",
+          "pdf_sha256": "2fc4b5de0416566c342f03726c06ebf983f228848762baf0112caf7de2d44c25",
           "pdf_unresolved_marker_count": 0,
           "undefined_citations": [],
           "undefined_references": []
@@ -32,7 +32,7 @@
           "page_count": 23,
           "passes_needed": 1,
           "pdf_produced": true,
-          "pdf_sha256": "d50592a467c4f9b39beba2fd2e5608bc58941680b2958efbb20352a50dab43de",
+          "pdf_sha256": "2fc4b5de0416566c342f03726c06ebf983f228848762baf0112caf7de2d44c25",
           "pdf_unresolved_marker_count": 0,
           "undefined_citations": [],
           "undefined_references": []
@@ -52,7 +52,7 @@
       "page_count": 23,
       "pass": true,
       "pdf_produced": true,
-      "pdf_sha256": "d50592a467c4f9b39beba2fd2e5608bc58941680b2958efbb20352a50dab43de",
+      "pdf_sha256": "2fc4b5de0416566c342f03726c06ebf983f228848762baf0112caf7de2d44c25",
       "pdf_unresolved_marker_count": 0,
       "source_date_epoch": "1786609963",
       "two_build_identical": true
@@ -128,9 +128,9 @@
           "within_band": true
         },
         "11 Reproducibility": {
-          "md_words": 422,
+          "md_words": 436,
           "pct_of_source": 100.0,
-          "pdf_words": 422,
+          "pdf_words": 436,
           "within_band": true
         },
         "2 Setting": {
@@ -186,99 +186,107 @@
         {
           "found": true,
           "identifiers": [],
-          "index": 11,
+          "index": 4,
           "missing_identifiers": [],
           "missing_numbers": [],
           "numbers": [],
-          "sentence": "What does not change."
+          "sentence": "Every field those contracts read is recorded: it comes from a system that stores it, with metadata a data-quality check can test."
         },
         {
           "found": true,
           "identifiers": [],
-          "index": 32,
+          "index": 5,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [],
+          "sentence": "Some fields an authority contract needs are written down only in unstructured evidence: a change ticket that says an approval was given, a contract that says wh"
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 26,
           "missing_identifiers": [],
           "missing_numbers": [],
           "numbers": [
+            "3"
+          ],
+          "sentence": "Section 3 states the invariants."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 52,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [],
+          "sentence": "The judgement that turns the reading into a permission stays in code that can be inspected and tested."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 78,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [
+            "1",
             "5"
           ],
-          "sentence": "We inherit paper 5's notation."
+          "sentence": "E3 re-reads the E1 caches at ceilings of 1% and 5%, and with unknown routed to deny or to escalation."
         },
         {
           "found": true,
           "identifiers": [],
-          "index": 76,
+          "index": 86,
           "missing_identifiers": [],
           "missing_numbers": [],
           "numbers": [],
-          "sentence": "E0, motivating evidence."
+          "sentence": "Noise is nested across levels."
         },
         {
           "found": true,
           "identifiers": [],
-          "index": 122,
+          "index": 87,
           "missing_identifiers": [],
           "missing_numbers": [],
           "numbers": [],
-          "sentence": "The flips are not misreadings of a clear document."
+          "sentence": "Each item and field has two labels."
         },
         {
           "found": true,
           "identifiers": [],
-          "index": 134,
+          "index": 128,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [],
+          "sentence": "On the test split, the verdict-change and unsafe rates were:"
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 130,
           "missing_identifiers": [],
           "missing_numbers": [],
           "numbers": [
-            "30"
+            "30",
+            "7.8"
           ],
-          "sentence": "Only the 30% bounds were registered."
+          "sentence": "At 30% noise the picked reduct changed fewer verdicts than the other in all four registered comparisons (H2, Section 7.8)."
         },
         {
           "found": true,
           "identifiers": [],
-          "index": 135,
+          "index": 224,
           "missing_identifiers": [],
           "missing_numbers": [],
-          "numbers": [],
-          "sentence": "The table below gives post hoc split-B bounds B\u207a at every noise level, computed the same way but not registered, beside the flips per reduct."
-        },
-        {
-          "found": true,
-          "identifiers": [],
-          "index": 177,
-          "missing_identifiers": [],
-          "missing_numbers": [],
-          "numbers": [],
-          "sentence": "The composition of a sensor with a deciding check is therefore not claimed as new."
-        },
-        {
-          "found": true,
-          "identifiers": [],
-          "index": 196,
-          "missing_identifiers": [],
-          "missing_numbers": [],
-          "numbers": [],
-          "sentence": "H1 is a one-sided test against a loose bound, so it can detect only large violations."
-        },
-        {
-          "found": true,
-          "identifiers": [],
-          "index": 199,
-          "missing_identifiers": [],
-          "missing_numbers": [],
-          "numbers": [],
-          "sentence": "Transfer and simultaneity."
-        },
-        {
-          "found": true,
-          "identifiers": [],
-          "index": 241,
-          "missing_identifiers": [],
-          "missing_numbers": [],
-          "numbers": [],
-          "sentence": "No text after the object."
+          "numbers": [
+            "10.5281",
+            "23224016",
+            "0.1"
+          ],
+          "sentence": "The repository is archived at DOI 10.5281/zenodo.23224016; this version corresponds to tag v1.0.1."
         }
       ],
-      "source_sha256": "a02f124c4a515734834a127395cbb20168c30e1b39e2ebeb0494c83180f40804"
+      "source_sha256": "b2aa1c57d3510c170c393492cd02f910920feba2214327f43d035992dbba769e"
     },
     "G5_structure_parity": {
       "counts": {

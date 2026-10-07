@@ -9,9 +9,8 @@ authors:
   - family-names: Besanson
     given-names: Gaston
     affiliation: Universidad Torcuato Di Tella
-version: 1.0.0
+version: 1.0.1
 repository-code: https://github.com/besanson/gigo-jev-probe
 license: Apache-2.0
-# Zenodo archival DOI: left empty until the release is archived. The CFF schema rejects an
-# empty value, so the field stays commented out; uncomment it and fill it in after Zenodo.
-# doi: 10.5281/zenodo.
+# Zenodo concept DOI: resolves to the latest archived version (DECISIONS.md, D-E3).
+doi: 10.5281/zenodo.23224016

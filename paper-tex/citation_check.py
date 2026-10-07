@@ -40,6 +40,10 @@ by exact url presence: the entry's own url must appear verbatim in the
 paper text, so a citation without a DOI/arXiv id still gets an automated
 presence check rather than only a one-time human verification during
 research.
+
+One DOI is allowed without a whitelist entry: the repository's own archive DOI, read from the
+`doi:` field of CITATION.cff at the repository root (DECISIONS.md, D-E3). It names this
+repository, not a cited work, so it has no bibliography entry.
 """
 from __future__ import annotations
 
@@ -50,6 +54,7 @@ from typing import Any, Dict
 
 ROOT = Path(__file__).resolve().parents[1]
 CITATIONS_PATH = str(ROOT / "verified-citations.json")
+CITATION_CFF_PATH = str(ROOT / "CITATION.cff")
 DEFAULT_TARGET = str(ROOT / "paper" / "paper6-draft-v0.1.md")
 
 ARXIV_PATTERN = re.compile(r"arXiv[:\s]+(\d{4}\.\d{5})", re.IGNORECASE)
@@ -62,6 +67,13 @@ CITE_PLACEHOLDER_PATTERN = re.compile(r"\[CITE[-:][^\]]*\]")
 
 
 REQUIRED_FIELDS = ("url", "title", "first_author", "year")
+SELF_DOI_PATTERN = re.compile(r"^doi:\s*[\"']?(10\.\d{4,9}/[^\s\"']+)", re.MULTILINE)
+
+
+def self_archive_dois(cff_path: str = CITATION_CFF_PATH) -> set[str]:
+    """The repository's own archive DOI from CITATION.cff (empty if absent or commented out)."""
+    path = Path(cff_path)
+    return set(SELF_DOI_PATTERN.findall(path.read_text())) if path.exists() else set()
 
 
 def load_whitelist(path: str = CITATIONS_PATH) -> Dict[str, Any]:
@@ -81,15 +93,16 @@ def verify_whitelist_schema(path: str = CITATIONS_PATH) -> Dict[str, Any]:
     return {"total": len(whitelist["citations"]), "incomplete": incomplete, "clean": not incomplete}
 
 
-def check(paper_path: str, whitelist_path: str = CITATIONS_PATH) -> Dict[str, Any]:
+def check(paper_path: str, whitelist_path: str = CITATIONS_PATH,
+          cff_path: str = CITATION_CFF_PATH) -> Dict[str, Any]:
     text = Path(paper_path).read_text()
     whitelist = load_whitelist(whitelist_path)
     allowed_arxiv = {c["arxiv_id"] for c in whitelist["citations"] if "arxiv_id" in c}
-    allowed_doi = {c["doi"] for c in whitelist["citations"] if "doi" in c}
+    allowed_doi = {c["doi"] for c in whitelist["citations"] if "doi" in c} | self_archive_dois(cff_path)
     allowed_urls = {c["url"] for c in whitelist["citations"] if "url" in c}
 
     found_arxiv = set(ARXIV_PATTERN.findall(text))
-    found_doi = {m.rstrip(".") for m in DOI_PATTERN.findall(text)}
+    found_doi = {m.rstrip(".,;:") for m in DOI_PATTERN.findall(text)}
     found_urls = {m.rstrip(".,;") for m in URL_PATTERN.findall(text)}
     unverified_arxiv = sorted(found_arxiv - allowed_arxiv)
     unverified_doi = sorted(found_doi - allowed_doi)

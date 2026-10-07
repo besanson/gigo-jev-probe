@@ -119,6 +119,18 @@ Tools beyond Python, all reported by `python preflight.py --paper`:
 
 Figure 1 is drawn by `paper/figs/fig1_pipeline.py` with matplotlib (pinned in the `dev` extras), which writes both the SVG and the PDF with its bundled fonts and fixed metadata; no SVG converter is needed.
 
+## Citation
+
+Cite paper 6 and this repository through the Zenodo concept DOI, which resolves to the latest
+archived version; the paper 6 release is tag `v1.0.1` (see [`DECISIONS.md`](DECISIONS.md), D-E3).
+Machine-readable metadata: [`CITATION.cff`](CITATION.cff).
+
+```text
+Gaston Besanson. Probabilistic Sensing, Deterministic Authority: Admitting Model-Produced
+Observations into Sufficiency-Checked Governance Contracts. Version 1.0.1.
+https://github.com/besanson/gigo-jev-probe. DOI: 10.5281/zenodo.23224016
+```
+
 ## Status
 
 jev-v1, jev-v2 and jev-v3 complete. Results: [`docs/jev-note.md`](docs/jev-note.md).

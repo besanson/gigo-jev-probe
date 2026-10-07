@@ -16,3 +16,12 @@
 - **Consequences.** One repository carries both the frozen probe record and the paper 6
   pipeline. Any later change to a frozen path is a deviation logged in
   `prereg/DEVIATIONS.md`, and the paper keeps quoting the tagged commit.
+
+## D-E3: the paper 6 release tag is v1.0.1; the concept DOI is cited
+
+- **Status:** accepted, 2026-10-07.
+- **Decision.** Tag v1.0 was created on e1fc75b (main) in error and does not contain paper 6. It
+  is left in place. The paper 6 release tag is v1.0.1. Zenodo record 23224017 (version 1 of
+  concept record 23224016) archives e1fc75b and is marked as created in error. The paper and
+  CITATION.cff cite the concept DOI 10.5281/zenodo.23224016, which resolves to the latest
+  version.
