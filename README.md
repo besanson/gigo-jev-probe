@@ -1,5 +1,9 @@
 # gigo-jev-probe
 
+Paper 6, *Probabilistic Sensing, Deterministic Authority*: arXiv
+[2610.10978](https://arxiv.org/abs/2610.10978); archive DOI
+[10.5281/zenodo.23224016](https://doi.org/10.5281/zenodo.23224016) (release `v1.0.1`).
+
 A preregistered probe of **TypeSafe AI's Jev** model as an **advisory data-quality
 critic** on **GIGO-Bench**, the frozen benchmark in
 [`besanson/dqSarc`](https://github.com/besanson/dqSarc).
@@ -121,14 +125,16 @@ Figure 1 is drawn by `paper/figs/fig1_pipeline.py` with matplotlib (pinned in th
 
 ## Citation
 
-Cite paper 6 and this repository through the Zenodo concept DOI, which resolves to the latest
-archived version; the paper 6 release is tag `v1.0.1` (see [`DECISIONS.md`](DECISIONS.md), D-E3).
+Cite paper 6 by its arXiv preprint, [arXiv:2610.10978](https://arxiv.org/abs/2610.10978), and
+this repository through the Zenodo concept DOI, which resolves to the latest archived version;
+the paper 6 release is tag `v1.0.1` (see [`DECISIONS.md`](DECISIONS.md), D-E3).
 Machine-readable metadata: [`CITATION.cff`](CITATION.cff).
 
 ```text
 Gaston Besanson. Probabilistic Sensing, Deterministic Authority: Admitting Model-Produced
 Observations into Sufficiency-Checked Governance Contracts. Version 1.0.1.
-https://github.com/besanson/gigo-jev-probe. DOI: 10.5281/zenodo.23224016
+arXiv:2610.10978, 2026. https://arxiv.org/abs/2610.10978
+Repository: https://github.com/besanson/gigo-jev-probe. DOI: 10.5281/zenodo.23224016
 ```
 
 ## Status

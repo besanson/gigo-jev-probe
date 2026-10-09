@@ -25,3 +25,6 @@
   concept record 23224016) archives e1fc75b and is marked as created in error. The paper and
   CITATION.cff cite the concept DOI 10.5281/zenodo.23224016, which resolves to the latest
   version.
+- **Addendum.** Tag v1.0 at e1fc75b coincides with jev-probes-final, the E0 source. Release
+  v1.0.1 archived as Zenodo version 2, record 23224577. arXiv 2610.10978, primary cs.SE,
+  cross-list cs.AI.
