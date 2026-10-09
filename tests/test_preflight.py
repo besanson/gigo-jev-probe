@@ -71,3 +71,42 @@ def test_second_sibling_is_checked(tmp_path: Path) -> None:
 
 def test_real_pins_hold() -> None:
     assert preflight.check_pin() is None
+
+
+def test_paper_report_needs_an_engine_pandoc_and_pdftotext() -> None:
+    present = {"tectonic": "/t", "latexmk": None, "pandoc": "/p", "pdftotext": "/x", "pdfinfo": "/i",
+               "lmodern.sty": None}
+    assert preflight.paper_report(present)[1] is True
+    for name in ("tectonic", "pandoc", "pdftotext"):
+        assert preflight.paper_report({**present, name: None})[1] is False
+    latexmk_only = {**present, "tectonic": None, "latexmk": "/l"}
+    assert preflight.paper_report(latexmk_only)[1] is False
+    assert preflight.paper_report({**latexmk_only, "lmodern.sty": "/tex/lmodern.sty"})[1] is True
+
+
+def test_paper_tools_reports_kpsewhich_lookup() -> None:
+    which = {"kpsewhich": "/k", "tectonic": "/t"}.get
+
+    class R:
+        stdout = "/texlive/lmodern.sty\n"
+
+    tools = preflight.paper_tools(which=which, run=lambda *a, **k: R())
+    assert tools["lmodern.sty"] == "/texlive/lmodern.sty" and tools["pandoc"] is None
+
+
+def test_pandoc_must_be_3_1() -> None:  # R3-1
+    assert preflight.pandoc_matches("3.1.3") and preflight.pandoc_matches("3.1.11")
+    for bad in ("3.7.0.2", "2.19.2", "3.2", None):
+        assert not preflight.pandoc_matches(bad)
+
+
+def test_tool_version_parses_the_first_dotted_number() -> None:  # R3-1
+    class R:
+        stdout = "pandoc 3.1.3\nFeatures: +server\n"
+
+    assert preflight.tool_version(["pandoc", "--version"], run=lambda *a, **k: R()) == "3.1.3"
+
+    def missing(*a, **k):
+        raise FileNotFoundError
+
+    assert preflight.tool_version(["nope"], run=missing) is None

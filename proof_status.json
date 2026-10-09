@@ -1,0 +1,17 @@
+{
+ "registration": "prereg/p6-v1.1.md (tag prereg-p6-v1.1)",
+ "tags": ["pending-human-review", "checked-scope-only", "machine-checked"],
+ "rule": "A statement may be tagged machine-checked only if its checker holds and the checker's scope equals the statement's scope; checked-scope-only if its checker holds on a narrower scope; otherwise pending-human-review.",
+ "statements": [
+  {"id": "S1-finite", "statement": "S1 on every joint distribution over the finite model families B12, B3 and T2", "scope": "finite-models:B12,B3,T2", "checker": "s1_check", "tag": "machine-checked"},
+  {"id": "S1", "statement": "S1: P(change) <= sum(e_i + u_i) and P(deny->allow) <= sum(e_i), for any finite reachable set, sufficient contract and sensor", "scope": "general", "checker": "s1_check", "tag": "checked-scope-only"},
+  {"id": "S2-finite", "statement": "S2 for nested sensed-field sets on the finite model families", "scope": "finite-models:B12,B3,T2;nested-sets-only", "checker": "s2_check", "tag": "machine-checked"},
+  {"id": "S2", "statement": "S2: for nested sensed-field sets, removing a sensed field does not increase the S1 bound", "scope": "general", "checker": "s2_check", "tag": "checked-scope-only"},
+  {"id": "S3-finite", "statement": "S3's global deny-ward condition is exactly the absence of a deny-to-allow vertex, on the finite model families", "scope": "finite-models:B12,B3,T2", "checker": "s3_check", "tag": "machine-checked"},
+  {"id": "S3", "statement": "S3: if unknown denies and the configuration is deny-ward (global), then P(deny->allow) = 0", "scope": "general", "checker": "s3_check", "tag": "checked-scope-only"},
+  {"id": "N6", "statement": "N6: (a) the S1 unsafe bound is attained with disjoint errors; (b) joint errors in an AND contract defeat the v1 directional bound while S1 holds", "scope": "witness", "checker": "n6_witness", "tag": "machine-checked"},
+  {"id": "S1-proof", "statement": "The written general proof of S1 in the appendix", "scope": "general", "checker": null, "tag": "pending-human-review"},
+  {"id": "S2-proof", "statement": "The written general proof of S2 (nested sets) in the appendix", "scope": "general", "checker": null, "tag": "pending-human-review"},
+  {"id": "S3-proof", "statement": "The written general proof of S3 in the appendix", "scope": "general", "checker": null, "tag": "pending-human-review"}
+ ]
+}

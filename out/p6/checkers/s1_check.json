@@ -1,0 +1,17 @@
+{
+ "argument": "pointwise at every vertex (t, o); both sides linear in the joint distribution",
+ "checker": "s1_check",
+ "first_violation": null,
+ "generated_at_head_sha": "e3d5ed12518515398c866fd3a191691dbc908bf4",
+ "holds": true,
+ "inputs_hash": "009445ae18046f767baf248027d552ad7c06d3197b819f3d44089817ab149cf4",
+ "pointwise_checks": {
+  "B12": 4472,
+  "B3": 131072,
+  "T2": 115200
+ },
+ "provenance": "sarc-suite-one-pass: checkers/_provenance.py ported verbatim with attribution (sarc-suite-one-pass@782261e via sarc-authority-derivation@cfb321e)",
+ "scope": "finite-models:B12,B3,T2",
+ "statement": "S1: P(change) <= sum(e_i + u_i); P(deny->allow) <= sum(e_i)",
+ "violations": {}
+}

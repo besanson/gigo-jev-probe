@@ -1,0 +1,44 @@
+cff-version: 1.2.0
+message: >-
+  If you use this repository (code, caches, checkers, or the paper 6 manuscript), please
+  cite it using the metadata below.
+title: >-
+  Probabilistic Sensing, Deterministic Authority: Admitting Model-Produced
+  Observations into Sufficiency-Checked Governance Contracts
+authors:
+  - family-names: Besanson
+    given-names: Gaston
+    affiliation: Universidad Torcuato Di Tella
+version: 1.0.1
+repository-code: https://github.com/besanson/gigo-jev-probe
+license: Apache-2.0
+# Zenodo concept DOI: resolves to the latest archived version (DECISIONS.md, D-E3).
+doi: 10.5281/zenodo.23224016
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23224016
+    description: Zenodo concept DOI for this repository (resolves to the latest version)
+  # The CFF schema has no arxiv identifier type; arXiv IDs are recorded as type other.
+  - type: other
+    value: "arXiv:2610.10978"
+    description: arXiv identifier of the paper 6 preprint
+preferred-citation:
+  type: article
+  title: >-
+    Probabilistic Sensing, Deterministic Authority: Admitting Model-Produced
+    Observations into Sufficiency-Checked Governance Contracts
+  authors:
+    - family-names: Besanson
+      given-names: Gaston
+      affiliation: Universidad Torcuato Di Tella
+  journal: arXiv
+  year: 2026
+  url: https://arxiv.org/abs/2610.10978
+  doi: 10.5281/zenodo.23224016
+  identifiers:
+    - type: other
+      value: "arXiv:2610.10978"
+      description: arXiv identifier
+    - type: doi
+      value: 10.5281/zenodo.23224016
+      description: Zenodo concept DOI

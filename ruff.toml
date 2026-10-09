@@ -1,0 +1,3 @@
+# Third-party review material under review-secondary/ is committed unedited (attestations there);
+# it is not linted. Every other ruff setting is the default.
+extend-exclude = ["review-secondary"]

@@ -1,0 +1,54 @@
+{
+ "a_disjoint": {
+  "exact": {
+   "bound_attained": true,
+   "bound_holds": true,
+   "e": {
+    "f1": "1/40",
+    "f2": "1/40"
+   },
+   "s1_unsafe_bound": "1/20",
+   "unsafe": "1/20"
+  },
+  "simulation": {
+   "bound_holds": true,
+   "n": 10000,
+   "outcomes_sha256": "c662b95221305b84c8809b63d87285d02ec192bb017ebba74827b1e593f48816",
+   "seed": 20261105,
+   "unsafe": 452,
+   "wrong_f1": 232,
+   "wrong_f2": 220
+  }
+ },
+ "b_joint": {
+  "exact": {
+   "bound_attained": false,
+   "bound_holds": true,
+   "e": {
+    "f1": "1/20",
+    "f2": "1/20"
+   },
+   "global_deny_ward": false,
+   "s1_unsafe_bound": "1/10",
+   "unsafe": "1/20",
+   "v1_directional_bound": "0"
+  },
+  "simulation": {
+   "bound_holds": true,
+   "n": 10000,
+   "outcomes_sha256": "f11a24e083dd428cf5888bc56cd6a25a366125115ecdc1a1fc25b3e7ce5e7ebb",
+   "seed": 20261108,
+   "unsafe": 503,
+   "wrong_f1": 503,
+   "wrong_f2": 503
+  }
+ },
+ "checker": "n6_witness",
+ "generated_at_head_sha": "e3d5ed12518515398c866fd3a191691dbc908bf4",
+ "holds": true,
+ "inputs_hash": "e730299a7d190a2092f32afe138e05e677504b2fa474ca7325f4dfd26d7ccb80",
+ "provenance": "sarc-suite-one-pass: checkers/_provenance.py ported verbatim with attribution (sarc-suite-one-pass@782261e via sarc-authority-derivation@cfb321e)",
+ "q": "1/20",
+ "scope": "witness",
+ "statement": "N6: (a) the S1 unsafe bound is attained with disjoint errors; (b) joint errors defeat the v1 directional bound while S1 holds"
+}

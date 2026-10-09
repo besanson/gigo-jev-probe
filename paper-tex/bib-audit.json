@@ -1,0 +1,451 @@
+{
+ "results": [
+  {
+   "error": null,
+   "fetched": "https://api.datacite.org/dois/10.4230/LIPIcs.ICALP.2016.107",
+   "id": "barthe2016program",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "Barthe, Gilles",
+     "Gaboardi, Marco",
+     "Grégoire, Benjamin",
+     "Hsu, Justin",
+     "Strub, Pierre-Yves"
+    ],
+    "pages": "107:1--107:15",
+    "title": "A Program Logic for Union Bounds",
+    "venue": "LIPIcs, Volume 55, ICALP 2016 43rd International Colloquium on Automata, Languages, and Programming (ICALP 2016)",
+    "volume": "55",
+    "year": 2016
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "datacite"
+  },
+  {
+   "error": null,
+   "fetched": "https://export.arxiv.org/api/query?id_list=2502.21308",
+   "id": "waite2025state",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "Thomas Waite",
+     "Yuang Geng",
+     "Trevor Turnquist",
+     "Ivan Ruchkin",
+     "Radoslav Ivanov"
+    ],
+    "pages": null,
+    "title": "State-Dependent Conformal Perception Bounds for Neuro-Symbolic Verification of Autonomous Systems",
+    "venue": "arXiv",
+    "volume": null,
+    "year": 2025
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "arxiv"
+  },
+  {
+   "error": null,
+   "fetched": "https://api.crossref.org/works/10.1007/978-3-031-65633-0_20",
+   "id": "zhu2024probabilistic",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "Shaowei Zhu",
+     "Yunbo Zhang"
+    ],
+    "pages": "443-466",
+    "title": "Probabilistic Access Policies with Automated Reasoning Support",
+    "venue": "Lecture Notes in Computer Science Computer Aided Verification",
+    "volume": null,
+    "year": 2024
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "crossref"
+  },
+  {
+   "error": null,
+   "fetched": "https://api.crossref.org/works/10.1145/3622875",
+   "id": "astorga2023perception",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "Angello Astorga",
+     "Chiao Hsieh",
+     "P. Madhusudan",
+     "Sayan Mitra"
+    ],
+    "pages": "2196-2223",
+    "title": "Perception Contracts for Safety of ML-Enabled Systems",
+    "venue": "Proceedings of the ACM on Programming Languages",
+    "volume": "7",
+    "year": 2023
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "crossref"
+  },
+  {
+   "error": null,
+   "fetched": "https://api.crossref.org/works/10.1145/2335484.2335488",
+   "id": "artikis2012event",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "Alexander Artikis",
+     "Opher Etzion",
+     "Zohar Feldman",
+     "Fabiana Fournier"
+    ],
+    "pages": "32-43",
+    "title": "Event processing under uncertainty",
+    "venue": "Proceedings of the 6th ACM International Conference on Distributed Event-Based Systems",
+    "volume": null,
+    "year": 2012
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "crossref"
+  },
+  {
+   "error": null,
+   "fetched": "https://api.crossref.org/works/10.1109/TIT.1970.1054406",
+   "id": "chow1970optimum",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "C. Chow"
+    ],
+    "pages": "41-46",
+    "title": "On optimum recognition error and reject tradeoff",
+    "venue": "IEEE Transactions on Information Theory",
+    "volume": "16",
+    "year": 1970
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "crossref"
+  },
+  {
+   "error": null,
+   "fetched": "https://proceedings.neurips.cc/paper_files/paper/2017/hash/4a8423d5e91fda00bb7e46540e2b0cf1-Abstract.html",
+   "id": "geifman2017selective",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "Geifman, Yonatan",
+     "El-Yaniv, Ran"
+    ],
+    "pages": null,
+    "title": "Selective Classification for Deep Neural Networks",
+    "venue": "Advances in Neural Information Processing Systems",
+    "volume": "30",
+    "year": 2017
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "proceedings_page"
+  },
+  {
+   "error": null,
+   "fetched": "https://api.crossref.org/works/10.1007/978-3-031-06649-8",
+   "id": "vovk2022algorithmic",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "Vladimir Vovk",
+     "Alexander Gammerman",
+     "Glenn Shafer"
+    ],
+    "pages": null,
+    "title": "Algorithmic Learning in a Random World",
+    "venue": "",
+    "volume": null,
+    "year": 2022
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "crossref"
+  },
+  {
+   "error": null,
+   "fetched": "https://api.crossref.org/works/10.1561/2200000101",
+   "id": "angelopoulos2023gentle",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "Anastasios N. Angelopoulos",
+     "Stephen Bates"
+    ],
+    "pages": "494-591",
+    "title": "Conformal Prediction: A Gentle Introduction",
+    "venue": "Foundations and Trends® in Machine Learning",
+    "volume": "16",
+    "year": 2023
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "crossref"
+  },
+  {
+   "error": null,
+   "fetched": "https://proceedings.neurips.cc/paper/2018/hash/09d37c08f7b129e96277388757530c72-Abstract.html",
+   "id": "madras2018predict",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "Madras, David",
+     "Pitassi, Toni",
+     "Zemel, Richard"
+    ],
+    "pages": null,
+    "title": "Predict Responsibly: Improving Fairness and Accuracy by Learning to Defer",
+    "venue": "Advances in Neural Information Processing Systems",
+    "volume": "31",
+    "year": 2018
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "proceedings_page"
+  },
+  {
+   "error": null,
+   "fetched": "https://proceedings.mlr.press/v119/mozannar20b.html",
+   "id": "mozannar2020consistent",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "Hussein Mozannar",
+     "David Sontag"
+    ],
+    "pages": "7076--7087",
+    "title": "Consistent Estimators for Learning to Defer to an Expert",
+    "venue": "International Conference on Machine Learning",
+    "volume": null,
+    "year": 2020
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "proceedings_page"
+  },
+  {
+   "error": null,
+   "fetched": "https://proceedings.mlr.press/v70/guo17a.html",
+   "id": "guo2017calibration",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "Chuan Guo",
+     "Geoff Pleiss",
+     "Yu Sun",
+     "Kilian Q. Weinberger"
+    ],
+    "pages": "1321--1330",
+    "title": "On Calibration of Modern Neural Networks",
+    "venue": "International Conference on Machine Learning",
+    "volume": null,
+    "year": 2017
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "proceedings_page"
+  },
+  {
+   "error": null,
+   "fetched": "https://api.crossref.org/works/10.1002/sim.4780050506",
+   "id": "spiegelhalter1986probabilistic",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "D. J. Spiegelhalter"
+    ],
+    "pages": "421-433",
+    "title": "Probabilistic prediction in patient management and clinical trials",
+    "venue": "Statistics in Medicine",
+    "volume": "5",
+    "year": 1986
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "crossref"
+  },
+  {
+   "error": null,
+   "fetched": "https://api.crossref.org/works/10.1175/1520-0493(1950)078<0001:VOFEIT>2.0.CO;2",
+   "id": "brier1950verification",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "GLENN W. BRIER"
+    ],
+    "pages": "1-3",
+    "title": "VERIFICATION OF FORECASTS EXPRESSED IN TERMS OF PROBABILITY",
+    "venue": "Monthly Weather Review",
+    "volume": "78",
+    "year": 1950
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "crossref"
+  },
+  {
+   "error": null,
+   "fetched": "https://api.crossref.org/works/10.1093/biomet/26.4.404",
+   "id": "clopper1934use",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "C. J. CLOPPER",
+     "E. S. PEARSON"
+    ],
+    "pages": "404-413",
+    "title": "THE USE OF CONFIDENCE OR FIDUCIAL LIMITS ILLUSTRATED IN THE CASE OF THE BINOMIAL",
+    "venue": "Biometrika",
+    "volume": "26",
+    "year": 1934
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "crossref"
+  },
+  {
+   "error": null,
+   "fetched": "https://api.crossref.org/works/10.1007/BF02295996",
+   "id": "mcnemar1947note",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "Quinn McNemar"
+    ],
+    "pages": "153-157",
+    "title": "Note on the Sampling Error of the Difference Between Correlated Proportions or Percentages",
+    "venue": "Psychometrika",
+    "volume": "12",
+    "year": 1947
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "crossref"
+  },
+  {
+   "error": null,
+   "fetched": "https://www.wikidata.org/wiki/Special:EntityData/Q88646612.json",
+   "id": "holm1979simple",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "Sture Holm"
+    ],
+    "pages": "65-70",
+    "title": "A Simple Sequentially Rejective Multiple Test Procedure",
+    "venue": "Scandinavian Journal of Statistics",
+    "volume": "6",
+    "year": 1979
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "wikidata"
+  },
+  {
+   "error": null,
+   "fetched": "https://api.crossref.org/works/10.1007/BF01001956",
+   "id": "pawlak1982rough",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "Zdzis?aw Pawlak"
+    ],
+    "pages": "341-356",
+    "title": "Rough sets",
+    "venue": "International Journal of Computer &amp; Information Sciences",
+    "volume": "11",
+    "year": 1982
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "crossref"
+  },
+  {
+   "error": null,
+   "fetched": "https://export.arxiv.org/api/query?id_list=2609.26016",
+   "id": "besanson2026compiling",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "Gaston Besanson"
+    ],
+    "pages": null,
+    "title": "Compiling Sufficient Governance Context from Declared Losses and Reachable States: Exact Observation-Contract Synthesis with Cardinality and Cost Objectives",
+    "venue": "arXiv",
+    "volume": null,
+    "year": 2026
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "arxiv"
+  },
+  {
+   "error": null,
+   "fetched": "https://export.arxiv.org/api/query?id_list=2607.26313",
+   "id": "besanson2026sarcdq",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "Gaston Besanson"
+    ],
+    "pages": null,
+    "title": "SARC-DQ: Runtime Data-Quality Gating for Agentic AI: Silent Evidence Defects, the Incompetence Shield, and Downstream-Only Remediation",
+    "venue": "arXiv",
+    "volume": null,
+    "year": 2026
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "arxiv"
+  },
+  {
+   "error": null,
+   "fetched": "https://export.arxiv.org/api/query?id_list=2608.18360",
+   "id": "besanson2026onegate",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "Gaston Besanson"
+    ],
+    "pages": null,
+    "title": "One Gate Is Not Enough: Composing Stateful Pre-Action Controls for Agentic AI",
+    "venue": "arXiv",
+    "volume": null,
+    "year": 2026
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "arxiv"
+  },
+  {
+   "error": null,
+   "fetched": "https://api.crossref.org/works/10.1155/2013/946070",
+   "id": "zhao2013test",
+   "mismatches": [],
+   "pass": true,
+   "retrieved": {
+    "authors": [
+     "Hong Zhao",
+     "Fan Min",
+     "William Zhu"
+    ],
+    "pages": "1-12",
+    "title": "Test-Cost-Sensitive Attribute Reduction of Data with Normal Distribution Measurement Errors",
+    "venue": "Mathematical Problems in Engineering",
+    "volume": "2013",
+    "year": 2013
+   },
+   "retrieved_on": "2026-10-02",
+   "source": "crossref"
+  }
+ ],
+ "tool": "paper-tex/verify_citations.py"
+}

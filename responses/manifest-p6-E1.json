@@ -1,0 +1,166 @@
+{
+  "registration": "p6-v1.1",
+  "prereg_tag": "prereg-p6-v1.1",
+  "prereg_commit": "2fac5a476b17abf7e361d27993860213755ffd09",
+  "experiment": "E1",
+  "engine_pins": {
+    "dqSarc": "db6c396128a4df7fe12d13be163b1e7d32087177",
+    "sarc-authority-derivation": "cfb321ec220e83e81a771a048276571f6edf08fb",
+    "self": "e1fc75b6686beecd3f4abdd57241ffc46c96e019"
+  },
+  "sdks": {
+    "typesafe-sdk": "0.7.2",
+    "anthropic": "1.9.0"
+  },
+  "generator_sha256": "18a827d20e2f9e31f68d9776c9a205252424ea756e0e41eb311d19d44f67b2a0",
+  "jev": {
+    "endpoint": "https://api.typesafe.ai/v1/systemone",
+    "requested_model": "jev-latest"
+  },
+  "cap": {
+    "usd": 60.0,
+    "scope": "E1 to E5"
+  },
+  "health_rule": {
+    "smoke_calls": 20,
+    "smoke_max_invalid": 2,
+    "validation_max_invalid_rate": 0.05
+  },
+  "jev_questions_sha256": {
+    "E1|approval_assertion": "fff3b2e6f9a31fc659b7d6c0e28fb95fc839d939b7da57757a87a226cda85c04",
+    "E1|data_residency_region": "f3365b60f3a61d460aa2abee805d5c81908c9baa8bb96963c310db8282a4c0ee"
+  },
+  "llm_prompt_sha256": {
+    "E1|approval_assertion": "5353c598df7223d4c28a718cb7ef163a23f46999c41e2cc1ba460f5feebe46e2",
+    "E1|data_residency_region": "a3116680a2c23dcc25639cb9f4ab9aca5511297db4999c0a2b23a286aadfcfd5"
+  },
+  "python": "3.11.15",
+  "health": {
+    "smoke.jev": {
+      "invalid": 0,
+      "n": 20,
+      "stopped": false
+    },
+    "smoke.llm": {
+      "invalid": 0,
+      "n": 20,
+      "stopped": false
+    },
+    "validation.jev": {
+      "invalid": 0,
+      "n": 1800,
+      "stopped": false
+    },
+    "validation.llm": {
+      "invalid": 0,
+      "n": 1800,
+      "stopped": false
+    }
+  },
+  "segments": [
+    {
+      "segment": "8a953a71f6f6",
+      "started_utc": "2026-10-01T16:04:49.029479+00:00",
+      "docs_url": "https://docs.typesafe.ai/api",
+      "docs_sha256": "429352ad00abeef123b8c8329808a88e794e229dedcf9543e45e21103f67e6d2",
+      "jev_models_listed": [
+        "jev-latest",
+        "jev-preview"
+      ],
+      "llm_model_retrieved": "claude-haiku-4-5-20251001",
+      "committed_usd_at_start": 0.0,
+      "ended_utc": "2026-10-01T16:34:48.769810+00:00",
+      "status": "TAU_WRITTEN",
+      "detail": "commit p6-E1.tau.json, then resume for the test split",
+      "committed_usd_at_end": 1.1825485359999965
+    },
+    {
+      "segment": "d05ded8ef8e6",
+      "started_utc": "2026-10-01T16:35:10.655357+00:00",
+      "docs_url": "https://docs.typesafe.ai/api",
+      "docs_sha256": "429352ad00abeef123b8c8329808a88e794e229dedcf9543e45e21103f67e6d2",
+      "jev_models_listed": [
+        "jev-latest",
+        "jev-preview"
+      ],
+      "llm_model_retrieved": "claude-haiku-4-5-20251001",
+      "committed_usd_at_start": 1.1825485359999965,
+      "ended_utc": "2026-10-01T17:44:44.782616+00:00",
+      "status": "COMPLETE",
+      "detail": "",
+      "committed_usd_at_end": 3.9415890600000387
+    }
+  ],
+  "design_facts": {
+    "A": {
+      "items": 150,
+      "approval": {
+        "recorded": 106,
+        "not": 44
+      },
+      "token": {
+        "valid": 77,
+        "expired": 29,
+        "absent": 44
+      },
+      "residency": {
+        "us": 63,
+        "eu": 62,
+        "apac": 25
+      },
+      "allow": 35
+    },
+    "B": {
+      "items": 150,
+      "approval": {
+        "recorded": 105,
+        "not": 45
+      },
+      "token": {
+        "valid": 71,
+        "expired": 34,
+        "absent": 45
+      },
+      "residency": {
+        "us": 51,
+        "eu": 63,
+        "apac": 36
+      },
+      "allow": 37
+    },
+    "test": {
+      "items": 700,
+      "approval": {
+        "recorded": 544,
+        "not": 156
+      },
+      "token": {
+        "valid": 410,
+        "expired": 134,
+        "absent": 156
+      },
+      "residency": {
+        "us": 273,
+        "eu": 261,
+        "apac": 166
+      },
+      "allow": 171
+    }
+  },
+  "docs_sha256": "429352ad00abeef123b8c8329808a88e794e229dedcf9543e45e21103f67e6d2",
+  "tau_sha256": "4d3bed4378508bfffa0746f19712d1f42b65de3d797dd835eb939188f0e539f7",
+  "status": "COMPLETE",
+  "returned_models": {
+    "jev": [
+      "jev-1.13.0"
+    ],
+    "llm": [
+      "claude-haiku-4-5-20251001"
+    ]
+  },
+  "model_version_changed": false,
+  "n_calls_cached": {
+    "jev": 6000,
+    "llm": 6000
+  }
+}

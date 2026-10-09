@@ -1,0 +1,237 @@
+{
+ "experiment": "E1",
+ "prereg_tag": "prereg-p6-v1.1",
+ "registration": "p6-v1.1",
+ "sensors": {
+  "jev": {
+   "bounds": {
+    "n00": {
+     "change_bound": 0.079093752658,
+     "unsafe_bound": 0.039546876329
+    },
+    "n10": {
+     "change_bound": 0.304506221856,
+     "unsafe_bound": 0.061148408058
+    },
+    "n30": {
+     "change_bound": 0.783747384857,
+     "unsafe_bound": 0.105636817704
+    }
+   },
+   "policy": {
+    "admission_policy_version": "p6-v1.1/E1/jev",
+    "ceiling": 0.01,
+    "estimates": {
+     "E1|approval_assertion": {
+      "n00": {
+       "e_hat": 0.019773438165,
+       "n": 150,
+       "u_hat": 0.019773438165,
+       "unknown": 0,
+       "wrong": 0
+      },
+      "n10": {
+       "e_hat": 0.041374969894,
+       "n": 150,
+       "u_hat": 0.085863379539,
+       "unknown": 7,
+       "wrong": 2
+      },
+      "n30": {
+       "e_hat": 0.085863379539,
+       "n": 150,
+       "u_hat": 0.28291742134,
+       "unknown": 33,
+       "wrong": 7
+      }
+     },
+     "E1|data_residency_region": {
+      "n00": {
+       "e_hat": 0.019773438165,
+       "n": 150,
+       "u_hat": 0.019773438165,
+       "unknown": 0,
+       "wrong": 0
+      },
+      "n10": {
+       "e_hat": 0.019773438165,
+       "n": 150,
+       "u_hat": 0.157494434259,
+       "unknown": 16,
+       "wrong": 0
+      },
+      "n30": {
+       "e_hat": 0.019773438165,
+       "n": 150,
+       "u_hat": 0.395193145813,
+       "unknown": 49,
+       "wrong": 0
+      }
+     }
+    },
+    "inputs_sha256": "6cc580b516d08e63252d96c5682e2c8892b3d0cef35d2a2536f6654912054ddb",
+    "thresholds": {
+     "approval_assertion": {
+      "not_recorded": {
+       "tau_false": 0.29,
+       "tau_true": 0.28
+      },
+      "recorded:2026-06-01": {
+       "tau_false": 0.02,
+       "tau_true": 0.45
+      },
+      "recorded:2026-06-15": {
+       "tau_false": 0.02,
+       "tau_true": 0.95
+      },
+      "recorded:2026-07-01": {
+       "tau_false": 0.02,
+       "tau_true": 0.94
+      },
+      "recorded:2026-07-15": {
+       "tau_false": 0.02,
+       "tau_true": 0.64
+      },
+      "recorded:2026-08-01": {
+       "tau_false": 0.02,
+       "tau_true": 0.63
+      },
+      "recorded:2026-08-15": {
+       "tau_false": 0.02,
+       "tau_true": 0.95
+      }
+     },
+     "data_residency_region": {
+      "apac": {
+       "tau_false": 0.02,
+       "tau_true": 0.12
+      },
+      "eu": {
+       "tau_false": 0.52,
+       "tau_true": 0.52
+      },
+      "us": {
+       "tau_false": 0.02,
+       "tau_true": 0.35
+      }
+     }
+    }
+   }
+  },
+  "llm": {
+   "bounds": {
+    "n00": {
+     "change_bound": 0.426830507637,
+     "unsafe_bound": 0.039546876329
+    },
+    "n10": {
+     "change_bound": 0.632442058538,
+     "unsafe_bound": 0.079754478466
+    },
+    "n30": {
+     "change_bound": 1.076126546047,
+     "unsafe_bound": 0.070650506143
+    }
+   },
+   "policy": {
+    "admission_policy_version": "p6-v1.1/E1/llm",
+    "ceiling": 0.01,
+    "estimates": {
+     "E1|approval_assertion": {
+      "n00": {
+       "e_hat": 0.019773438165,
+       "n": 150,
+       "u_hat": 0.367510193143,
+       "unknown": 45,
+       "wrong": 0
+      },
+      "n10": {
+       "e_hat": 0.059981040301,
+       "n": 150,
+       "u_hat": 0.395193145813,
+       "unknown": 49,
+       "wrong": 4
+      },
+      "n30": {
+       "e_hat": 0.050877067979,
+       "n": 150,
+       "u_hat": 0.589670164224,
+       "unknown": 78,
+       "wrong": 3
+      }
+     },
+     "E1|data_residency_region": {
+      "n00": {
+       "e_hat": 0.019773438165,
+       "n": 150,
+       "u_hat": 0.019773438165,
+       "unknown": 0,
+       "wrong": 0
+      },
+      "n10": {
+       "e_hat": 0.019773438165,
+       "n": 150,
+       "u_hat": 0.157494434259,
+       "unknown": 16,
+       "wrong": 0
+      },
+      "n30": {
+       "e_hat": 0.019773438165,
+       "n": 150,
+       "u_hat": 0.41580587568,
+       "unknown": 52,
+       "wrong": 0
+      }
+     }
+    },
+    "inputs_sha256": "9301ca6eeef50e0bd4894a3ecf697ff22431c5ad69973c3488686fb018ebab5d",
+    "thresholds": {
+     "approval_assertion": {
+      "not_recorded": {
+       "tau_false": -1.0,
+       "tau_true": 2.0
+      },
+      "recorded:2026-06-01": {
+       "tau_false": 0.05,
+       "tau_true": 0.05
+      },
+      "recorded:2026-06-15": {
+       "tau_false": 0.05,
+       "tau_true": 0.02
+      },
+      "recorded:2026-07-01": {
+       "tau_false": 0.01,
+       "tau_true": 0.15
+      },
+      "recorded:2026-07-15": {
+       "tau_false": 0.01,
+       "tau_true": 0.5
+      },
+      "recorded:2026-08-01": {
+       "tau_false": 0.01,
+       "tau_true": 0.5
+      },
+      "recorded:2026-08-15": {
+       "tau_false": 0.01,
+       "tau_true": 0.5
+      }
+     },
+     "data_residency_region": {
+      "apac": {
+       "tau_false": 0.05,
+       "tau_true": 0.05
+      },
+      "eu": {
+       "tau_false": 0.3,
+       "tau_true": 0.3
+      },
+      "us": {
+       "tau_false": 0.0,
+       "tau_true": 0.5
+      }
+     }
+    }
+   }
+  }
+ }
+}

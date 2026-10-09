@@ -1,0 +1,440 @@
+{
+  "all_pass": true,
+  "gates": {
+    "G1_build": {
+      "builds": [
+        {
+          "errors": [],
+          "exit_code": 0,
+          "file_list": [
+            "main.pdf",
+            "main.tex"
+          ],
+          "missing_characters": [],
+          "overfull_hbox_above_10pt": [],
+          "page_count": 23,
+          "passes_needed": 1,
+          "pdf_produced": true,
+          "pdf_sha256": "2fc4b5de0416566c342f03726c06ebf983f228848762baf0112caf7de2d44c25",
+          "pdf_unresolved_marker_count": 0,
+          "undefined_citations": [],
+          "undefined_references": []
+        },
+        {
+          "errors": [],
+          "exit_code": 0,
+          "file_list": [
+            "main.pdf",
+            "main.tex"
+          ],
+          "missing_characters": [],
+          "overfull_hbox_above_10pt": [],
+          "page_count": 23,
+          "passes_needed": 1,
+          "pdf_produced": true,
+          "pdf_sha256": "2fc4b5de0416566c342f03726c06ebf983f228848762baf0112caf7de2d44c25",
+          "pdf_unresolved_marker_count": 0,
+          "undefined_citations": [],
+          "undefined_references": []
+        }
+      ],
+      "compiler": "tectonic",
+      "compiler_log_undefined_citations": [],
+      "compiler_log_undefined_references": [],
+      "errors": [],
+      "exit_code_zero": true,
+      "file_list": [
+        "main.pdf",
+        "main.tex"
+      ],
+      "missing_characters": [],
+      "overfull_hbox_above_10pt": [],
+      "page_count": 23,
+      "pass": true,
+      "pdf_produced": true,
+      "pdf_sha256": "2fc4b5de0416566c342f03726c06ebf983f228848762baf0112caf7de2d44c25",
+      "pdf_unresolved_marker_count": 0,
+      "source_date_epoch": "1786609963",
+      "two_build_identical": true
+    },
+    "G2_token_purity": {
+      "cite_needed_placeholder_count": 0,
+      "forbidden_token_counts": {
+        "**": 0,
+        "TODO": 0,
+        "[@": 0,
+        "[GENERATED": 0,
+        "```": 0,
+        "{{": 0
+      },
+      "pass": true
+    },
+    "G3_number_parity": {
+      "pass": true,
+      "pdf_numbers_not_in_slots_or_registered": [],
+      "slot_number_count": 271,
+      "slot_numbers_missing_from_pdf": {},
+      "tag_counts": {
+        "checked-scope-only": {
+          "pdf_count": 4,
+          "source_count": 4
+        },
+        "machine-checked": {
+          "pdf_count": 5,
+          "source_count": 5
+        },
+        "pending-human-review": {
+          "pdf_count": 5,
+          "source_count": 5
+        }
+      },
+      "used_slot_count": 628
+    },
+    "G4_prose_parity": {
+      "front_matter_metadata_check": {
+        "affiliation": {
+          "match": true,
+          "md": "Universidad Torcuato Di Tella",
+          "tex": "Universidad Torcuato Di Tella"
+        },
+        "author_name": {
+          "match": true,
+          "md": "Gaston Besanson",
+          "tex": "Gaston Besanson"
+        },
+        "pass": true,
+        "title": {
+          "match": true,
+          "md": "Probabilistic Sensing, Deterministic Authority: Admitting Model-Produced Observations into Sufficiency-Checked Governance Contracts",
+          "tex": "Probabilistic Sensing, Deterministic Authority: Admitting Model-Produced Observations into Sufficiency-Checked Governance Contracts"
+        }
+      },
+      "pass": true,
+      "section_word_ratio_band_pct": [
+        80.0,
+        125.0
+      ],
+      "sections": {
+        "1 Introduction": {
+          "md_words": 494,
+          "pct_of_source": 101.012,
+          "pdf_words": 499,
+          "within_band": true
+        },
+        "10 Limitations": {
+          "md_words": 496,
+          "pct_of_source": 102.419,
+          "pdf_words": 508,
+          "within_band": true
+        },
+        "11 Reproducibility": {
+          "md_words": 436,
+          "pct_of_source": 100.0,
+          "pdf_words": 436,
+          "within_band": true
+        },
+        "2 Setting": {
+          "md_words": 473,
+          "pct_of_source": 119.662,
+          "pdf_words": 566,
+          "within_band": true
+        },
+        "3 Invariants": {
+          "md_words": 243,
+          "pct_of_source": 100.0,
+          "pdf_words": 243,
+          "within_band": true
+        },
+        "4 Propositions": {
+          "md_words": 712,
+          "pct_of_source": 100.983,
+          "pdf_words": 719,
+          "within_band": true
+        },
+        "5 Admission policy and estimation": {
+          "md_words": 389,
+          "pct_of_source": 101.285,
+          "pdf_words": 394,
+          "within_band": true
+        },
+        "6 Experimental design": {
+          "md_words": 594,
+          "pct_of_source": 100.168,
+          "pdf_words": 595,
+          "within_band": true
+        },
+        "7 Results": {
+          "md_words": 2613,
+          "pct_of_source": 97.053,
+          "pdf_words": 2536,
+          "within_band": true
+        },
+        "8 Related work and fence": {
+          "md_words": 410,
+          "pct_of_source": 100.0,
+          "pdf_words": 410,
+          "within_band": true
+        },
+        "9 Claims versus non-claims": {
+          "md_words": 304,
+          "pct_of_source": 98.355,
+          "pdf_words": 299,
+          "within_band": true
+        }
+      },
+      "sentence_sample": [
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 4,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [],
+          "sentence": "Every field those contracts read is recorded: it comes from a system that stores it, with metadata a data-quality check can test."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 5,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [],
+          "sentence": "Some fields an authority contract needs are written down only in unstructured evidence: a change ticket that says an approval was given, a contract that says wh"
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 26,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [
+            "3"
+          ],
+          "sentence": "Section 3 states the invariants."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 52,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [],
+          "sentence": "The judgement that turns the reading into a permission stays in code that can be inspected and tested."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 78,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [
+            "1",
+            "5"
+          ],
+          "sentence": "E3 re-reads the E1 caches at ceilings of 1% and 5%, and with unknown routed to deny or to escalation."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 86,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [],
+          "sentence": "Noise is nested across levels."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 87,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [],
+          "sentence": "Each item and field has two labels."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 128,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [],
+          "sentence": "On the test split, the verdict-change and unsafe rates were:"
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 130,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [
+            "30",
+            "7.8"
+          ],
+          "sentence": "At 30% noise the picked reduct changed fewer verdicts than the other in all four registered comparisons (H2, Section 7.8)."
+        },
+        {
+          "found": true,
+          "identifiers": [],
+          "index": 224,
+          "missing_identifiers": [],
+          "missing_numbers": [],
+          "numbers": [
+            "10.5281",
+            "23224016",
+            "0.1"
+          ],
+          "sentence": "The repository is archived at DOI 10.5281/zenodo.23224016; this version corresponds to tag v1.0.1."
+        }
+      ],
+      "source_sha256": "b2aa1c57d3510c170c393492cd02f910920feba2214327f43d035992dbba769e"
+    },
+    "G5_structure_parity": {
+      "counts": {
+        "figures": {
+          "equal": true,
+          "source": 1,
+          "tex": 1
+        },
+        "footnotes": {
+          "equal": true,
+          "source": 1,
+          "tex": 1
+        },
+        "propositions": {
+          "equal": true,
+          "source": 5,
+          "tex": 5
+        },
+        "sections": {
+          "equal": true,
+          "source": 14,
+          "tex": 14
+        },
+        "subsections": {
+          "equal": true,
+          "source": 8,
+          "tex": 8
+        },
+        "tables": {
+          "equal": true,
+          "source": 21,
+          "tex": 21
+        }
+      },
+      "pass": true
+    },
+    "G6_disclosure_and_banners": {
+      "pass": true,
+      "sentences": {
+        "ai_assistance": {
+          "in_manuscript": true,
+          "in_pdf": true
+        },
+        "external_review": {
+          "in_manuscript": true,
+          "in_pdf": true
+        },
+        "fence": {
+          "in_manuscript": true,
+          "in_pdf": true
+        },
+        "invariant": {
+          "in_manuscript": true,
+          "in_pdf": true
+        },
+        "non_claim": {
+          "in_manuscript": true,
+          "in_pdf": true
+        }
+      }
+    },
+    "G7_sidecar_sync": {
+      "abstract_at_most_200_words": true,
+      "abstract_char_count": 1309,
+      "abstract_has_required_phrase": true,
+      "abstract_within_max_chars": true,
+      "abstract_word_count": 200,
+      "in_sync": {
+        "arxiv-abstract.txt": true,
+        "arxiv-metadata.txt": true
+      },
+      "metadata_has_required_author_line": true,
+      "pass": true,
+      "sidecars_match_generator": true
+    },
+    "G8_citation_completeness": {
+      "citation_check_tokens_clean": true,
+      "cite_placeholder_count": 0,
+      "cite_placeholders": [],
+      "cited_keys": [
+        "angelopoulos2023gentle",
+        "artikis2012event",
+        "astorga2023perception",
+        "barthe2016program",
+        "besanson2026compiling",
+        "besanson2026onegate",
+        "besanson2026sarcdq",
+        "brier1950verification",
+        "chow1970optimum",
+        "clopper1934use",
+        "geifman2017selective",
+        "guo2017calibration",
+        "holm1979simple",
+        "madras2018predict",
+        "mcnemar1947note",
+        "mozannar2020consistent",
+        "pawlak1982rough",
+        "spiegelhalter1986probabilistic",
+        "vovk2022algorithmic",
+        "waite2025state",
+        "zhao2013test",
+        "zhu2024probabilistic"
+      ],
+      "keys_not_verified": [],
+      "pass": true,
+      "verified_but_uncited": []
+    },
+    "G9_bibliography_quality": {
+      "audit_failed": [],
+      "audit_missing": [],
+      "audited": 22,
+      "doi_mismatches": [],
+      "invalid_entry_type": [],
+      "misc_with_venue_info": [],
+      "missing_authors": [],
+      "missing_venue_fields": [],
+      "pass": true,
+      "refs_bib_matches_generator": true,
+      "total_citations": 22,
+      "truncated_author_list": []
+    },
+    "L_populated_freshness": {
+      "command": "python paper/populate.py --check",
+      "output_tail": [
+        "populate: ok (paper/paper6-draft-v0.1-populated.md)"
+      ],
+      "pass": true
+    },
+    "L_proof_status": {
+      "command": "python -m checkers.proof_status_lint",
+      "output_tail": [
+        "proof_status: ok"
+      ],
+      "pass": true
+    },
+    "L_terminology": {
+      "command": "python -m lint.terminology",
+      "output_tail": [
+        "terminology: ok (21 files)"
+      ],
+      "pass": true
+    },
+    "L_typed_numerals": {
+      "command": "python -m lint.typed_numerals",
+      "output_tail": [
+        "typed_numerals: ok (paper/paper6-draft-v0.1.md)"
+      ],
+      "pass": true
+    }
+  }
+}
